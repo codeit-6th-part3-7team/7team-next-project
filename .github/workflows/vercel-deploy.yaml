@@ -1,0 +1,24 @@
+name: Sync to Personal Repository and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "gohansaem92"
+          git config --global user.email "gohansaem@gmail.com"
+
+      - name: Push to Personal Repository
+        run: |
+          git remote add personal https://github.com/gohansaem92/7team-next-project.git
+          git push personal main
