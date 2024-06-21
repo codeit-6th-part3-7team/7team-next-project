@@ -28,4 +28,4 @@ assignees: AdamSeungheonShin
 
 ### 참고 자료
 
-- [React Hook Form - 공식 문서](https://react-hook-form.com/): 폼 유효성 검사에 사용되는 라이브러리 문서
+- [React Hook Form - 공식 문서](https://react-hook-form.com/): 폼 유효성 검사에 사용되는 라이브러리
