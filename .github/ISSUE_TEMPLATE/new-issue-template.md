@@ -1,9 +1,9 @@
 ---
-name: 세부작업 명세 템플릿
+name: New Issue template
 about: 세부작업 티켓 생성용 템플릿
 title: "[페이지이름] - [작업유형]: [작업 세부 내용]"
 labels: ''
-assignees: ''
+assignees: AdamSeungheonShin
 
 ---
 
