@@ -5,5 +5,5 @@ import { useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <h1>자동배포</h1>;
+  return <h1>디벨럽 브랜치</h1>;
 }
