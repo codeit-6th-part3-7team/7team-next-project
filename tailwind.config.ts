@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       backgroundImage: {
@@ -15,7 +15,8 @@ const config: Config = {
           300: "#C6CADA",
           400: "#8F95B2",
           500: "#474D66",
-          600: "#3B415B",
+          600: "#8F95B2",
+          800: "#474D66",
         },
         green: {
           100: "#EEF9F6",
@@ -29,6 +30,9 @@ const config: Config = {
         purple: "#8E66FF",
         yellow: "#FDD181",
       },
+    },
+    fontFamily: {
+      pretendard: ["pretendard", "sans-serif"],
     },
   },
   plugins: [],
