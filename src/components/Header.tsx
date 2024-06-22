@@ -1,4 +1,4 @@
-import { Group, Box, Menu } from "@mantine/core";
+import { Group, Menu } from "@mantine/core";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -7,9 +7,9 @@ import IcoBurger from "@/public/assets/ic_burger.svg";
 
 export default function Header() {
   return (
-    <Box pb={120}>
-      <header className="md:px-20 px-10 bg-white drop-shadow-md font-pretendard">
-        <Group justify="space-between" h={80}>
+    <div className="h-20">
+      <header className="fixed md:px-20 px-10 w-full h-20 bg-white drop-shadow-md font-pretendard">
+        <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
               <Image src={ImgLogo} width={107} height={30} alt="로고" />
@@ -48,6 +48,6 @@ export default function Header() {
           </Group>
         </Group>
       </header>
-    </Box>
+    </div>
   );
 }
