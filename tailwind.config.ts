@@ -15,7 +15,7 @@ const config: Config = {
           300: "#C6CADA",
           400: "#8F95B2",
           500: "#474D66",
-          600: "#8F95B2",
+          600: "#3B415B",
           800: "#474D66",
         },
         green: {
@@ -32,7 +32,11 @@ const config: Config = {
       },
     },
     fontFamily: {
-      pretendard: ["pretendard", "sans-serif"],
+      pretendard: ["Pretendard", "sans-serif"],
+      nexon: ["Nexon", "sans-serif"],
+    },
+    borderRadius: {
+      "1/2": "50%",
     },
   },
   plugins: [],
