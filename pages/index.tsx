@@ -1,5 +1,5 @@
 import Header from "@/src/components/Header";
-import { Box, Button, Flex, Grid, useMatches } from "@mantine/core";
+import { Box, Button, Flex, Grid, Group, useMatches } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
@@ -25,10 +25,10 @@ export default function Home() {
         <div className="rounded-1/2 absolute bottom-0 -left-10 -right-10 h-56 bg-gray-800 translate-y-1/2" />
         <Flex bg="#F1F4FD" direction="column" align="center">
           <Flex pt={{ base: 100, sm: 120 }}>
-            <hgroup className="font-nexon text-gray-800 mb-10 text-center">
+            <Box className="font-nexon text-gray-800 mb-10 text-center">
               <h2 className="text-40 md:text-60 leading-70 md:leading-100 font-light">남들이 만드는</h2>
               <h2 className="text-60 md:text-90 leading-70 md:leading-100 font-bold">나만의 위키</h2>
-            </hgroup>
+            </Box>
           </Flex>
           <Button component={Link} href="/wiki" variant="filled" color="#474D66" size={btnSize} radius="md">
             위키 만들기
@@ -47,10 +47,10 @@ export default function Home() {
               <Flex direction="column" justify="space-between" w={{ base: "35.5vw", sm: "35.2vw", lg: 364 }} gap={10}>
                 <Flex direction="column" gap={{ base: 10, sm: 20 }} className="font-nexon">
                   <strong className="text-green-200 text-10 md:text-20 xl:text-30">WRITE</strong>
-                  <hgroup className="text-white text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
+                  <Box className="text-white text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
                     <h3>친구의 위키,</h3>
                     <h3>직접 작성해봐요</h3>
-                  </hgroup>
+                  </Box>
                 </Flex>
                 <Box className="bg-green-200 rounded-20" pr={{ base: 0, sm: 40, lg: 54 }}>
                   <Image src={LandingImg_02} alt="키보드 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -68,10 +68,10 @@ export default function Home() {
           <Box px={20} mx="auto" my={0} maw={924}>
             <Flex direction="column" align="flex-end" gap={{ base: 10, sm: 20 }} className="font-nexon">
               <strong className="text-green-200 text-10 md:text-20 xl:text-30">SHARE</strong>
-              <hgroup className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60 text-right">
+              <Box className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60 text-right">
                 <h3>내 위키 만들고</h3>
                 <h3>친구에게 공유해요</h3>
-              </hgroup>
+              </Box>
             </Flex>
           </Box>
           <Flex justify="center">
@@ -111,10 +111,10 @@ export default function Home() {
           <Box px={20} mx="auto" my={0} maw={924}>
             <Flex direction="column" gap={{ base: 10, sm: 20 }} className="font-nexon">
               <strong className="text-green-200 text-10 md:text-20 xl:text-30">SHARE</strong>
-              <hgroup className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
+              <Box className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
                 <h3>내 위키 만들고</h3>
                 <h3>친구에게 공유해요</h3>
-              </hgroup>
+              </Box>
             </Flex>
             <Flex mt={{ base: 40, sm: 80, lg: 120 }} direction="column" gap={{ base: 10, sm: 22, lg: 40 }}>
               <Box>
