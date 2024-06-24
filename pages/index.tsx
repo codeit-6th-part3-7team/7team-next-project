@@ -1,10 +1,14 @@
 import Header from "@/src/components/Header";
-import { Box, Button, Flex, Title } from "@mantine/core";
+import { Box, Button, Flex, useMatches } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
 
 export default function Home() {
+  const btnSize = useMatches({
+    base: "lg",
+    sm: "xl",
+  });
   return (
     <>
       <Header />
@@ -18,7 +22,7 @@ export default function Home() {
             </hgroup>
           </Flex>
           <Link href="/wiki">
-            <Button variant="filled" color="#474D66" size="xl" radius="md">
+            <Button variant="filled" color="#474D66" size={btnSize} radius="md">
               위키 만들기
             </Button>
           </Link>
