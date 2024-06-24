@@ -32,10 +32,6 @@ export default function ProfileCard({ profileData, profileImage }: ProfileCardPr
           );
         })}
       </div>
-      {/* <div className="w-64 h-72 grid grid-cols-[60px_auto]">
-        <span className="text-sm text-gray-400">City</span>
-        <span className="text-sm text-gray-800">Seoul</span>
-      </div> */}
     </div>
   );
 }
