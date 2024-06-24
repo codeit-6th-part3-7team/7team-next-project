@@ -1,6 +1,6 @@
 import axios from "@/apis/axios";
 import ProfileCard from "@/components/ProfileCard";
-import { ProfileResponse } from "@/types/ProfileResponse";
+import { ProfileCardData, ProfileResponse } from "@/types/ProfileResponse";
 import { useEffect, useState } from "react";
 import { Button, CopyButton } from "@mantine/core";
 import ic_copy_link from "../../public/ic_copy_link.svg";
@@ -11,6 +11,16 @@ const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
 
 export default function Wiki() {
   const [wikiData, setWikiData] = useState<ProfileResponse>();
+  const [profileData, setProfileData] = useState<ProfileCardData>({
+    city: "",
+    mbti: "",
+    job: "",
+    sns: "",
+    birthday: "",
+    nickname: "",
+    bloodType: "",
+    nationality: "",
+  });
   const [wikiUrl, setWikiUrl] = useState<string>("");
 
   // api 호출, url 설정 effect
@@ -20,20 +30,25 @@ export default function Wiki() {
         const { data } = await axios.get(`profiles/${TEST_CODE}`);
         // TODO 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
         setWikiData(data);
+
+        const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = data;
+        const profileCardData: ProfileCardData = { city, mbti, job, sns, birthday, nickname, bloodType, nationality };
+        setProfileData(profileCardData);
+
+        const currentUrl: string = window.location.href;
+        setWikiUrl(currentUrl);
       } catch (e) {
         // eslint-disable-next-line
         console.error("failed to fetch", e);
       }
     };
     getWikiDataByCode();
-    const currentUrl: string = window.location.href;
-    setWikiUrl(currentUrl);
   }, []);
 
   return (
     <main className="w-screen h-screen">
       <section className="w-[860px] h-28 mx-auto mt-40">
-        <ProfileCard />
+        <ProfileCard profileData={profileData} />
         <section className="w-[860px] h-28">
           <div className="flex justify-between">
             <span className="text-50 font-semibold text-gray-800">title</span>

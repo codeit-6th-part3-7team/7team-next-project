@@ -1,7 +1,12 @@
 import Image from "next/image";
 import temp from "../../public/img_temp_profile.png";
+import { ProfileCardData } from "@/types/ProfileResponse";
 
-export default function ProfileCard() {
+type ProfileCardProps = {
+  profileData: ProfileCardData;
+};
+
+export default function ProfileCard({ profileData }: ProfileCardProps) {
   return (
     <div className="w-80 h-[670px] rounded-xl shadow-lg shadow-gray-300 flex flex-col items-center gap-14 border-none absolute top-32 right-[3%]">
       <Image className="w-[200px] h-[200px] object-cover rounded-full mt-14" src={temp} width={200} height={200} alt="프로필이미지" />
