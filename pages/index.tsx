@@ -1,5 +1,5 @@
 import Header from "@/src/components/Header";
-import { Box, Button, Container, Flex, Grid, useMatches } from "@mantine/core";
+import { Box, Button, Flex, Grid, useMatches } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
@@ -74,34 +74,36 @@ export default function Home() {
               </hgroup>
             </Flex>
           </Box>
-          <Grid mx="-15.4vw" mt={{ base: 40, sm: 80, lg: 120 }} gutter={{ base: "2.7vw", sm: "2.7vw", lg: "3.6vw" }}>
-            <Grid.Col span={2}>
-              <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
-            </Grid.Col>
-            <Grid.Col span={2}>
-              <Box bg="#B2A5FD" className="rounded-25">
-                <Image src={LandingImg_04} alt="알림 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={2} className="rounded-25">
-              <Box bg="#ADEDDE" className="rounded-25">
-                <Image src={LandingImg_05} alt="위키 로고 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={2} className="rounded-25">
-              <Box bg="#DEE5F5" className="rounded-25">
-                <Image src={LandingImg_06} alt="위키 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={2} className="rounded-25">
-              <Box bg="#DEE5F5" className="rounded-25">
-                <Image src={LandingImg_07} alt="메시지 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={2} className="rounded-25">
-              <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
-            </Grid.Col>
-          </Grid>
+          <Flex justify="center">
+            <Grid maw={1920} mx="-15.4vw" mt={{ base: 40, sm: 80, lg: 120 }} gutter={{ base: "2.7vw", sm: "2.7vw", lg: "3.6vw" }}>
+              <Grid.Col span={2}>
+                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
+              </Grid.Col>
+              <Grid.Col span={2}>
+                <Box bg="#B2A5FD" className="rounded-25">
+                  <Image src={LandingImg_04} alt="알림 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </Box>
+              </Grid.Col>
+              <Grid.Col span={2} className="rounded-25">
+                <Box bg="#ADEDDE" className="rounded-25">
+                  <Image src={LandingImg_05} alt="위키 로고 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </Box>
+              </Grid.Col>
+              <Grid.Col span={2} className="rounded-25">
+                <Box bg="#DEE5F5" className="rounded-25">
+                  <Image src={LandingImg_06} alt="위키 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </Box>
+              </Grid.Col>
+              <Grid.Col span={2} className="rounded-25">
+                <Box bg="#DEE5F5" className="rounded-25">
+                  <Image src={LandingImg_07} alt="메시지 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </Box>
+              </Grid.Col>
+              <Grid.Col span={2} className="rounded-25">
+                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
+              </Grid.Col>
+            </Grid>
+          </Flex>
         </Box>
       </div>
       <div>
@@ -140,6 +142,32 @@ export default function Home() {
           </Button>
         </Flex>
       </div>
+      <footer>
+        <Box py={{ base: 40, sm: 60, lg: 80 }} bg="#3B415B" className="text-white px-20">
+          <Flex direction="column">
+            <strong className="mb-1">Copyright ⓒ Wikied. All Rights Reserved</strong>
+            <p>
+              <span>사업자등록번호 000-00-00000 </span>
+              <i aria-hidden="true">|</i>
+              <span> 통신판매신고 제2020-서울-00000호 </span>
+              <i aria-hidden="true">|</i>
+              <span> 대표 : 이지은</span>
+            </p>
+            <p>서울특별시 중구 청계천로 123, 위키드빌딩</p>
+            <ul className="flex gap-4 mt-2.5 md:mt-5">
+              <li>
+                <Link href="/">서비스 이용약관</Link>
+              </li>
+              <li>
+                <Link href="/">개인정보 취급방침</Link>
+              </li>
+              <li>
+                <Link href="/">전자금융거래 기본약관</Link>
+              </li>
+            </ul>
+          </Flex>
+        </Box>
+      </footer>
     </>
   );
 }
