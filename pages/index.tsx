@@ -148,9 +148,9 @@ export default function Home() {
             <strong className="mb-1">Copyright ⓒ Wikied. All Rights Reserved</strong>
             <p>
               <span>사업자등록번호 000-00-00000 </span>
-              <i aria-hidden="true">|</i>
+              <span aria-hidden="true">|</span>
               <span> 통신판매신고 제2020-서울-00000호 </span>
-              <i aria-hidden="true">|</i>
+              <span aria-hidden="true">|</span>
               <span> 대표 : 이지은</span>
             </p>
             <p>서울특별시 중구 청계천로 123, 위키드빌딩</p>
