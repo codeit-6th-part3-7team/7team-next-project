@@ -40,7 +40,7 @@ export default function Wiki() {
           </div>
           <CopyButton value={wikiUrl}>
             {({ copied, copy }) => (
-              <Button color={copied ? "gray" : "grape"} leftSection={<Image src={ic_copy_link} width={20} height={20} alt="위키링크복사하기" />} onClick={copy}>
+              <Button color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} width={20} height={20} alt="위키링크복사하기" />} onClick={copy}>
                 <span className="text-sm text-green-200 font-normal">{copied ? "Copied!" : wikiUrl}</span>
               </Button>
             )}
