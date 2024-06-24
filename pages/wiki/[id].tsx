@@ -69,7 +69,7 @@ export default function Wiki() {
         <ProfileCard profileData={profileData} profileImage={wikiData.image} />
         <section className="w-[860px] h-28">
           <div className="flex justify-between">
-            <span className="text-50 font-semibold text-gray-800">title</span>
+            <span className="text-50 font-semibold text-gray-800">{wikiData.name}</span>
             <Button color="green">hop in</Button>
           </div>
           <CopyButton value={wikiUrl}>
