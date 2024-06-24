@@ -12,7 +12,7 @@ export type ProfileResponse = {
   job: string;
   mbti: string;
   city: string;
-  image: string;
+  image: string | null;
   code: string;
   name: string;
   id: number;
