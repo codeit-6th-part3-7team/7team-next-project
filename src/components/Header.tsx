@@ -8,24 +8,24 @@ import IcoBurger from "@/public/assets/ic_burger.svg";
 export default function Header() {
   return (
     <div className="h-20">
-      <header className="fixed z-10 md:px-20 px-10 w-full h-20 bg-white drop-shadow-md">
+      <header className="fixed z-10 h-20 w-full bg-white px-10 drop-shadow-md md:px-20">
         <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
               <Image src={ImgLogo} width={107} height={30} alt="로고" />
             </Link>
             <Group h="100%" gap={40} visibleFrom="sm">
-              <Link href="/wikilist" className="text-gray-800 text-sm">
+              <Link href="/wikilist" className="text-sm text-gray-800">
                 위키목록
               </Link>
-              <Link href="/boards" className="text-gray-800 text-sm">
+              <Link href="/boards" className="text-sm text-gray-800">
                 자유게시판
               </Link>
             </Group>
           </Group>
           <Group>
             <Group visibleFrom="sm">
-              <Link href="/login" className="text-gray-400 text-sm">
+              <Link href="/login" className="text-sm text-gray-400">
                 로그인
               </Link>
             </Group>
@@ -36,10 +36,10 @@ export default function Header() {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Link href="/wikilist" className="flex p-2 justify-center text-gray-800 text-sm">
+                  <Link href="/wikilist" className="text-sm flex justify-center p-2 text-gray-800">
                     위키 목록
                   </Link>
-                  <Link href="/boards" className="flex p-2 justify-center text-gray-800 text-sm">
+                  <Link href="/boards" className="text-sm flex justify-center p-2 text-gray-800">
                     자유게시판
                   </Link>
                 </Menu.Dropdown>
