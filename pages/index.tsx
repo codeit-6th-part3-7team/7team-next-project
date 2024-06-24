@@ -1,5 +1,5 @@
 import Header from "@/src/components/Header";
-import { Box, Button, Flex, Grid, Group, useMatches } from "@mantine/core";
+import { Box, Button, Flex, Grid, useMatches } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
