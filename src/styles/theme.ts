@@ -9,5 +9,6 @@ const theme: MantineThemeOverride = {
     yellow: ["#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181", "#FDD181"],
   },
 };
+// note  mantine theme 색상 배열타입 기본 길이가 10으로 설정되어 있어서 사용하는 색상 외에는 임의로 채워넣었습니다..
 
 export default createTheme(theme);

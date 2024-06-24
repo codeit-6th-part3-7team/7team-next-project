@@ -35,7 +35,6 @@ export default function Wiki() {
         <section className="w-[860px] h-28">
           <div className="flex justify-between">
             <span className="text-50 font-semibold text-gray-800">title</span>
-            {/* todo 라이브러리용 색상 theme 설정 필요 */}
             <Button color="green">hop in</Button>
           </div>
           <CopyButton value={wikiUrl}>
