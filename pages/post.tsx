@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Container, Title, Text, Card, Group, TextInput, Button } from "@mantine/core"; // Mantine의 필요한 컴포넌트를 임포트합니다.
 import Image from "next/image";
-import Link from "next/link";
 
 interface NextImage {
   src: string;
@@ -18,11 +17,10 @@ interface Post {
   author: string;
   date: string;
   likes: number;
-  image?: NextImage ;
+  image?: NextImage;
 }
 
 function PostPage() {
-  // Best 게시글 데이터 예시 (임의로 설정)
   const bestPosts: Post[] = [
     {
       id: 1,
@@ -31,10 +29,10 @@ function PostPage() {
       date: "June 20, 2024",
       likes: 15,
       image: {
-        src: "/path/to/image1.jpg", // 이미지 경로
-        alt: "Description of image", // 이미지 alt 텍스트 (optional)
-        width: 250, // 이미지 너비 (optional)
-        height: 300, // 이미지 높이 (optional)
+        src: "/path/to/image1.jpg",
+        alt: "Description of image",
+        width: 250,
+        height: 300,
       },
     },
     {
@@ -47,7 +45,7 @@ function PostPage() {
         src: "/path/to/image1.jpg",
         alt: "Description of image",
         width: 250,
-        height: 300, 
+        height: 300,
       },
     },
     {
@@ -60,7 +58,7 @@ function PostPage() {
         src: "/path/to/image1.jpg",
         alt: "Description of image",
         width: 250,
-        height: 300, 
+        height: 300,
       },
     },
     {
@@ -73,12 +71,10 @@ function PostPage() {
         src: "/path/to/image1.jpg",
         alt: "Description of image",
         width: 250,
-        height: 300, 
+        height: 300,
       },
     },
   ];
-
-  // 다른 게시글 목록 예시
   const PostList: Post[] = [
     { id: 1, title: "Post 1", author: "Alice Johnson", likes: 8, date: "June 15, 2024" },
     { id: 2, title: "Post 2", author: "Bob Lee", likes: 12, date: "June 18, 2024" },
@@ -123,12 +119,9 @@ function PostPage() {
     return 0;
   });
 
- 
   const indexOfNextPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfNextPost - postsPerPage;
   const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfNextPost);
-
- 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
@@ -140,18 +133,16 @@ function PostPage() {
       <div className="flex flex-row gap-1 overflow-x-auto mb-8">
         {bestPosts.map((post) => (
           <Card key={post.id} shadow="sm" padding="lg" style={{ width: 250, height: 300 }}>
-            {post.image && (
-  <Image src={post.image.src} alt={post.title} width={250} height={150} />
-)}
+            {post.image && <Image src={post.image.src} alt={post.title} width={250} height={150} />}
             <Title order={2} className="text-xl my-2">
               {post.title}
             </Title>
-            <Group  className="mb-4">
+            <Group className="mb-4">
               <Text size="sm" color="gray">
                 {post.author} | {post.date}
               </Text>
             </Group>
-            <Group >
+            <Group>
               <Text size="sm" color="gray">
                 좋아요 {post.likes}개
               </Text>
@@ -178,13 +169,13 @@ function PostPage() {
         <Title order={2} className="text-2xl mb-4">
           다른 게시글 목록
         </Title>
-        <Group >
+        <Group>
           {currentPosts.map((post) => (
             <Card key={post.id} shadow="sm" padding="md" className="cursor-pointer hover:bg-gray-100" style={{ minWidth: 300 }}>
               <Title order={3} className="text-lg mb-2">
                 {post.title}
               </Title>
-              <Group >
+              <Group>
                 <Text size="sm" color="gray">
                   {post.author} | 좋아요 {post.likes}개 | {post.date}
                 </Text>
@@ -205,7 +196,5 @@ function PostPage() {
     </Container>
   );
 }
-
-
 
 export default PostPage;
