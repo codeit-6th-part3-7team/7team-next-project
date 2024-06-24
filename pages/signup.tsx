@@ -44,11 +44,11 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-[100px]">
-      <h1 className="text-[24px] leading-[32px] font-semibold text-gray-500 mb-[32px]">회원가입</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] flex flex-col gap-[24px]">
+    <div className="mt-[100px] flex flex-col items-center">
+      <h1 className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex w-[400px] flex-col gap-[24px]">
         <div className="flex flex-col gap-[10px]">
-          <label htmlFor="name" className="text-[14px] leading-[32px] font-normal text-gray-500">
+          <label htmlFor="name" className="text-[14px] font-normal leading-[32px] text-gray-500">
             이름
           </label>
           <input
@@ -56,13 +56,13 @@ export default function SignUp() {
             type="text"
             {...register("name")}
             placeholder="이름을 입력해주세요"
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("name")}`}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}`}
           />
           {errors.name && <p className="error-message">{errors.name.message}</p>}
         </div>
 
         <div className="flex flex-col gap-[10px]">
-          <label htmlFor="email" className="text-[14px] leading-[32px] font-normal text-gray-500">
+          <label htmlFor="email" className="text-[14px] font-normal leading-[32px] text-gray-500">
             이메일
           </label>
           <input
@@ -70,13 +70,13 @@ export default function SignUp() {
             type="email"
             placeholder="이메일을 입력해주세요"
             {...register("email")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("email")}`}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}`}
           />
           {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
 
         <div className="flex flex-col gap-[10px]">
-          <label htmlFor="password" className="text-[14px] leading-[32px] font-normal text-gray-500">
+          <label htmlFor="password" className="text-[14px] font-normal leading-[32px] text-gray-500">
             비밀번호
           </label>
           <input
@@ -84,13 +84,13 @@ export default function SignUp() {
             type="password"
             placeholder="비밀번호를 입력해주세요"
             {...register("password")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("password")}`}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}`}
           />
           {errors.password && <p className="error-message">{errors.password.message}</p>}
         </div>
 
         <div className="flex flex-col gap-[10px]">
-          <label htmlFor="confirmPassword" className="text-[14px] leading-[32px] font-normal text-gray-500">
+          <label htmlFor="confirmPassword" className="text-[14px] font-normal leading-[32px] text-gray-500">
             비밀번호 확인
           </label>
           <input
@@ -98,12 +98,12 @@ export default function SignUp() {
             type="password"
             placeholder="비밀번호를 입력해주세요"
             {...register("confirmPassword")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("confirmPassword")}`}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("confirmPassword")}`}
           />
           {errors.confirmPassword && <p className="error-message">{errors.confirmPassword.message}</p>}
         </div>
 
-        <button type="submit" disabled={!isValid} className="w-full h-[45px] bg-green-200 rounded-[10px] hover:bg-green-300 disabled:bg-gray-300 text-[14px] font-semibold leading-[24px] text-white">
+        <button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
           가입하기
         </button>
         <div className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
