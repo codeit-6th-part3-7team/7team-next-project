@@ -1,11 +1,8 @@
 import "@/src/styles/globals.css";
 import "@mantine/core/styles.css";
-import { MantineProvider, createTheme } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import type { AppProps } from "next/app";
-
-const theme = createTheme({
-  fontFamily: "Pretendard, sans-serif",
-});
+import theme from "@/src/styles/theme";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
