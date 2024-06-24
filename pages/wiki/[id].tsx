@@ -10,7 +10,25 @@ const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
 export default function Wiki() {
-  const [wikiData, setWikiData] = useState<ProfileResponse>();
+  const [wikiData, setWikiData] = useState<ProfileResponse>({
+    id: 0,
+    code: "",
+    image: null,
+    city: "",
+    mbti: "",
+    job: "",
+    sns: "",
+    birthday: "",
+    nickname: "",
+    bloodType: "",
+    family: "",
+    nationality: "",
+    content: "",
+    teamId: "",
+    securityQuestion: "",
+    updatedAt: "",
+    name: "",
+  });
   const [profileData, setProfileData] = useState<ProfileCardData>({
     city: "",
     mbti: "",
@@ -48,7 +66,7 @@ export default function Wiki() {
   return (
     <main className="w-screen h-screen">
       <section className="w-[860px] h-28 mx-auto mt-40">
-        <ProfileCard profileData={profileData} />
+        <ProfileCard profileData={profileData} profileImage={wikiData.image} />
         <section className="w-[860px] h-28">
           <div className="flex justify-between">
             <span className="text-50 font-semibold text-gray-800">title</span>
