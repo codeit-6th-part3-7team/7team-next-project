@@ -29,6 +29,14 @@ module.exports = {
     "react/prop-types": "off",
     "no-console": "error",
     "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        required: {
+          some: ["nesting", "id"],
+        },
+      },
+    ],
   },
   settings: {
     react: {
