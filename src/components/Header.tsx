@@ -8,7 +8,7 @@ import IcoBurger from "@/public/assets/ic_burger.svg";
 export default function Header() {
   return (
     <div className="h-20">
-      <header className="fixed md:px-20 px-10 w-full h-20 bg-white drop-shadow-md">
+      <header className="fixed z-10 md:px-20 px-10 w-full h-20 bg-white drop-shadow-md">
         <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
