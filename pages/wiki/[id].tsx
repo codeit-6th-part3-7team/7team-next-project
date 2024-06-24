@@ -16,13 +16,15 @@ export default function Wiki() {
   // api 호출, url 설정 effect
   useEffect(() => {
     const getWikiDataByCode = async () => {
-      const { data } = await axios.get(`profiles/${TEST_CODE}`);
-      // TODO 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
-      if (data) {
+      try {
+        const { data } = await axios.get(`profiles/${TEST_CODE}`);
+        // TODO 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
         setWikiData(data);
+      } catch (e) {
+        // eslint-disable-next-line
+        console.error("failed to fetch", e);
       }
     };
-
     getWikiDataByCode();
     const currentUrl: string = window.location.href;
     setWikiUrl(currentUrl);
@@ -45,9 +47,7 @@ export default function Wiki() {
             )}
           </CopyButton>
         </section>
-        <article className="w-[860px] h-auto pb-24 mt-14">
-          ContentContentContentContentContent ContentContentContentContentContent ContentContentContentContentContent ContentContentContentContentContent
-        </article>
+        <article className="w-[860px] h-auto pb-24 mt-14">{wikiData?.content}</article>
       </section>
     </main>
   );
