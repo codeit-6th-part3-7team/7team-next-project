@@ -37,6 +37,10 @@ const config: Config = {
     },
     borderRadius: {
       "1/2": "50%",
+      "20": "20px",
+    },
+    lineHeight: {
+      "11": "3.75rem",
     },
   },
   plugins: [],

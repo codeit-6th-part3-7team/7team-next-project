@@ -1,8 +1,10 @@
 import Header from "@/src/components/Header";
-import { Box, Button, Flex, useMatches } from "@mantine/core";
+import { Box, Button, Flex, Group, useMatches } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
+import LandingImg_02 from "@/public/assets/img_landing_02.webp";
+import LandingImg_03 from "@/public/assets/img_landing_03.webp";
 
 export default function Home() {
   const btnSize = useMatches({
@@ -17,8 +19,8 @@ export default function Home() {
         <Flex bg="#F1F4FD" direction="column" align="center">
           <Flex pt={{ base: 100, sm: 120 }}>
             <hgroup className="font-nexon text-gray-800 mb-10 text-center">
-              <h1 className="md:text-6xl text-4xl md:leading-tight leading-tight font-light">남들이 만드는</h1>
-              <h1 className="md:text-8xl text-6xl md:leading-tight leading-tight font-bold">나만의 위키</h1>
+              <h2 className="md:text-6xl text-4xl md:leading-tight leading-tight font-light">남들이 만드는</h2>
+              <h2 className="md:text-8xl text-6xl md:leading-tight leading-tight font-bold">나만의 위키</h2>
             </hgroup>
           </Flex>
           <Link href="/wiki">
@@ -34,7 +36,23 @@ export default function Home() {
         </Flex>
       </div>
       <div>
-        <Flex bg="#474D66" h={914} direction="column" align="center" />
+        <Flex bg="#474D66" direction="column" align="center" pt={131} pb={200}>
+          <Flex gap="40" align="flex-end">
+            <Flex direction="column" gap="60">
+              <Flex direction="column" gap="20" className="font-nexon">
+                <strong className="text-green-200 text-3xl">WRITE</strong>
+                <hgroup className="text-white text-5xl leading-11">
+                  <h3>친구의 위키,</h3>
+                  <h3>직접 작성해 봐요</h3>
+                </hgroup>
+              </Flex>
+              <Box className="bg-green-200 rounded-20" w={364}>
+                <Image src={LandingImg_02} alt="키보드 이미지" width={310} height={450} />
+              </Box>
+            </Flex>
+            <Image src={LandingImg_03} alt="위키 예시 이미지" width={520} height={681} />
+          </Flex>
+        </Flex>
       </div>
     </>
   );
