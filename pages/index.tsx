@@ -22,12 +22,12 @@ export default function Home() {
     <>
       <Header />
       <div className="relative overflow-hidden">
-        <div className="rounded-1/2 absolute bottom-0 -left-10 -right-10 h-56 bg-gray-800 translate-y-1/2" />
+        <div className="absolute -left-10 -right-10 bottom-0 h-56 translate-y-1/2 rounded-1/2 bg-gray-800" />
         <Flex bg="#F1F4FD" direction="column" align="center">
           <Flex pt={{ base: 100, sm: 120 }}>
-            <Box className="font-nexon text-gray-800 mb-10 text-center">
-              <h2 className="text-40 md:text-60 leading-70 md:leading-100 font-light">남들이 만드는</h2>
-              <h2 className="text-60 md:text-90 leading-70 md:leading-100 font-bold">나만의 위키</h2>
+            <Box className="mb-10 text-center font-nexon text-gray-800">
+              <h2 className="text-40 font-light leading-70 md:text-60 md:leading-100">남들이 만드는</h2>
+              <h2 className="text-60 font-bold leading-70 md:text-90 md:leading-100">나만의 위키</h2>
             </Box>
           </Flex>
           <Button component={Link} href="/wiki" variant="filled" color="#474D66" size={btnSize} radius="md">
@@ -46,13 +46,13 @@ export default function Home() {
             <Flex gap={{ base: 10, sm: 20, lg: 40 }} justify="center">
               <Flex direction="column" justify="space-between" w={{ base: "35.5vw", sm: "35.2vw", lg: 364 }} gap={10}>
                 <Flex direction="column" gap={{ base: 10, sm: 20 }} className="font-nexon">
-                  <strong className="text-green-200 text-10 md:text-20 xl:text-30">WRITE</strong>
-                  <Box className="text-white text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
+                  <strong className="text-10 text-green-200 md:text-20 xl:text-30">WRITE</strong>
+                  <Box className="text-16 leading-20 text-white md:text-32 md:leading-40 xl:text-50 xl:leading-60">
                     <h3>친구의 위키,</h3>
                     <h3>직접 작성해봐요</h3>
                   </Box>
                 </Flex>
-                <Box className="bg-green-200 rounded-20" pr={{ base: 0, sm: 40, lg: 54 }}>
+                <Box className="rounded-20 bg-green-200" pr={{ base: 0, sm: 40, lg: 54 }}>
                   <Image src={LandingImg_02} alt="키보드 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Flex>
@@ -67,8 +67,8 @@ export default function Home() {
         <Box bg="#F1F4FD" pt={{ base: 100, sm: 160, lg: 200 }} pb={{ base: 100, sm: 160, lg: 200 }} className="overflow-hidden">
           <Box px={20} mx="auto" my={0} maw={924}>
             <Flex direction="column" align="flex-end" gap={{ base: 10, sm: 20 }} className="font-nexon">
-              <strong className="text-green-200 text-10 md:text-20 xl:text-30">SHARE</strong>
-              <Box className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60 text-right">
+              <strong className="text-10 text-green-200 md:text-20 xl:text-30">SHARE</strong>
+              <Box className="text-right text-16 leading-20 text-gray-800 md:text-32 md:leading-40 xl:text-50 xl:leading-60">
                 <h3>내 위키 만들고</h3>
                 <h3>친구에게 공유해요</h3>
               </Box>
@@ -110,8 +110,8 @@ export default function Home() {
         <Box bg="#ECF0FA" pt={{ base: 100, sm: 160, lg: 200 }} pb={{ base: 100, sm: 160, lg: 200 }}>
           <Box px={20} mx="auto" my={0} maw={924}>
             <Flex direction="column" gap={{ base: 10, sm: 20 }} className="font-nexon">
-              <strong className="text-green-200 text-10 md:text-20 xl:text-30">SHARE</strong>
-              <Box className="text-gray-800 text-16 md:text-32 xl:text-50 leading-20 md:leading-40 xl:leading-60">
+              <strong className="text-10 text-green-200 md:text-20 xl:text-30">SHARE</strong>
+              <Box className="text-16 leading-20 text-gray-800 md:text-32 md:leading-40 xl:text-50 xl:leading-60">
                 <h3>내 위키 만들고</h3>
                 <h3>친구에게 공유해요</h3>
               </Box>
@@ -136,25 +136,25 @@ export default function Home() {
       </div>
       <div>
         <Flex bg="#474D66" direction="column" gap={40} align="center" py={{ base: 100, sm: 160, lg: 200 }}>
-          <h2 className="font-nexon font-semibold text-white text-30 md:text-60">나만의 위키 만들어 보기</h2>
+          <h2 className="font-nexon text-30 font-semibold text-white md:text-60">나만의 위키 만들어 보기</h2>
           <Button component={Link} href="/wiki" variant="white" color="#474D66" size={btnSize} radius="md">
             지금 시작하기
           </Button>
         </Flex>
       </div>
       <footer>
-        <Box py={{ base: 40, sm: 60, lg: 80 }} bg="#3B415B" className="text-white px-20">
+        <Box py={{ base: 40, sm: 60, lg: 80 }} bg="#3B415B" className="px-10 text-white md:px-20">
           <Flex direction="column">
-            <strong className="mb-1">Copyright ⓒ Wikied. All Rights Reserved</strong>
-            <p>
+            <strong className="mb-1 text-10 md:text-16">Copyright ⓒ Wikied. All Rights Reserved</strong>
+            <p className="text-8 md:text-14">
               <span>사업자등록번호 000-00-00000 </span>
               <span aria-hidden="true">|</span>
               <span> 통신판매신고 제2020-서울-00000호 </span>
               <span aria-hidden="true">|</span>
               <span> 대표 : 이지은</span>
             </p>
-            <p>서울특별시 중구 청계천로 123, 위키드빌딩</p>
-            <ul className="flex gap-4 mt-2.5 md:mt-5">
+            <p className="text-8 md:text-14">서울특별시 중구 청계천로 123, 위키드빌딩</p>
+            <ul className="mt-2.5 flex gap-4 text-8 md:mt-5 md:text-14">
               <li>
                 <Link href="/">서비스 이용약관</Link>
               </li>
