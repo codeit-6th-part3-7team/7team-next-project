@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext ts,tsx src/**/* --cache --fix",
+    "lint": "eslint --ext ts,tsx --cache --fix",
     "prepare": "husky"
   },
   "dependencies": {
