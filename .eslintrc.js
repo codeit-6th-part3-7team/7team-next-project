@@ -28,6 +28,7 @@ module.exports = {
         endOfLine: "auto",
       },
     ],
+<<<<<<< HEAD
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -36,6 +37,8 @@ module.exports = {
         },
       },
     ],
+=======
+>>>>>>> 65715ca (feat: 에디터 초안 작성)
     "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
     // 'import/prefer-default-export': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',

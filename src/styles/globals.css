@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+<<<<<<< HEAD
 
 @font-face {
   font-family: "Pretendard";
@@ -20,3 +21,6 @@ body {
 }
 
 @media (max-width: 1200px) { body{overflow-x: hidden;} }
+=======
+@import "./editor.css";
+>>>>>>> 65715ca (feat: 에디터 초안 작성)
