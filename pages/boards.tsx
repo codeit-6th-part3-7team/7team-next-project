@@ -6,6 +6,8 @@ import Image from "next/image";
 import testImage from "../public/assets/img_card_section.png";
 import heart from "../public/assets/ic_heart.svg";
 import search from "../public/assets/ic_search.svg";
+import bottomArrow from "../public/assets/ic_bottom_arrow.svg";
+import upArrow from "../public/assets/ic_up_arrow.svg";
 
 interface NextImage {
   src: string;
@@ -101,6 +103,7 @@ function PostPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("latest");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const postsPerPage = 10;
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,8 +120,22 @@ function PostPage() {
       setSearchTerm(searchValue);
     }
   };
-  const handleSortChange = (sortOption: string) => {
-    setSortBy(sortOption);
+  const handleSortLatest = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSortBy("latest");
+  };
+  const handleSortPopular = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSortBy("popular");
+  };
+  const handleOpenToggle = (): void => {
+    setIsOpen(!isOpen);
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault(); // 기본 동작을 막습니다. 특히 Space 키의 기본 동작을 방지합니다.
+      handleOpenToggle(); // Enter나 Space 키로 드롭다운 열기/닫기
+    }
   };
 
   const filteredPosts = PostList.filter((post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -178,14 +195,29 @@ function PostPage() {
             검색
           </Button>
         </form>
-        <div className="flex items-center">
-          <Text className="mr-2">정렬하기:</Text>
-          <Button variant={sortBy === "latest" ? "filled" : "outline"} onClick={() => handleSortChange("latest")} className="mr-2">
-            최신순
-          </Button>
-          <Button variant={sortBy === "likes" ? "filled" : "outline"} onClick={() => handleSortChange("likes")}>
-            좋아요 순
-          </Button>
+
+        <div className="relative">
+          <div
+            onClick={handleOpenToggle}
+            onKeyDown={handleKeyDown}
+            role="button"
+            tabIndex={0}
+            className="rounded-md text-14 flex h-[45px] w-[140px] items-center justify-between border border-none bg-gray-100 px-5 py-[14px] text-center text-gray-500"
+          >
+            <Text>{sortBy === "latest" ? "최신순" : "좋아요순"}</Text>
+            {!isOpen ? <Image src={bottomArrow} alt="검색" width={22} height={22} /> : <Image src={upArrow} alt="검색" width={22} height={22} />}
+          </div>
+
+          {isOpen && (
+            <div className="rounded-md text-14 absolute mt-1 w-[140px] border border-none bg-gray-100 p-1">
+              <Button onClick={handleSortLatest} className="rounded-md text-14 h-[45px] w-[100%] border border-none bg-gray-100 text-center text-gray-500 hover:bg-green-100">
+                최신순
+              </Button>
+              <Button onClick={handleSortPopular} className="rounded-md text-14 h-[45px] w-[100%] border border-none bg-gray-100 text-center text-gray-500 hover:bg-green-100">
+                좋아요순
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
