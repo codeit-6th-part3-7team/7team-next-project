@@ -136,7 +136,7 @@ function PostPage() {
       </div>
       <div className="mb-8 flex flex-row gap-4">
         {bestPosts.map((post) => (
-          <Card key={post.id} shadow="sm" radius="md" withBorder className="rounded-md h-[220px] w-[250px] overflow-hidden border shadow-sm" component="a" href="/boards" target="_self">
+          <Card key={post.id} shadow="sm" radius="md" withBorder className="rounded-md h-[220px] w-[250px] overflow-hidden shadow-sm" component="a" href="/boards" target="_self">
             <Card.Section>{post.image && <Image src={testImage} alt={post.title} width={250} height={131} className="w-full object-cover" />}</Card.Section>
             <Group className="p-[19px] pb-[14px]">
               <Title order={2} className="text-18 leading-6 mb-[14px] font-semibold text-gray-800">
