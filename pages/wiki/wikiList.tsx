@@ -1,17 +1,7 @@
 import UserCard from "@/src/components/UserCard";
 import instance from "@/src/apis/axios";
 import { useEffect, useState } from "react";
-
-interface Article {
-  updatedAt: "string";
-  job: "string";
-  nationality: "string";
-  city: "string";
-  image: "string";
-  code: "string";
-  name: "string";
-  id: number;
-}
+import { Article } from "@/src/types/wikiListTypes";
 
 export default function WikiList() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -44,15 +34,8 @@ export default function WikiList() {
     <div>
       <div>헤더</div>
       <div>검색</div>
-      <UserCard />
       {articles.map((article) => (
-        <div key={article.id}>
-          <span>{article.image}</span>
-          <h2>{article.name}</h2>
-          <span>{article.city}</span>
-          <span>{article.nationality}</span>
-          <span>{article.job}</span>
-        </div>
+        <UserCard key={article.id} article={article} />
       ))}
       <div>페이지네이션</div>
     </div>
