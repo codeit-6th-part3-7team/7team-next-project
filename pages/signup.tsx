@@ -1,7 +1,9 @@
-import { useForm } from "react-hook-form";
+import axios, { isAxiosError } from "@/apis/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const schema = z
   .object({
@@ -12,16 +14,17 @@ const schema = z
       .regex(/^[^\d!@#$%^&*(),.?":{}|<>]*$/, "이름에 숫자나 특수문자가 포함될 수 없습니다."),
     email: z.string().min(1, "이메일을 입력해주세요").email("이메일 형식으로 작성해 주세요."),
     password: z.string().min(1, "비밀번호를 입력해주세요").min(8, "8자 이상 입력해주세요."),
-    confirmPassword: z.string().min(1, "비밀번호를 입력해주세요").min(8, "8자 이상 입력해주세요."),
+    passwordConfirmation: z.string().min(1, "비밀번호를 입력해주세요").min(8, "8자 이상 입력해주세요."),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.passwordConfirmation, {
     message: "비밀번호가 일치하지 않습니다.",
-    path: ["confirmPassword"],
+    path: ["passwordConfirmation"],
   });
 
 type FormData = z.infer<typeof schema>;
 
 export default function SignUp() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,7 +34,36 @@ export default function SignUp() {
     mode: "onBlur",
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormData) => {
+    try {
+      await axios.post("auth/signUp", {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        passwordConfirmation: data.passwordConfirmation,
+      });
+      // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
+      // eslint-disable-next-line no-alert
+      alert("가입이 완료되었습니다");
+      router.push("/login");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
+          // eslint-disable-next-line no-alert
+          alert("이미 존재하는 이메일입니다");
+        } else {
+          // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
+          // eslint-disable-next-line no-alert
+          alert(`오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`);
+        }
+      } else {
+        // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
+        // eslint-disable-next-line no-alert
+        alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+    }
+  };
 
   const getClassName = (fieldName: keyof FormData) => {
     if (errors[fieldName]) {
@@ -90,17 +122,17 @@ export default function SignUp() {
         </div>
 
         <div className="flex flex-col gap-[10px]">
-          <label htmlFor="confirmPassword" className="text-[14px] font-normal leading-[32px] text-gray-500">
+          <label htmlFor="passwordConfirmation" className="text-[14px] font-normal leading-[32px] text-gray-500">
             비밀번호 확인
           </label>
           <input
-            id="confirmPassword"
+            id="passwordConfirmation"
             type="password"
             placeholder="비밀번호를 입력해주세요"
-            {...register("confirmPassword")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("confirmPassword")}`}
+            {...register("passwordConfirmation")}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}`}
           />
-          {errors.confirmPassword && <p className="error-message">{errors.confirmPassword.message}</p>}
+          {errors.passwordConfirmation && <p className="error-message">{errors.passwordConfirmation.message}</p>}
         </div>
 
         <button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
