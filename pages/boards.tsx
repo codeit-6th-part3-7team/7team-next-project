@@ -1,8 +1,10 @@
 // Post.tsx
 
 import { useState } from "react";
-import { Container, Title, Text, Card, Group, TextInput, Button } from "@mantine/core"; // Mantine의 필요한 컴포넌트를 임포트합니다.
+import { Container, Title, Text, Card, Group, TextInput, Button } from "@mantine/core";
 import Image from "next/image";
+import testImage from "../public/assets/img_card_section.png";
+import heart from "../public/assets/ic_heart.svg";
 
 interface NextImage {
   src: string;
@@ -24,10 +26,10 @@ function PostPage() {
   const bestPosts: Post[] = [
     {
       id: 1,
-      title: "Best Post 1",
-      author: "Jane Smith",
-      date: "June 20, 2024",
-      likes: 15,
+      title: "게시물 제목입니다.",
+      author: "박동욱",
+      date: "2024.02.24.",
+      likes: 135,
       image: {
         src: "/path/to/image1.jpg",
         alt: "Description of image",
@@ -125,34 +127,37 @@ function PostPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <Container className="max-w-screen-lg  min-w-screen-sm mx-auto flex-col align-center">
-      <div className="flex items-center justify-between">
-        <Title order={1}>베스트 게시글</Title>
-        <Button onClick={() => {}}>게시글 등록하기</Button>
+    <Container className="min-w-screen-sm align-center mx-auto max-w-screen-lg flex-col">
+      <div className="mb-10 flex items-center justify-between">
+        <Title className="text-left text-32 font-semibold leading-40 text-gray-800">베스트 게시글</Title>
+        <Button className="rounded-md text-14 h-15 bg-green-200 px-8 py-2 text-white" onClick={() => {}}>
+          게시물 등록하기
+        </Button>
       </div>
-      <div className="flex flex-row gap-1 overflow-x-auto mb-8">
+      <div className="mb-8 flex flex-row gap-4">
         {bestPosts.map((post) => (
-          <Card key={post.id} shadow="sm" padding="lg" style={{ width: 250, height: 300 }}>
-            {post.image && <Image src={post.image.src} alt={post.title} width={250} height={150} />}
-            <Title order={2} className="text-xl my-2">
-              {post.title}
-            </Title>
-            <Group className="mb-4">
-              <Text size="sm" color="gray">
-                {post.author} | {post.date}
-              </Text>
-            </Group>
-            <Group>
-              <Text size="sm" color="gray">
-                좋아요 {post.likes}개
-              </Text>
+          <Card key={post.id} shadow="sm" radius="md" withBorder className="rounded-md h-[220px] w-[250px] overflow-hidden border shadow-sm" component="a" href="/boards" target="_self">
+            <Card.Section>{post.image && <Image src={testImage} alt={post.title} width={250} height={131} className="w-full object-cover" />}</Card.Section>
+            <Group className="p-[19px] pb-[14px]">
+              <Title order={2} className="text-18 leading-6 mb-[14px] font-semibold text-gray-800">
+                {post.title}
+              </Title>
+              <Group justify="space-between" className="flex justify-between">
+                <Group className="flex gap-2">
+                  <Text className="text-14 text-gray-400">{post.author}</Text>
+                  <Text className="text-14 text-gray-400">{post.date}</Text>
+                </Group>
+                <Text className="text-14 flex gap-1 text-gray-400">
+                  <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likes}개
+                </Text>
+              </Group>
             </Group>
           </Card>
         ))}
       </div>
       {/* 검색창과 정렬하기 */}
-      <div className="flex items-center justify-between mb-8">
-        <TextInput placeholder="게시글 검색..." value={searchTerm} onChange={handleSearchChange} className="w-1/2 mr-4" />
+      <div className="mb-8 flex items-center justify-between">
+        <TextInput placeholder="게시글 검색..." value={searchTerm} onChange={handleSearchChange} className="mr-4 w-1/2" />
         <div className="flex items-center">
           <Text className="mr-2">정렬하기:</Text>
           <Button variant={sortBy === "latest" ? "filled" : "outline"} onClick={() => handleSortChange("latest")} className="mr-2">
@@ -186,7 +191,7 @@ function PostPage() {
       </div>
 
       {/* 페이지네이션 */}
-      <div className="flex justify-center mt-8">
+      <div className="mt-8 flex justify-center">
         {Array.from({ length: Math.ceil(sortedPosts.length / postsPerPage) }, (_, index) => (
           <Button key={index + 1} onClick={() => paginate(index + 1)} variant={currentPage === index + 1 ? "filled" : "outline"} className="mx-1">
             {index + 1}
