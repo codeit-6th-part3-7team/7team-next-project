@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext ts,tsx src/**/* --cache --fix",
+    "lint": "eslint --ext ts,tsx --cache --fix",
     "prepare": "husky"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
