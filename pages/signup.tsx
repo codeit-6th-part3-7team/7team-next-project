@@ -1,8 +1,10 @@
 import axios, { isAxiosError } from "@/apis/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
 const schema = z
@@ -23,10 +25,35 @@ const schema = z
 
 type FormData = z.infer<typeof schema>;
 
+const showNotification = (title: string, message: string, color: string) => {
+  notifications.show({
+    color,
+    title,
+    message,
+    autoClose: 2000,
+    withCloseButton: true,
+    styles: {
+      root: {
+        backgroundColor: color,
+        width: 400,
+        borderRadius: 10,
+        padding: 25,
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+      },
+      title: { color: "white" },
+      description: { color: "white" },
+      closeButton: { color: "white", width: 50, height: 50, position: "absolute", top: 20, right: 0 },
+    },
+  });
+};
+
 export default function SignUp() {
   const router = useRouter();
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
   } = useForm<FormData>({
@@ -42,25 +69,19 @@ export default function SignUp() {
         password: data.password,
         passwordConfirmation: data.passwordConfirmation,
       });
-      // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
-      // eslint-disable-next-line no-alert
-      alert("가입이 완료되었습니다");
-      router.push("/login");
+      showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "#32A68A");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2500);
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 400) {
-          // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
-          // eslint-disable-next-line no-alert
-          alert("이미 존재하는 이메일입니다");
+          showNotification("회원가입 실패!", "이미 존재하는 이메일입니다! 🤥", "#D14343");
         } else {
-          // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
-          // eslint-disable-next-line no-alert
-          alert(`오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`);
+          showNotification("회원가입 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
         }
       } else {
-        // TODO: 테스트용 alert. 추후 mantine ui로 변경 예정
-        // eslint-disable-next-line no-alert
-        alert("예기치 않은 오류가 발생했습니다. 다시 시도해주세요.");
+        showNotification("회원가입 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
       }
     }
   };
@@ -76,83 +97,93 @@ export default function SignUp() {
   };
 
   return (
-    <div className="mt-[100px] flex flex-col items-center">
-      <h1 className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</h1>
+    <Container className="mt-[100px] flex flex-col items-center">
+      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</Title>
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-[400px] flex-col gap-[24px]">
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="name" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            이름
-          </label>
-          <input
-            id="name"
-            type="text"
-            {...register("name")}
-            placeholder="이름을 입력해주세요"
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}`}
+        <Group>
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                label="이름"
+                id="name"
+                placeholder="이름을 입력해주세요"
+                error={errors.name && <Text className="text-[14px] font-normal leading-[18px] text-red-500">{errors.name.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.name && <p className="error-message">{errors.name.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="email" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            이메일
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            {...register("email")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                label="이메일"
+                id="email"
+                placeholder="이메일을 입력해주세요"
+                error={errors.email && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.email && <p className="error-message">{errors.email.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="password" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            비밀번호
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("password")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="password"
+                label="비밀번호"
+                id="password"
+                placeholder="비밀번호를 입력해주세요"
+                error={errors.password && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.password && <p className="error-message">{errors.password.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="passwordConfirmation" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            비밀번호 확인
-          </label>
-          <input
-            id="passwordConfirmation"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("passwordConfirmation")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="passwordConfirmation"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="password"
+                label="비밀번호 확인"
+                id="passwordConfirmation"
+                placeholder="비밀번호를 입력해주세요"
+                error={errors.passwordConfirmation && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.passwordConfirmation.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.passwordConfirmation && <p className="error-message">{errors.passwordConfirmation.message}</p>}
-        </div>
-
-        <button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
+        </Group>
+        <Button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
           가입하기
-        </button>
-        <div className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-          <p>이미 회원이신가요?</p>
+        </Button>
+        <Group className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
+          <Text>이미 회원이신가요?</Text>
           <Link href="/login" className="text-green-200">
             로그인하기
           </Link>
-        </div>
+        </Group>
       </form>
-      <style jsx>{`
-        .error-message {
-          color: red;
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 18px;
-        }
-      `}</style>
-    </div>
+    </Container>
   );
 }
