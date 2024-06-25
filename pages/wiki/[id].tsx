@@ -75,15 +75,15 @@ export default function Wiki() {
         <section className="w-[860px] h-28">
           <div className="h-12 mb-12 flex justify-between">
             <span className="leading-none text-50 font-semibold text-gray-800">{wikiData.name}</span>
-            <Button color="green" size="md" onClick={openModal}>
+            <Button color="green.1" size="md" onClick={openModal}>
               위키 참여하기
             </Button>
-            <EditWikiAuthModal opened={opened} onClose={closeModal} />
+            <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} onClose={closeModal} />
           </div>
           <CopyButton value={wikiUrl}>
             {({ copied, copy }) => (
               <Button color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} width={20} height={20} alt="위키링크복사하기" />} onClick={copy}>
-                <span className="text-sm text-green-200 font-normal">{copied ? "Copied!" : wikiUrl}</span>
+                <span className="text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</span>
               </Button>
             )}
           </CopyButton>
