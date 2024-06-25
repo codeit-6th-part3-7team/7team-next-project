@@ -133,8 +133,8 @@ function PostPage() {
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault(); // 기본 동작을 막습니다. 특히 Space 키의 기본 동작을 방지합니다.
-      handleOpenToggle(); // Enter나 Space 키로 드롭다운 열기/닫기
+      event.preventDefault();
+      handleOpenToggle();
     }
   };
 
@@ -222,24 +222,29 @@ function PostPage() {
       </div>
 
       {/* 현재 페이지의 게시글 목록 */}
-      <div className="mt-8">
-        <Title order={2} className="text-2xl mb-4">
-          다른 게시글 목록
-        </Title>
-        <Group>
-          {currentPosts.map((post) => (
-            <Card key={post.id} shadow="sm" padding="md" className="cursor-pointer hover:bg-gray-100" style={{ minWidth: 300 }}>
-              <Title order={3} className="text-lg mb-2">
-                {post.title}
-              </Title>
-              <Group>
-                <Text size="sm" color="gray">
-                  {post.author} | 좋아요 {post.likes}개 | {post.date}
-                </Text>
-              </Group>
-            </Card>
-          ))}
-        </Group>
+      <div className="container mx-auto mt-8">
+        <table className="rounded-lg min-w-full overflow-hidden border border-gray-200 bg-white">
+          <thead className="border-b border-gray-200 bg-gray-100">
+            <tr className="text-xs font-medium uppercase tracking-wider text-gray-600">
+              <th className="w-12 px-4 py-3 text-center">번호</th>
+              <th className="w-64 px-4 py-3 text-center">제목</th>
+              <th className="w-16 px-4 py-3 text-center">작성자</th>
+              <th className="w-12 px-4 py-3 text-center">좋아요 </th>
+              <th className="w-24 px-4 py-3 text-center">작성일자</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {currentPosts.map((post) => (
+              <tr key={post.id}>
+                <td className="px-3 py-3 text-center">{post.id}</td>
+                <td className="px-3 py-3 text-center">{post.title}</td>
+                <td className="px-3 py-3 text-center">{post.author}</td>
+                <td className="px-3 py-3 text-center">{post.likes}</td>
+                <td className="px-3 py-3 text-center">{post.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* 페이지네이션 */}
