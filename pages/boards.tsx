@@ -1,10 +1,11 @@
 // Post.tsx
 
 import { useState } from "react";
-import { Container, Title, Text, Card, Group, TextInput, Button } from "@mantine/core";
+import { Container, Title, Text, Card, Group, Button } from "@mantine/core";
 import Image from "next/image";
 import testImage from "../public/assets/img_card_section.png";
 import heart from "../public/assets/ic_heart.svg";
+import search from "../public/assets/ic_search.svg";
 
 interface NextImage {
   src: string;
@@ -96,15 +97,26 @@ function PostPage() {
     { id: 16, title: "Post 16", author: "Ava Garcia", likes: 11, date: "July 22, 2024" },
   ];
 
+  const [searchValue, setSearchValue] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("latest");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const postsPerPage = 10;
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setSearchValue(event.target.value);
   };
 
+  const handleSearchClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSearchTerm(searchValue);
+  };
+
+  const handleSearchEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      setSearchTerm(searchValue);
+    }
+  };
   const handleSortChange = (sortOption: string) => {
     setSortBy(sortOption);
   };
@@ -130,7 +142,7 @@ function PostPage() {
     <Container className="min-w-screen-sm align-center mx-auto max-w-screen-lg flex-col">
       <div className="mb-10 flex items-center justify-between">
         <Title className="text-left text-32 font-semibold leading-40 text-gray-800">베스트 게시글</Title>
-        <Button className="rounded-md text-14 h-15 bg-green-200 px-8 py-2 text-white" onClick={() => {}}>
+        <Button className="rounded-md text-14 h-[45px] w-[160px] bg-green-200 text-white" onClick={() => {}}>
           게시물 등록하기
         </Button>
       </div>
@@ -157,7 +169,15 @@ function PostPage() {
       </div>
       {/* 검색창과 정렬하기 */}
       <div className="mb-8 flex items-center justify-between">
-        <TextInput placeholder="게시글 검색..." value={searchTerm} onChange={handleSearchChange} className="mr-4 w-1/2" />
+        <form className="flex w-full flex-row">
+          <div className="rounded-lg relative mr-5 flex h-[40px] w-full flex-row gap-2.5 bg-gray-100 px-[20px] py-[7px]">
+            <Image src={search} alt="검색" width={22} height={22} />
+            <input placeholder="제목을 검색해주세요" value={searchValue} onChange={handleSearchChange} onKeyPress={handleSearchEnter} className="w-full bg-gray-100" />
+          </div>
+          <Button className="rounded-md text-14 mr-5 h-[45px] w-[80px] bg-green-200 text-white" onClick={handleSearchClick}>
+            검색
+          </Button>
+        </form>
         <div className="flex items-center">
           <Text className="mr-2">정렬하기:</Text>
           <Button variant={sortBy === "latest" ? "filled" : "outline"} onClick={() => handleSortChange("latest")} className="mr-2">
