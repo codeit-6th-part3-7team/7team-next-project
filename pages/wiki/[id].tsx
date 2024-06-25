@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Button, CopyButton } from "@mantine/core";
 import ic_copy_link from "../../public/ic_copy_link.svg";
 import Image from "next/image";
+import { useDisclosure } from "@mantine/hooks";
+import EditWikiAuthModal from "@/components/EditWikiAuthModal";
 
 const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
@@ -41,7 +43,10 @@ export default function Wiki() {
   });
   const [wikiUrl, setWikiUrl] = useState<string>("");
 
-  // api 호출, url 설정 effect
+  // note mantine modal handler hook
+  const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
+
+  // note api 호출, url 설정 effect
   useEffect(() => {
     const getWikiDataByCode = async () => {
       try {
@@ -68,9 +73,12 @@ export default function Wiki() {
       <section className="w-[860px] h-28 mx-auto mt-40">
         <ProfileCard profileData={profileData} profileImage={wikiData.image} />
         <section className="w-[860px] h-28">
-          <div className="flex justify-between">
-            <span className="text-50 font-semibold text-gray-800">{wikiData.name}</span>
-            <Button color="green">hop in</Button>
+          <div className="h-12 mb-12 flex justify-between">
+            <span className="leading-none text-50 font-semibold text-gray-800">{wikiData.name}</span>
+            <Button color="green" size="md" onClick={openModal}>
+              위키 참여하기
+            </Button>
+            <EditWikiAuthModal opened={opened} onClose={closeModal} />
           </div>
           <CopyButton value={wikiUrl}>
             {({ copied, copy }) => (
