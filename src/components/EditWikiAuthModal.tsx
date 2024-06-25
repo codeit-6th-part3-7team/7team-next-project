@@ -1,7 +1,7 @@
-import { Button, InputPlaceholder, Modal, TextInput } from "@mantine/core";
+import { Button, Modal, TextInput } from "@mantine/core";
 import Image from "next/image";
 import ic_lock from "../../public/ic_lock.webp";
-import theme from "@/styles/theme";
+import { useForm } from "@mantine/form";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
@@ -10,6 +10,16 @@ type EditWikiAuthModal = {
 };
 
 export default function EditWikiAuthModal({ securityQuestion, opened, onClose }: EditWikiAuthModal) {
+  const form = useForm({
+    mode: "uncontrolled",
+    initialValues: {
+      securityAnswer: "",
+    },
+    validate: {
+      securityAnswer: (value) => (value.trim().length > 0 ? null : "정확한 답변을 입력해 주세요"),
+    },
+  });
+
   return (
     <>
       <Modal
@@ -33,8 +43,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, onClose }:
             위키를 작성해 보세요
           </span>
         </div>
-        <div className="flex flex-col gap-6">
-          {/* todo form component */}
+        <form className="flex flex-col gap-6" onSubmit={form.onSubmit((value) => console.log(value))}>
           <TextInput
             label={securityQuestion}
             data-autofocus
@@ -49,19 +58,18 @@ export default function EditWikiAuthModal({ securityQuestion, opened, onClose }:
               },
               input: {
                 height: 45,
-                "::placeholder": {
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: theme.colors.gray[3],
-                },
-                // todo input스타일 속성 수정할 방법 찾아보기
+                border: 0,
+                background: theme.colors.gray[0],
+                // todo placeholder 스타일 수정 방법 찾아보는중...
               },
             })}
+            key={form.key("securityAnswer")}
+            {...form.getInputProps("securityAnswer")}
           />
-          <Button size="md" color="green.1">
+          <Button size="md" color="green.1" type="submit">
             확인
           </Button>
-        </div>
+        </form>
         <div className="leading-tight text-xs font-normal text-gray-400 flex flex-col items-center gap-1 mt-6">
           <span>위키드는 지인들과 함께하는 즐거운 공간입니다</span>
           <span>지인에게 상처를 주지 않도록 작성해 주세요</span>
