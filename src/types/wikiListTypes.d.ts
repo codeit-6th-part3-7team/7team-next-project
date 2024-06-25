@@ -7,6 +7,7 @@ export interface Article {
   code: string;
   name: string;
   id: number;
+  totalCount: number;
 }
 
 export interface UserCardProps {
