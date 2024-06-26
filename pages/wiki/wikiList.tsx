@@ -15,7 +15,7 @@ export default function WikiList() {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await instance.get(`/profiles`, { params: { name: value } });
+        const response = await instance.get(`/profiles`, { params: { name: value, page } });
         if (Array.isArray(response.data.list)) {
           setArticles(response.data.list);
           setTotalPages(Math.ceil(response.data.totalCount / 3));
