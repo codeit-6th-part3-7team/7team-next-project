@@ -35,10 +35,10 @@ export default function Header() {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Link href="/wikilist" className="text-sm flex justify-center p-2 text-gray-800">
+                  <Link href="/wikilist" className="flex justify-center p-2 text-sm text-gray-800">
                     위키 목록
                   </Link>
-                  <Link href="/boards" className="text-sm flex justify-center p-2 text-gray-800">
+                  <Link href="/boards" className="flex justify-center p-2 text-sm text-gray-800">
                     자유게시판
                   </Link>
                 </Menu.Dropdown>

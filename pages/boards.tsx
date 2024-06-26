@@ -159,16 +159,16 @@ function PostPage() {
     <Container className="min-w-screen-sm align-center mx-auto max-w-screen-lg flex-col">
       <div className="mb-10 flex items-center justify-between">
         <Title className="text-left text-32 font-semibold leading-40 text-gray-800">베스트 게시글</Title>
-        <Button className="rounded-md text-14 h-[45px] w-[160px] bg-green-200 text-white" onClick={() => {}}>
+        <Button className="h-[45px] w-[160px] rounded-md bg-green-200 text-14 text-white" onClick={() => {}}>
           게시물 등록하기
         </Button>
       </div>
       <div className="mb-8 flex flex-row gap-4">
         {bestPosts.map((post) => (
-          <Card key={post.id} shadow="sm" radius="md" withBorder className="rounded-md h-[220px] w-[250px] overflow-hidden shadow-sm" component="a" href="/boards" target="_self">
+          <Card key={post.id} shadow="sm" radius="md" withBorder className="h-[220px] w-[250px] overflow-hidden rounded-md shadow-sm" component="a" href="/boards" target="_self">
             <Card.Section>{post.image && <Image src={testImage} alt={post.title} width={250} height={131} className="w-full object-cover" />}</Card.Section>
             <Group className="p-[19px] pb-[14px]">
-              <Title order={2} className="text-18 leading-6 mb-[14px] font-semibold text-gray-800">
+              <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">
                 {post.title}
               </Title>
               <Group justify="space-between" className="flex justify-between">
@@ -176,7 +176,7 @@ function PostPage() {
                   <Text className="text-14 text-gray-400">{post.author}</Text>
                   <Text className="text-14 text-gray-400">{post.date}</Text>
                 </Group>
-                <Text className="text-14 flex gap-1 text-gray-400">
+                <Text className="flex gap-1 text-14 text-gray-400">
                   <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likes}개
                 </Text>
               </Group>
@@ -187,11 +187,11 @@ function PostPage() {
       {/* 검색창과 정렬하기 */}
       <div className="mb-8 flex items-center justify-between">
         <form className="flex w-full flex-row">
-          <div className="rounded-lg relative mr-5 flex h-[40px] w-full flex-row gap-2.5 bg-gray-100 px-[20px] py-[7px]">
+          <div className="relative mr-5 flex h-[40px] w-full flex-row gap-2.5 rounded-lg bg-gray-100 px-[20px] py-[7px]">
             <Image src={search} alt="검색" width={22} height={22} />
             <input placeholder="제목을 검색해주세요" value={searchValue} onChange={handleSearchChange} onKeyPress={handleSearchEnter} className="w-full bg-gray-100" />
           </div>
-          <Button className="rounded-md text-14 mr-5 h-[45px] w-[80px] bg-green-200 text-white" onClick={handleSearchClick}>
+          <Button className="mr-5 h-[45px] w-[80px] rounded-md bg-green-200 text-14 text-white" onClick={handleSearchClick}>
             검색
           </Button>
         </form>
@@ -202,18 +202,18 @@ function PostPage() {
             onKeyDown={handleKeyDown}
             role="button"
             tabIndex={0}
-            className="rounded-md text-14 flex h-[45px] w-[140px] items-center justify-between border border-none bg-gray-100 px-5 py-[14px] text-center text-gray-500"
+            className="flex h-[45px] w-[140px] items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 text-gray-500"
           >
             <Text>{sortBy === "latest" ? "최신순" : "좋아요순"}</Text>
             {!isOpen ? <Image src={bottomArrow} alt="검색" width={22} height={22} /> : <Image src={upArrow} alt="검색" width={22} height={22} />}
           </div>
 
           {isOpen && (
-            <div className="rounded-md text-14 absolute mt-1 w-[140px] border border-none bg-gray-100 p-1">
-              <Button onClick={handleSortLatest} className="rounded-md text-14 h-[45px] w-[100%] border border-none bg-gray-100 text-center text-gray-500 hover:bg-green-100">
+            <div className="absolute mt-1 w-[140px] rounded-md border border-none bg-gray-100 p-1 text-14">
+              <Button onClick={handleSortLatest} className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100">
                 최신순
               </Button>
-              <Button onClick={handleSortPopular} className="rounded-md text-14 h-[45px] w-[100%] border border-none bg-gray-100 text-center text-gray-500 hover:bg-green-100">
+              <Button onClick={handleSortPopular} className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100">
                 좋아요순
               </Button>
             </div>
@@ -223,7 +223,7 @@ function PostPage() {
 
       {/* 현재 페이지의 게시글 목록 */}
       <div className="container mx-auto mt-8">
-        <table className="rounded-lg min-w-full overflow-hidden border border-gray-200 bg-white">
+        <table className="min-w-full overflow-hidden rounded-lg border border-gray-200 bg-white">
           <thead className="border-b border-gray-200 bg-gray-100">
             <tr className="text-xs font-medium uppercase tracking-wider text-gray-600">
               <th className="w-12 px-4 py-3 text-center">번호</th>
