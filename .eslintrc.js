@@ -22,7 +22,12 @@ module.exports = {
   ],
   plugins: ["react", "react-hooks", "@typescript-eslint", "jsx-a11y", "import", "prettier"],
   rules: {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
     // 'import/prefer-default-export': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',

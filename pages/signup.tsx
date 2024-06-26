@@ -1,39 +1,75 @@
-import { useForm } from "react-hook-form";
+import axios, { isAxiosError } from "@/apis/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { Controller, useForm } from "react-hook-form";
+import schema from "@/schema/signup";
+import { SignUpFormData } from "@/types/type";
 
-const schema = z
-  .object({
-    name: z
-      .string()
-      .min(2, "이름을 입력해주세요")
-      .max(10, "10자 이하로 작성해주세요")
-      .regex(/^[^\d!@#$%^&*(),.?":{}|<>]*$/, "이름에 숫자나 특수문자가 포함될 수 없습니다."),
-    email: z.string().min(1, "이메일을 입력해주세요").email("이메일 형식으로 작성해 주세요."),
-    password: z.string().min(1, "비밀번호를 입력해주세요").min(8, "8자 이상 입력해주세요."),
-    confirmPassword: z.string().min(1, "비밀번호를 입력해주세요").min(8, "8자 이상 입력해주세요."),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "비밀번호가 일치하지 않습니다.",
-    path: ["confirmPassword"],
+const showNotification = (title: string, message: string, color: string) => {
+  notifications.show({
+    color,
+    title,
+    message,
+    autoClose: 2000,
+    withCloseButton: true,
+    styles: {
+      root: {
+        backgroundColor: color,
+        width: 400,
+        borderRadius: 10,
+        padding: 25,
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+      },
+      title: { color: "white" },
+      description: { color: "white" },
+      closeButton: { color: "white", width: 50, height: 50, position: "absolute", top: 20, right: 0 },
+    },
   });
-
-type FormData = z.infer<typeof schema>;
+};
 
 export default function SignUp() {
+  const router = useRouter();
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
-  } = useForm<FormData>({
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(schema),
     mode: "onBlur",
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      await axios.post("auth/signUp", {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        passwordConfirmation: data.passwordConfirmation,
+      });
+      showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "#32A68A");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2500);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          showNotification("회원가입 실패!", "이미 존재하는 이메일입니다! 🤥", "#D14343");
+        } else {
+          showNotification("회원가입 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
+        }
+      } else {
+        showNotification("회원가입 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
+      }
+    }
+  };
 
-  const getClassName = (fieldName: keyof FormData) => {
+  const getClassName = (fieldName: keyof SignUpFormData) => {
     if (errors[fieldName]) {
       return "border border-red-500";
     }
@@ -44,83 +80,93 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-[100px]">
-      <h1 className="text-[24px] leading-[32px] font-semibold text-gray-500 mb-[32px]">회원가입</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] flex flex-col gap-[24px]">
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="name" className="text-[14px] leading-[32px] font-normal text-gray-500">
-            이름
-          </label>
-          <input
-            id="name"
-            type="text"
-            {...register("name")}
-            placeholder="이름을 입력해주세요"
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("name")}`}
+    <Container className="mt-[100px] flex flex-col items-center">
+      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</Title>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex w-[400px] flex-col gap-[24px]">
+        <Group>
+          <Controller
+            name="name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                label="이름"
+                id="name"
+                placeholder="이름을 입력해주세요"
+                error={errors.name && <Text className="text-[14px] font-normal leading-[18px] text-red-500">{errors.name.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.name && <p className="error-message">{errors.name.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="email" className="text-[14px] leading-[32px] font-normal text-gray-500">
-            이메일
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            {...register("email")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("email")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                label="이메일"
+                id="email"
+                placeholder="이메일을 입력해주세요"
+                error={errors.email && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.email && <p className="error-message">{errors.email.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="password" className="text-[14px] leading-[32px] font-normal text-gray-500">
-            비밀번호
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("password")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("password")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="password"
+                label="비밀번호"
+                id="password"
+                placeholder="비밀번호를 입력해주세요"
+                error={errors.password && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.password && <p className="error-message">{errors.password.message}</p>}
-        </div>
-
-        <div className="flex flex-col gap-[10px]">
-          <label htmlFor="confirmPassword" className="text-[14px] leading-[32px] font-normal text-gray-500">
-            비밀번호 확인
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("confirmPassword")}
-            className={`w-full h-[45px] rounded-[10px] py-[10px] pl-[20px] outline-none bg-gray-100 ${getClassName("confirmPassword")}`}
+        </Group>
+        <Group>
+          <Controller
+            name="passwordConfirmation"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                type="password"
+                label="비밀번호 확인"
+                id="passwordConfirmation"
+                placeholder="비밀번호를 입력해주세요"
+                error={errors.passwordConfirmation && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.passwordConfirmation.message}</Text>}
+                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}` }}
+                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+              />
+            )}
           />
-          {errors.confirmPassword && <p className="error-message">{errors.confirmPassword.message}</p>}
-        </div>
-
-        <button type="submit" disabled={!isValid} className="w-full h-[45px] bg-green-200 rounded-[10px] hover:bg-green-300 disabled:bg-gray-300 text-[14px] font-semibold leading-[24px] text-white">
+        </Group>
+        <Button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
           가입하기
-        </button>
-        <div className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-          <p>이미 회원이신가요?</p>
+        </Button>
+        <Group className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
+          <Text>이미 회원이신가요?</Text>
           <Link href="/login" className="text-green-200">
             로그인하기
           </Link>
-        </div>
+        </Group>
       </form>
-      <style jsx>{`
-        .error-message {
-          color: red;
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 18px;
-        }
-      `}</style>
-    </div>
+    </Container>
   );
 }
