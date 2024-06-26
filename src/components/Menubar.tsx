@@ -185,7 +185,6 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
         size="xs"
         onClose={() => {
           closeUploader();
-          setFileValue(null);
         }}
         title="이미지 선택기"
       >
