@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
     "@mantine/core": "^7.10.2",
     "@mantine/dates": "^7.10.2",
     "@mantine/dropzone": "^7.10.2",
@@ -23,10 +24,13 @@
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
+    "axios": "^1.7.2",
     "dayjs": "^1.11.11",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -44,8 +48,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^9.0.11",
     "postcss": "^8",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.2",
     "prettier-eslint": "^16.3.0",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
