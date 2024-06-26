@@ -4,12 +4,15 @@ const config: Config = {
   content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+<<<<<<< HEAD
       screens: {
         md: "744px",
         // => @media (min-width: 744px) { ... }
         xl: "1200px",
         // => @media (min-width: 1280px) { ... }
       },
+=======
+>>>>>>> 2345021 (feat: 에디터 작성중)
       height: {
         "400": "400px",
       },
@@ -60,7 +63,11 @@ const config: Config = {
         "14": "0.875rem",
         "16": "1rem",
         "20": "1.25rem",
+<<<<<<< HEAD
 >>>>>>> 65715ca (feat: 에디터 초안 작성)
+=======
+        "24": "1.5rem",
+>>>>>>> 2345021 (feat: 에디터 작성중)
         "30": "1.875rem",
         "32": "2rem",
         "40": "2.5rem",
