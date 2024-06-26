@@ -5,8 +5,8 @@ import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
-import { signUpSchema } from "@/schema/signup";
-import { SignUpFormData } from "@/types/type";
+import { signUpSchema } from "@/schema/userFormSchema";
+import { SignUpFormData } from "@/types/userFormData";
 
 const showNotification = (title: string, message: string, color: string) => {
   notifications.show({

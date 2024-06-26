@@ -4,8 +4,8 @@ import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
-import { baseSchema } from "@/schema/signup";
-import { LoginFormData } from "@/types/type";
+import { baseSchema } from "@/schema/userFormSchema";
+import { LoginFormData } from "@/types/userFormData";
 
 const loginSchema = baseSchema.pick({ email: true, password: true });
 
