@@ -5,7 +5,7 @@ import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
-import schema from "@/schema/signup";
+import { signUpSchema } from "@/schema/signup";
 import { SignUpFormData } from "@/types/type";
 
 const showNotification = (title: string, message: string, color: string) => {
@@ -40,7 +40,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors, isValid, touchedFields },
   } = useForm<SignUpFormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(signUpSchema),
     mode: "onBlur",
   });
 

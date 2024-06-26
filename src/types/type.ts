@@ -1,6 +1,6 @@
 import { z } from "zod";
-import schema from "@/schema/signup";
+import { signUpSchema, baseSchema } from "@/schema/signup";
 
-export type SignUpFormData = z.infer<typeof schema>;
+export type SignUpFormData = z.infer<typeof signUpSchema>;
 
-export type LoginFormData = Pick<SignUpFormData, "email" | "password">;
+export type LoginFormData = Pick<z.infer<typeof baseSchema>, "email" | "password">;
