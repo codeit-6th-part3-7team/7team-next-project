@@ -24,6 +24,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
     },
   });
 
+  // todo 인증 요청 이전에 로그인 여부 확인하는 로직 추가 필요
   const handleSubmitAnswer = async (value: string) => {
     try {
       const res = await authEditWiki(value, wikiCode);
