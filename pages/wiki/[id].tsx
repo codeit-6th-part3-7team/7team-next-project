@@ -7,6 +7,7 @@ import ic_copy_link from "../../public/ic_copy_link.svg";
 import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
 import EditWikiAuthModal from "@/components/EditWikiAuthModal";
+import { notifications } from "@mantine/notifications";
 
 const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
@@ -78,7 +79,7 @@ export default function Wiki() {
             <Button color="green.1" size="md" onClick={openModal}>
               위키 참여하기
             </Button>
-            <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} onClose={closeModal} />
+            <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
           </div>
           <CopyButton value={wikiUrl}>
             {({ copied, copy }) => (

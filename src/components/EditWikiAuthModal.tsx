@@ -2,14 +2,18 @@ import { Button, Modal, TextInput } from "@mantine/core";
 import Image from "next/image";
 import ic_lock from "../../public/ic_lock.webp";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
+import authEditWiki from "@/apis/authEditWiki";
+import { redirect } from "next/navigation";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
   opened: boolean;
-  onClose: () => void;
+  closeModal: () => void;
+  wikiCode: string;
 };
 
-export default function EditWikiAuthModal({ securityQuestion, opened, onClose }: EditWikiAuthModal) {
+export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, wikiCode }: EditWikiAuthModal) {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -20,11 +24,24 @@ export default function EditWikiAuthModal({ securityQuestion, opened, onClose }:
     },
   });
 
+  const handleSubmitAnswer = async (value: string) => {
+    try {
+      const res = await authEditWiki(value, wikiCode);
+      // todo 인증 성공 시 수정페이지로 이동시키기
+    } catch (e) {
+      notifications.show({
+        title: "Error",
+        message: "정답이 아닙니다",
+        color: "red",
+        autoClose: 2000,
+      });
+    }
+  };
   return (
     <>
       <Modal
         opened={opened}
-        onClose={onClose}
+        onClose={closeModal}
         size="sm"
         centered={true}
         padding={20}
@@ -43,7 +60,12 @@ export default function EditWikiAuthModal({ securityQuestion, opened, onClose }:
             위키를 작성해 보세요
           </span>
         </div>
-        <form className="flex flex-col gap-6" onSubmit={form.onSubmit((value) => console.log(value))}>
+        <form
+          className="flex flex-col gap-6"
+          onSubmit={form.onSubmit((value) => {
+            handleSubmitAnswer(value.securityAnswer);
+          })}
+        >
           <TextInput
             label={securityQuestion}
             data-autofocus
