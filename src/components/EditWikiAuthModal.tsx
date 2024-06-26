@@ -4,7 +4,6 @@ import ic_lock from "../../public/ic_lock.webp";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import authEditWiki from "@/apis/authEditWiki";
-import { redirect } from "next/navigation";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
@@ -28,16 +27,21 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   const handleSubmitAnswer = async (value: string) => {
     try {
       const res = await authEditWiki(value, wikiCode);
+      notifications.show({
+        title: "Success",
+        message: "인증에 성공했습니다",
+        color: "green",
+      });
       // todo 인증 성공 시 수정페이지로 이동시키기
     } catch (e) {
       notifications.show({
-        title: "Error",
-        message: "정답이 아닙니다",
+        title: "Failed",
+        message: "정답이 아닙니다.",
         color: "red",
-        autoClose: 2000,
       });
     }
   };
+
   return (
     <>
       <Modal

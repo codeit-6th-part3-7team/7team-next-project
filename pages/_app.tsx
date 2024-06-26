@@ -8,7 +8,7 @@ import theme from "@/styles/theme";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme}>
-      <Notifications position="bottom-left" />
+      <Notifications position="top-left" />
       <Component {...pageProps} />
     </MantineProvider>
   );
