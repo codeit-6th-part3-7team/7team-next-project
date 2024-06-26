@@ -73,13 +73,13 @@ export default function WriteBoard() {
       <Flex
         direction="column"
         w={{ base: "100%", lg: 1060 }}
-        mih="calc(89vh - 80px)"
+        mih={{ base: "calc(100vh - 80px)", sm: "calc(89vh - 80px)" }}
         pt={46}
         pb={30}
         px={30}
         mx={{ base: 0, sm: 60, lg: 0 }}
         my={{ base: 0, sm: "5.5vh" }}
-        className="bg-white drop-shadow-md"
+        className="bg-white md:drop-shadow-md"
       >
         <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">게시물 등록하기</h2>
         <Box my={24} className="order-3">
@@ -116,7 +116,7 @@ export default function WriteBoard() {
             <Flex className="flex-shrink flex-grow">
               <EditorContent editor={editor} placeholder="본문을 입력해주세요." className="w-full" />
             </Flex>
-            <Flex className="flex-shrink-0 flex-grow-0 rounded-full border">
+            <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-0 flex-shrink-0 flex-grow-0 rounded-full border">
               <MenuBar editor={editor} />
             </Flex>
           </Flex>
