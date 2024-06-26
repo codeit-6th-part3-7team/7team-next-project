@@ -185,7 +185,7 @@ export default function WriteBoard() {
   return (
     <div className="flex justify-center align-middle">
       <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="89vh" pt={46} pb={30} px={30} mx={{ base: 0, sm: 60, lg: 0 }} my={{ base: 0, sm: "5.5vh" }} className="bg-white drop-shadow-md">
-        <h2 className="lg:text-24 text-16 font-semibold text-gray-800 md:text-20">게시물 등록하기</h2>
+        <h2 className="text-16 font-semibold text-gray-800 md:text-20 lg:text-24">게시물 등록하기</h2>
         <Box my={24}>
           <p className="text-12 text-gray-400 md:text-16">
             <strong className="mr-2 font-normal">이율</strong>
