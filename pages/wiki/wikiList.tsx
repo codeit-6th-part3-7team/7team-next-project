@@ -59,9 +59,9 @@ export default function WikiList() {
         </section>
         <section className="w-[860px] mb-[60px] m-auto my-[16px] text-[16px] font-[400] text-gray-400">
           {value ? (
-            <span>
-              &quot;{value}&quot;님을 총 {searchResults.length}명 찾았습니다.
-            </span>
+            <p>
+              &quot;{value}&quot;님을 총<span className="text-green-400">&nbsp;{searchResults.length}</span>명 찾았습니다.
+            </p>
           ) : (
             <br />
           )}

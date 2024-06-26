@@ -13,7 +13,7 @@ export default function UserCard({ article }: UserCardProps) {
           <span className="text-[24px] font-[600] gap-[14px]">{article.name}</span>
           <div className="text-[14px] font-[400] text-gray-400">
             <span>{article.city}</span>
-            <span>,&nbsp;</span>
+            {article.city && article.nationality ? <span>,&nbsp;</span> : <>&nbsp;</>}
             <span>{article.nationality}</span>
             <br />
             <span>{article.job}</span>
