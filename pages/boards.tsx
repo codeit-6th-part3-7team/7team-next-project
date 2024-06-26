@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Container, Title, Text, Card, Group, Button } from "@mantine/core";
 import Image from "next/image";
+import Pagination from "@/components/Pagination";
 import testImage from "../public/assets/img_card_section.png";
 import heart from "../public/assets/ic_heart.svg";
 import search from "../public/assets/ic_search.svg";
@@ -153,6 +154,7 @@ function PostPage() {
   const indexOfNextPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfNextPost - postsPerPage;
   const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfNextPost);
+  const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
@@ -246,14 +248,8 @@ function PostPage() {
           </tbody>
         </table>
       </div>
-
-      {/* 페이지네이션 */}
       <div className="mt-8 flex justify-center">
-        {Array.from({ length: Math.ceil(sortedPosts.length / postsPerPage) }, (_, index) => (
-          <Button key={index + 1} onClick={() => paginate(index + 1)} variant={currentPage === index + 1 ? "filled" : "outline"} className="mx-1">
-            {index + 1}
-          </Button>
-        ))}
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
       </div>
     </Container>
   );
