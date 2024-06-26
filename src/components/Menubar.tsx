@@ -147,7 +147,16 @@ export default function MenuBar({ editor }: { editor: Editor }) {
           </Button>
         </Flex>
       </Modal>
-      <Modal centered opened={uploaderOpened} size="xs" onClose={closeUploader} title="이미지 선택기">
+      <Modal
+        centered
+        opened={uploaderOpened}
+        size="xs"
+        onClose={() => {
+          closeUploader();
+          setFileValue(null);
+        }}
+        title="이미지 선택기"
+      >
         <Flex direction="column">
           <FileInput value={fileValue} onChange={setFileValue} setUrl={setFileUrl} />
           <Flex justify="flex-end">
