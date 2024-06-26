@@ -66,9 +66,7 @@ export default function WikiList() {
             <br />
           )}
         </section>
-        <section className="h-[470px]">
-          {value ? searchResults.map((article) => <UserCard key={article.id} article={article} />) : articles.map((article) => <UserCard key={article.id} article={article} />)}
-        </section>
+        <section className="h-[470px]">{searchResults.length > 0 ? searchResults.map((article) => <UserCard key={article.id} articles={[article]} />) : <p>검색 결과가 없습니다.</p>}</section>
         <footer>
           <Pagination totalPages={totalPages} currentPage={page} onPageChange={(newPage) => setPage(newPage)} />
         </footer>
