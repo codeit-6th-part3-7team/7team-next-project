@@ -114,7 +114,7 @@ export default function WriteBoard() {
           </p>
           <Flex direction="column" pt={{ base: 16, sm: 20 }} className="flex-shrink flex-grow">
             <Flex className="flex-shrink flex-grow">
-              <EditorContent editor={editor} placeholder="본문을 입력해주세요." />
+              <EditorContent editor={editor} placeholder="본문을 입력해주세요." className="w-full" />
             </Flex>
             <Flex className="flex-shrink-0 flex-grow-0 rounded-full border">
               <MenuBar editor={editor} />
