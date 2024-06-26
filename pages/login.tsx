@@ -6,6 +6,32 @@ import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import { baseSchema } from "@/schema/userFormSchema";
 import { LoginFormData } from "@/types/userFormData";
+import { notifications } from "@mantine/notifications";
+
+const showNotification = (title: string, message: string, color: string) => {
+  notifications.show({
+    color,
+    title,
+    message,
+    autoClose: 2000,
+    withCloseButton: true,
+    styles: {
+      root: {
+        backgroundColor: color,
+        width: 400,
+        borderRadius: 10,
+        padding: 25,
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+      },
+      title: { color: "white" },
+      description: { color: "white" },
+      closeButton: { color: "white", width: 50, height: 50, position: "absolute", top: 20, right: 0 },
+    },
+  });
+};
 
 const loginSchema = baseSchema.pick({ email: true, password: true });
 
@@ -33,12 +59,14 @@ export default function LogIn() {
         router.push("/");
       }
     } catch (error) {
-      if (isAxiosError(error) && error.response && error.response.status === 400) {
-        // eslint-disable-next-line no-alert
-        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+      if (isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          showNotification("로그인 실패!", "이메일 또는 비밀번호가 일치하지 않습니다. 🤥", "#D14343");
+        } else {
+          showNotification("로그인 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
+        }
       } else {
-        // eslint-disable-next-line no-console
-        console.error("An unexpected error occurred:", error);
+        showNotification("로그인 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
       }
     }
   };
