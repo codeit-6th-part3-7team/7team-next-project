@@ -4,20 +4,24 @@ import Image from "next/image";
 import searchIcon from "@/public/ic_search.svg";
 import { useEffect, useState } from "react";
 import { Article } from "@/src/types/wikiListTypes";
+import Pagination from "@/src/components/Pagination";
 
 export default function WikiList() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [value, setValue] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await instance.get(`/profiles?name=${value}`);
+        const response = await instance.get(`/profiles?page=${page}&name=${value}`);
         // TODO: 데이터 전송 확인
         // eslint-disable-next-line no-console
         console.log(response.data);
         if (Array.isArray(response.data.list)) {
           setArticles(response.data.list);
+          setTotalPages(Math.ceil(response.data.totalCount / 3));
         } else {
           // NOTE: 배열이 아닐시 에러 출력
           // eslint-disable-next-line no-console
@@ -31,7 +35,7 @@ export default function WikiList() {
     }
 
     fetchArticles();
-  }, [value]);
+  }, [page, value]);
 
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
@@ -62,8 +66,10 @@ export default function WikiList() {
           <br />
         )}
       </div>
-      {value ? searchResults.map((article) => <UserCard key={article.id} article={article} />) : articles.map((article) => <UserCard key={article.id} article={article} />)}
-      <div>페이지네이션</div>
+      <div className="h-[470px]">
+        {value ? searchResults.map((article) => <UserCard key={article.id} article={article} />) : articles.map((article) => <UserCard key={article.id} article={article} />)}
+      </div>
+      <Pagination totalPages={totalPages} currentPage={page} onPageChange={(newPage) => setPage(newPage)} />
     </div>
   );
 }

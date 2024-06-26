@@ -49,6 +49,7 @@ const config: Config = {
       "1/2": "50%",
       "20": "20px",
       "25": "25px",
+      "10": "10px",
     },
     lineHeight: {
       "20": "1.25rem",
