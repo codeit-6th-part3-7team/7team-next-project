@@ -39,7 +39,7 @@ export default function MenuBar({ editor }: { editor: Editor }) {
 
   return (
     <div className="control-group sticky">
-      <Flex gap={16} px={16} className="button-group">
+      <Flex gap={{ base: 0, sm: 16 }} px={16} className="button-group">
         <Flex>
           <ActionIcon
             variant="transparent"
@@ -153,7 +153,6 @@ export default function MenuBar({ editor }: { editor: Editor }) {
         size="xs"
         onClose={() => {
           closeUploader();
-          setFileValue(null);
         }}
         title="이미지 선택기"
       >
