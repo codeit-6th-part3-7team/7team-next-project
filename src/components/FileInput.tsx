@@ -27,7 +27,7 @@ export default function FileInput({ value, setUrl, onChange }: FileInputProps) {
     };
 
     reader.readAsDataURL(value);
-  }, [value, preview, onChange, setPreview]);
+  }, [value, preview, onChange, setPreview, setUrl]);
 
   return (
     <div>
