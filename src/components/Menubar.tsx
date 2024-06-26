@@ -33,8 +33,11 @@ export default function MenuBar({ editor }: { editor: Editor }) {
   const handleUploading = useCallback(() => {
     if (fileUrl) {
       editor.chain().focus().setImage({ src: fileUrl }).run();
+      editor.commands.createParagraphNear();
+
+      setFileValue(null);
+      setFileUrl("");
     }
-    setFileValue(null);
   }, [editor, fileUrl]);
 
   return (
