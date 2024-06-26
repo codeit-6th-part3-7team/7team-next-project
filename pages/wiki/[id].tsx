@@ -1,5 +1,5 @@
-import axios from "@/apis/axios";
-import { ProfileResponse } from "@/types/ProfileResponse";
+import axios from "@/src/apis/axios";
+import { ProfileResponse } from "@/src/types/ProfileResponse";
 import { useEffect, useState } from "react";
 
 const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
