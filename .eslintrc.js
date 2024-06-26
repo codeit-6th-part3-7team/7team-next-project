@@ -29,6 +29,9 @@ module.exports = {
       },
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 182db97 (feat: 게시글 작성 페이지 에디터 UI 개발, 기능 구현)
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -37,8 +40,19 @@ module.exports = {
         },
       },
     ],
+<<<<<<< HEAD
 =======
 >>>>>>> 65715ca (feat: 에디터 초안 작성)
+=======
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        required: {
+          some: ["nesting", "id"],
+        },
+      },
+    ],
+>>>>>>> 182db97 (feat: 게시글 작성 페이지 에디터 UI 개발, 기능 구현)
     "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
     // 'import/prefer-default-export': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
