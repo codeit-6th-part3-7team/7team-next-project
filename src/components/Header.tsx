@@ -42,6 +42,12 @@ export default function Header() {
                   <Link href="/boards" className="flex justify-center p-2 text-14 text-gray-800">
                     자유게시판
                   </Link>
+                  <Link href="/mypage" className="flex justify-center p-2 text-14 text-gray-800">
+                    계정 설정
+                  </Link>
+                  <Link href="/wiki" className="flex justify-center p-2 text-14 text-gray-800">
+                    내 위키
+                  </Link>
                 </Menu.Dropdown>
               </Menu>
             </Group>
