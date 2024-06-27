@@ -1,5 +1,5 @@
 import axios from "@/apis/axios";
-import { error } from "console";
+import { notifications } from "@mantine/notifications";
 
 type AuthEditRequestBody = {
   securityAnswer: string;
@@ -10,24 +10,31 @@ type AuthEditResponseBody = {
   userId: number;
 };
 
-type checkWikiStatusResponseBody = {
-  registeredAt: string;
-  userId: number;
-};
-
 export default async function authEditWiki(answer: string, wikiCode: string): Promise<AuthEditResponseBody> {
   try {
-    const checkStatus = await axios.get<checkWikiStatusResponseBody>(`profiles/${wikiCode}/ping`);
-    if (checkStatus.data === null) {
-      const requestBody: AuthEditRequestBody = {
-        securityAnswer: answer,
-      };
-      const response = await axios.post<AuthEditResponseBody>(`profiles/${wikiCode}/ping`, requestBody);
-      return response?.data;
-    } else {
-      throw new Error("Wiki is currently being edited");
+    const requestBody: AuthEditRequestBody = {
+      securityAnswer: answer,
+    };
+    const response = await axios.post<AuthEditResponseBody>(`profiles/${wikiCode}/ping`, requestBody);
+
+    switch (response.status) {
+      case 400:
+        notifications.show({
+          title: "오류",
+          message: "정답이 아닙니다",
+          color: "red",
+        });
+      case 200:
+        return response?.data;
+      default:
+        notifications.show({
+          title: "오류",
+          message: "알 수 없는 오류가 발생했습니다. 다시 시도해 주세요",
+          color: "red",
+        });
+        throw new Error("알 수 없는 오류가 발생했습니다. 다시 시도해 주세요");
     }
   } catch (e) {
-    throw new Error("Auth failed");
+    throw e;
   }
 }

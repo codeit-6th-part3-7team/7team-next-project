@@ -31,7 +31,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
         message: "인증에 성공했습니다",
         color: "green",
       });
-      // todo 인증 성공 시 수정페이지로 이동시키기
+      // todo 인증 성공 시 수정 컴포넌트 렌더링
     } catch (e) {
       notifications.show({
         title: "Failed",
