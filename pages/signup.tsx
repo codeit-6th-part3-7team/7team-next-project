@@ -77,10 +77,10 @@ export default function SignUp() {
 
   const getClassName = (fieldName: keyof SignUpFormData) => {
     if (errors[fieldName]) {
-      return "border border-red-500";
+      return "border border-red-500 bg-red-100";
     }
     if (touchedFields[fieldName]) {
-      return "border border-green-300";
+      return "border border-green-300 bg-green-100";
     }
     return "";
   };
