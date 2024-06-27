@@ -5,10 +5,9 @@ import searchIcon from "@/public/assets/ic_search.svg";
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
-  searchTerm: string;
 }
 
-function SearchBar({ onSearch, searchTerm }: SearchBarProps) {
+function SearchBar({ onSearch }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +17,6 @@ function SearchBar({ onSearch, searchTerm }: SearchBarProps) {
   const handleSearchClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     onSearch(searchValue);
-    setSearchValue(` '${searchTerm}' 검색결과입니다`);
   };
 
   const handleSearchEnter = (event: KeyboardEvent<HTMLInputElement>) => {
