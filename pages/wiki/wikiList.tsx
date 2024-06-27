@@ -56,7 +56,12 @@ export default function WikiList() {
               type="text"
               name="위키 검색"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+                if (page > 1) {
+                  setPage(1);
+                }
+              }}
               placeholder="이름으로 위키 찾기"
               className="w-full h-[45px] m-auto bg-gray-100 rounded-20 py-[10px] pl-[55px] outline-none"
             />
