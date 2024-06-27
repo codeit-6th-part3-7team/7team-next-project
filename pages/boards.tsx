@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Title, Button } from "@mantine/core";
-import Pagination from "@/src/components/Pagination";
+import Pagination from "@/src/components/boards/Pagination";
 import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
 import SearchBar from "@/src/components/boards/SearchBar";

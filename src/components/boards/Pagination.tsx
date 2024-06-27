@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "@mantine/core";
 import Image from "next/image";
-import leftArrow from "../../public/assets/ic_left_arrow.svg";
-import rightArrow from "../../public/assets/ic_right_arrow.svg";
+import leftArrow from "@/public/assets/ic_left_arrow.svg";
+import rightArrow from "@/public/assets/ic_right_arrow.svg";
 
 interface PaginationProps {
   currentPage: number;
