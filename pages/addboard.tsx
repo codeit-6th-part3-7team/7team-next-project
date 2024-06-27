@@ -15,7 +15,7 @@ const INITIAL_VALUES = {
 export default function AddBoard() {
   const router = useRouter();
 
-  const handleSubmit = async (values: { title: string; content: string; image: string }) => {
+  const handleSubmit = async (values: { title: string; content: string; image?: string }) => {
     await axios.post("/articles", values);
     router.push("/boards");
   };

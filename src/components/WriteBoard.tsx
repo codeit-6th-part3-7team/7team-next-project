@@ -25,7 +25,7 @@ export const WriteBoardType = {
 };
 
 type WriteBoardProps = {
-  onSubmit: (data: { title: string; content: string; image: string }) => Promise<void>;
+  onSubmit: (data: { title: string; content: string; image?: string }) => Promise<void>;
   type: (typeof WriteBoardType)[keyof typeof WriteBoardType];
   initialValues: {
     title: string;
@@ -102,8 +102,6 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     await onSubmit({
       title: values.title,
       content: values.content,
-      image:
-        "https://search.pstatic.net/common?type=f&size=206x206&quality=95&direct=true&src=http%3A%2F%2Fshop1.phinf.naver.net%2F20200404_197%2F1585965283031qaszP_JPEG%2F22100892055468371_1850734880.jpg",
     });
 
     setValues({
@@ -112,6 +110,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
       writer: INITIAL_VALUES.writer,
       updatedAt: INITIAL_VALUES.updatedAt,
     });
+    editor.commands.clearContent();
   };
 
   return (

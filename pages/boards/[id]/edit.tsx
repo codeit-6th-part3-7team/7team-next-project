@@ -51,7 +51,7 @@ export default function EditBoard({ article, writer }: { article: ArticleType; w
   const router = useRouter();
   const { id } = router.query;
 
-  const handleSubmit = async (values: { title: string; content: string; image: string }) => {
+  const handleSubmit = async (values: { title: string; content: string; image?: string }) => {
     await axios.patch(`/articles/${id}`, values);
     router.push("/boards");
   };
