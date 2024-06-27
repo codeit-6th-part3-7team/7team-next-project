@@ -5,6 +5,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import authEditWiki from "@/apis/authEditWiki";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
@@ -34,12 +35,30 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
       });
       closeModal();
       // todo 인증 성공 시 수정 컴포넌트 렌더링
-    } catch (e) {
-      notifications.show({
-        title: "Failed",
-        message: "정답이 아닙니다.",
-        color: "red",
-      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 400) {
+          notifications.show({
+            title: "Error",
+            message: "정답이 아닙니다",
+            color: "red",
+          });
+        } else {
+          notifications.show({
+            title: "Error",
+            message: "알 수 없는 오류가 발생했습니다",
+            color: "red",
+          });
+        }
+      } else {
+        notifications.show({
+          title: "Error",
+          message: "예기치 못한 오류가 발생했습니다. 새로고침 후 다시 시도해주세요",
+          color: "red",
+        });
+      }
+      return null;
     }
   };
 

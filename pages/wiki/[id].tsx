@@ -10,7 +10,7 @@ import EditWikiAuthModal from "@/components/EditWikiAuthModal";
 import { notifications } from "@mantine/notifications";
 import checkWikiStatus from "@/apis/checkWikiStatus";
 
-const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
+const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
 export default function Wiki() {
