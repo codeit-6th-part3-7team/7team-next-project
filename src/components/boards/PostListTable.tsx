@@ -1,12 +1,6 @@
 import React from "react";
-
-interface Post {
-  id: number;
-  title: string;
-  author: string;
-  likes: number;
-  date: string;
-}
+import { Post } from "@/src/types/boardTypes";
+import formatDateToCustom from "@/src/utils/formatDate";
 
 interface Props {
   posts: Post[];
@@ -14,7 +8,7 @@ interface Props {
 
 function PostListTable({ posts }: Props) {
   return (
-    <table className="min-w-full overflow-hidden rounded-lg border border-gray-200 bg-white">
+    <table className="mb-[60px] min-w-full overflow-hidden rounded-lg border border-gray-200 bg-white">
       <thead className="border-b border-gray-200 bg-gray-100">
         <tr className="text-xs font-medium uppercase tracking-wider text-gray-600">
           <th className="w-12 px-4 py-3 text-center">번호</th>
@@ -29,9 +23,9 @@ function PostListTable({ posts }: Props) {
           <tr key={post.id}>
             <td className="px-3 py-3 text-center">{post.id}</td>
             <td className="px-3 py-3 text-center">{post.title}</td>
-            <td className="px-3 py-3 text-center">{post.author}</td>
-            <td className="px-3 py-3 text-center">{post.likes}</td>
-            <td className="px-3 py-3 text-center">{post.date}</td>
+            <td className="px-3 py-3 text-center">{post.writer.name}</td>
+            <td className="px-3 py-3 text-center">{post.likeCount}</td>
+            <td className="px-3 py-3 text-center">{formatDateToCustom(post.createdAt)}</td>
           </tr>
         ))}
       </tbody>
