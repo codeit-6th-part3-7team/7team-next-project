@@ -5,6 +5,7 @@ import searchIcon from "@/public/ic_search.svg";
 import { useEffect, useState } from "react";
 import { Article } from "@/src/types/wikiListTypes";
 import Pagination from "@/src/components/Pagination";
+import NoSearchImage from "@/public/img_no_search.webp";
 
 export default function WikiList() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -12,7 +13,7 @@ export default function WikiList() {
   const [searchText, setSearchText] = useState<string>(value);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const maxLength = 8;
+  const maxLength = 10;
 
   useEffect(() => {
     async function fetchArticles() {
@@ -65,9 +66,9 @@ export default function WikiList() {
           </div>
         </section>
         <section className="w-[860px] mb-[60px] m-auto my-[16px] text-[16px] font-[400] text-gray-400">
-          {value ? (
+          {value && searchResults.length > 0 ? (
             <p>
-              &quot;{searchText}&quot;님을 총<span className="text-green-400">&nbsp;{searchResults.length}</span>명 찾았습니다.
+              &quot;{searchText}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
             </p>
           ) : (
             <br />
@@ -77,7 +78,10 @@ export default function WikiList() {
           {searchResults.length > 0 ? (
             searchResults.map((article) => <UserCard key={article.id} articles={[article]} />)
           ) : (
-            <p className="w-[400px] h-[142px] rounded-25 py-[24px] m-auto text-[20px] font-[500] text-gray-400">&quot;{searchText}&quot;과 일치하는 검색 결과가 없어요.</p>
+            <div>
+              <p className="py-[32px] text-center text-[20px] font-[500] text-gray-400">&quot;{searchText}&quot;과/와 일치하는 검색 결과가 없어요.</p>
+              <Image src={NoSearchImage} alt="검색 결과 없음 이미지" width={144} height={144} draggable="false" className="m-auto" />
+            </div>
           )}
         </section>
         <footer>{searchResults.length > 0 ? <Pagination totalPages={totalPages} currentPage={page} onPageChange={(newPage) => setPage(newPage)} /> : <br />}</footer>

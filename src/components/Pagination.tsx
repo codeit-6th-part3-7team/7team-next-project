@@ -20,7 +20,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
       <button
         key={i}
         onClick={() => onPageChange(i)}
-        className={`w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200 ${currentPage === i ? "text-green-200 font-[700] shadow-inner" : ""}`}
+        className={`w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200 ${currentPage === i ? "text-green-200 font-[700]" : ""}`}
         type="button"
       >
         {i}
@@ -34,7 +34,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
         <button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
-          className={`w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200 ${currentPage === 1 ? "" : "hover:shadow-inner"}`}
+          className="w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200"
           type="button"
         >
           <div className="absolute top-3 left-2">
@@ -47,7 +47,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
         <button
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className={`w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200 ${currentPage === totalPages ? "" : "hover:shadow-inner"}`}
+          className="w-[45px] h-[45px] rounded-10 shadow-xl text-gray-400 focus:text-green-200"
           type="button"
         >
           <div className="absolute top-3 right-2">
