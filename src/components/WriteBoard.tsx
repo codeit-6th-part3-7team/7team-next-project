@@ -6,7 +6,7 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import UnderLine from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Box, Button, Divider, Flex, Input, useMatches } from "@mantine/core";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -14,7 +14,7 @@ import MenuBar from "./Menubar";
 
 const INITIAL_VALUES = {
   title: "",
-  content: "",
+  content: {},
 };
 
 export const WriteBoardType = {
@@ -22,9 +22,9 @@ export const WriteBoardType = {
   Edit: "edit",
 };
 
-export default function WriteBoard({ initialValues = INITIAL_VALUES, type = WriteBoardType.Create }) {
-  const [title, setTitle] = useState(initialValues.title);
-  const [content, setContent] = useState<string | undefined>(initialValues.content);
+export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }) {
+  const [title, setTitle] = useState<string>(initialValues.title);
+  const [content, setContent] = useState<JSONContent | string | undefined>(initialValues.content);
   const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
   const [length, setLength] = useState<number | undefined>(0);
   const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(0);
@@ -32,7 +32,6 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
     base: "md",
     sm: "xl",
   });
-
   const editor = useEditor({
     extensions: [
       Image,
@@ -78,11 +77,20 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
     setSubmitDisabled(!(editor?.getText() !== "" && e.target.value.length !== 0));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // TODO : 게시글 등록하기
     // eslint-disable-next-line no-console
-    console.log(title, content);
+
+    await onSubmit({
+      title,
+      content,
+      image:
+        "https://search.pstatic.net/common?type=f&size=206x206&quality=95&direct=true&src=http%3A%2F%2Fshop1.phinf.naver.net%2F20200404_197%2F1585965283031qaszP_JPEG%2F22100892055468371_1850734880.jpg",
+    });
+
+    setTitle(INITIAL_VALUES.title);
+    setContent(INITIAL_VALUES.content);
   };
 
   return (
@@ -132,7 +140,7 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
             </p>
             <Flex direction="column" pt={{ base: 16, sm: 20 }} className="flex-shrink flex-grow">
               <Flex className="flex-shrink flex-grow">
-                <EditorContent editor={editor} content={content} placeholder="본문을 입력해주세요." className="w-full" />
+                <EditorContent editor={editor} content={String(content)} placeholder="본문을 입력해주세요." className="w-full" />
               </Flex>
               <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-8 flex-shrink-0 flex-grow-0 rounded-full border">
                 <MenuBar editor={editor} />
