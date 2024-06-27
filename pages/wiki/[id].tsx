@@ -93,7 +93,7 @@ export default function Wiki() {
 
   return (
     <main className="max-w-[1200px] w-full mx-auto">
-      <div className="mx-4 flex justify-between gap-2">
+      <div className="mx-4 flex justify-between gap-4">
         <section className="w-[860px] h-full mt-40 relative">
           <section className="w-[860px] h-28">
             <div className="h-12 mb-12 flex justify-between">
