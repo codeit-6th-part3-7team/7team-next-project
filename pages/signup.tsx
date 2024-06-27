@@ -86,9 +86,9 @@ export default function SignUp() {
   };
 
   return (
-    <Container className="mt-[100px] flex flex-col items-center">
+    <Container className="mt-[100px] flex flex-col items-center justify-center">
       <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</Title>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex w-[400px] flex-col gap-[24px]">
+      <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
         <Group>
           <Controller
             name="name"

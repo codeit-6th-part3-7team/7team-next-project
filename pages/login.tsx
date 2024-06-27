@@ -85,7 +85,7 @@ export default function LogIn() {
   return (
     <Container className="mt-[100px] flex flex-col items-center">
       <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">로그인</Title>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex w-[400px] flex-col gap-[24px]">
+      <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
         <Group>
           <Controller
             name="email"
