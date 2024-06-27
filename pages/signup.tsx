@@ -46,15 +46,21 @@ export default function SignUp() {
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      await axios.post("auth/signUp", {
+      const response = await axios.post("auth/signUp", {
         name: data.name,
         email: data.email,
         password: data.password,
         passwordConfirmation: data.passwordConfirmation,
       });
+
+      const { accessToken, refreshToken } = response.data;
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
       showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "#32A68A");
       setTimeout(() => {
-        router.push("/login");
+        router.push("/");
       }, 2500);
     } catch (error) {
       if (isAxiosError(error)) {
