@@ -41,7 +41,7 @@ interface WriterType {
 }
 
 export default function EditBoard({ article, writer }: { article: ArticleType; writer: WriterType }) {
-  const [value, setValue] = useState({
+  const [value] = useState({
     title: article.title,
     content: article.content,
     image: article.image,
