@@ -116,7 +116,7 @@ export default function WriteBoard() {
             <Flex className="flex-shrink flex-grow">
               <EditorContent editor={editor} placeholder="본문을 입력해주세요." className="w-full" />
             </Flex>
-            <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-0 flex-shrink-0 flex-grow-0 rounded-full border">
+            <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-8 flex-shrink-0 flex-grow-0 rounded-full border">
               <MenuBar editor={editor} />
             </Flex>
           </Flex>

@@ -36,14 +36,6 @@ module.exports = {
         },
       },
     ],
-    "jsx-a11y/label-has-for": [
-      "error",
-      {
-        required: {
-          some: ["nesting", "id"],
-        },
-      },
-    ],
     "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
     // 'import/prefer-default-export': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
