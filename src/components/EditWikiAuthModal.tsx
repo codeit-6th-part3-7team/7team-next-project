@@ -4,6 +4,7 @@ import ic_lock from "../../public/ic_lock.webp";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import authEditWiki from "@/apis/authEditWiki";
+import { useEffect } from "react";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
@@ -41,6 +42,10 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
       });
     }
   };
+
+  useEffect(() => {
+    form.reset();
+  }, [opened]);
 
   return (
     <>

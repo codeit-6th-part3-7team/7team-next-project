@@ -80,14 +80,9 @@ export default function Wiki() {
       });
       return;
     }
-
-    try {
-      const wikiStatus = await checkWikiStatus(TEST_CODE);
-      if (wikiStatus === null) {
-        openModal();
-      }
-    } catch (e) {
-      return;
+    const wikiStatus = await checkWikiStatus(TEST_CODE);
+    if (wikiStatus === null) {
+      openModal();
     }
   };
 
