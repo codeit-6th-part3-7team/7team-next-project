@@ -1,12 +1,13 @@
 import axios, { isAxiosError } from "@/apis/axios";
+import { signUpSchema } from "@/schema/userFormSchema";
+import { SignUpFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { signUpSchema } from "@/schema/userFormSchema";
-import { SignUpFormData } from "@/types/userFormData";
 
 const showNotification = (title: string, message: string, color: string) => {
   notifications.show({
@@ -84,6 +85,13 @@ export default function SignUp() {
     }
     return "";
   };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <Container className="mt-[100px] flex flex-col items-center justify-center">
