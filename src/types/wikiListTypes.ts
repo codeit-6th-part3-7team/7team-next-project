@@ -11,5 +11,5 @@ export interface Article {
 }
 
 export interface UserCardProps {
-  article: Article[Article];
+  articles: Article[];
 }

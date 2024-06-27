@@ -12,7 +12,7 @@ export default function WikiList() {
   useEffect(() => {
     async function fetchArticles() {
       try {
-        const response = await instance.get(`/profiles?name=${value}`);
+        const response = await instance.get(`/profiles`, { params: { name: value } });
         // TODO: 데이터 전송 확인
         // eslint-disable-next-line no-console
         console.log(response.data);
@@ -62,7 +62,7 @@ export default function WikiList() {
           <br />
         )}
       </div>
-      {value ? searchResults.map((article) => <UserCard key={article.id} article={article} />) : articles.map((article) => <UserCard key={article.id} article={article} />)}
+      {value ? searchResults.map((article) => <UserCard key={article.id} articles={[article]} />) : <p>검색 결과가 없습니다.</p>}
       <div>페이지네이션</div>
     </div>
   );

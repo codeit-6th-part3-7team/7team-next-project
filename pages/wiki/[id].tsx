@@ -11,7 +11,7 @@ export default function Wiki() {
   useEffect(() => {
     const getWikiDataByCode = async () => {
       const { data } = await axios.get(`profiles/${TEST_CODE}`);
-      // 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
+      // TODO : 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
       if (data) {
         setWikiData(data);
       }
