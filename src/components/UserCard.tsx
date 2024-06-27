@@ -6,7 +6,10 @@ export default function UserCard({ articles }: UserCardProps) {
   return (
     <div>
       {articles.map((article) => (
-        <article key={article.id} className="flex justify-between w-[860px] h-[142px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-xl py-[24px]">
+        <article
+          key={article.id}
+          className="flex-col justify-between sm:flex md:flex-row lg:flex-row w-[340px] md:w-[700px] lg:w-[860px] h-[150px] md:h-[140px] lg:h-[140px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-xl py-[24px]"
+        >
           <div className="flex">
             <Image
               src={article.image ? article.image : userImageNull}
@@ -28,8 +31,7 @@ export default function UserCard({ articles }: UserCardProps) {
             </div>
           </div>
           <div className="flex flex-col justify-end mr-[32px]">
-            <div>&nbsp;</div>
-            <div className="text-green-200">link</div>
+            <div className="text-green-200 text-right">link</div>
           </div>
         </article>
       ))}

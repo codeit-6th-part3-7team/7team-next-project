@@ -45,13 +45,13 @@ export default function WikiList() {
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
   return (
-    <div>
+    <div className="w-[400px] md:w-[700px] lg:w-[1000px] m-auto">
       <header>
         <div>헤더</div>
       </header>
       <main>
         <section className="flex justify-center align-center mx-[20px]">
-          <div className="relative w-[860px]">
+          <div className="relative w-[340px] md:w-[700px] lg:w-[860px]">
             <input
               type="text"
               name="위키 검색"
@@ -70,7 +70,7 @@ export default function WikiList() {
             </div>
           </div>
         </section>
-        <section className="w-[860px] mb-[60px] m-auto my-[16px] text-[16px] font-[400] text-gray-400">
+        <section className="w-[340px] md:w-[700px] lg:w-[860px] mb-[60px] m-auto my-[16px] text-[16px] font-[400] text-gray-400">
           {value && searchResults.length > 0 ? (
             <p>
               &quot;{searchText}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
