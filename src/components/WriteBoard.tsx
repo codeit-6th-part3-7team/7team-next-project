@@ -6,7 +6,7 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import UnderLine from "@tiptap/extension-underline";
-import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Box, Button, Divider, Flex, Input, useMatches } from "@mantine/core";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -14,7 +14,9 @@ import MenuBar from "./Menubar";
 
 const INITIAL_VALUES = {
   title: "",
-  content: {},
+  content: "",
+  writer: "",
+  updatedAt: new Date(),
 };
 
 export const WriteBoardType = {
@@ -22,12 +24,27 @@ export const WriteBoardType = {
   Edit: "edit",
 };
 
-export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }) {
-  const [title, setTitle] = useState<string>(initialValues.title);
-  const [content, setContent] = useState<JSONContent | string | undefined>(initialValues.content);
+type WriteBoardProps = {
+  onSubmit: (data: { title: string; content: string; image: string }) => Promise<void>;
+  type: (typeof WriteBoardType)[keyof typeof WriteBoardType];
+  initialValues: {
+    title: string;
+    content: string;
+    writer: string;
+    updatedAt: Date | string;
+  };
+};
+
+export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }: WriteBoardProps) {
+  const [values, setValues] = useState({
+    title: initialValues.title,
+    content: initialValues.content,
+    writer: initialValues.writer,
+    updatedAt: initialValues.updatedAt,
+  });
   const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
-  const [length, setLength] = useState<number | undefined>(0);
-  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(0);
+  const [length, setLength] = useState<number | undefined>(initialValues.content.length ?? 0);
+  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(initialValues.content.replace(/ /g, "").length);
   const inputSize = useMatches({
     base: "md",
     sm: "xl",
@@ -59,12 +76,12 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
         placeholder: "본문을 입력해주세요.",
       }),
     ],
-    content,
+    content: values.content,
     onUpdate: () => {
       setLength(editor?.getText().length);
       setLengthExceptSpace(editor?.getText().replace(/ /g, "").length);
-      setSubmitDisabled(!(editor?.getText() !== "" && title.length !== 0));
-      setContent(editor?.getHTML());
+      setSubmitDisabled(!(editor?.getText() !== "" && values.title.length !== 0));
+      setValues((prevValues) => ({ ...prevValues, content: editor?.getHTML() || "" }));
     },
   });
 
@@ -73,7 +90,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
   }
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    setValues((prevValues) => ({ ...prevValues, title: e.target.value }));
     setSubmitDisabled(!(editor?.getText() !== "" && e.target.value.length !== 0));
   };
 
@@ -83,14 +100,18 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     // eslint-disable-next-line no-console
 
     await onSubmit({
-      title,
-      content,
+      title: values.title,
+      content: values.content,
       image:
         "https://search.pstatic.net/common?type=f&size=206x206&quality=95&direct=true&src=http%3A%2F%2Fshop1.phinf.naver.net%2F20200404_197%2F1585965283031qaszP_JPEG%2F22100892055468371_1850734880.jpg",
     });
 
-    setTitle(INITIAL_VALUES.title);
-    setContent(INITIAL_VALUES.content);
+    setValues({
+      title: INITIAL_VALUES.title,
+      content: INITIAL_VALUES.content,
+      writer: INITIAL_VALUES.writer,
+      updatedAt: INITIAL_VALUES.updatedAt,
+    });
   };
 
   return (
@@ -110,8 +131,8 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
           <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">게시물 등록하기</h2>
           <Box my={24} className="order-3">
             <p className="text-12 text-gray-400 md:text-16">
-              <strong className="mr-2 font-normal">이율</strong>
-              <strong className="font-normal">2024.06.25.</strong>
+              <strong className="mr-2 font-normal">{values.writer}</strong>
+              <strong className="font-normal">{values.updatedAt instanceof Date ? values.updatedAt.toLocaleDateString() : new Date(values.updatedAt).toLocaleDateString()}</strong>
             </p>
           </Box>
           <Divider color="#E4E5F0" className="order-4" />
@@ -119,14 +140,14 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
             <Input
               variant="unstyled"
               size={inputSize}
-              value={title}
+              value={values.title}
               maxLength={30}
               onChange={handleTitleChange}
               placeholder="제목을 입력해주세요."
               className="flex-shrink flex-grow text-16 placeholder-gray-400 md:text-20"
             />
             <Flex className="flex-shrink-0 flex-grow-0">
-              <span>{title.length}</span>
+              <span>{values.title.length}</span>
               <span>/</span>
               <span className="text-green-600">30</span>
             </Flex>
@@ -140,7 +161,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
             </p>
             <Flex direction="column" pt={{ base: 16, sm: 20 }} className="flex-shrink flex-grow">
               <Flex className="flex-shrink flex-grow">
-                <EditorContent editor={editor} content={String(content)} placeholder="본문을 입력해주세요." className="w-full" />
+                <EditorContent editor={editor} content={values.content} placeholder="본문을 입력해주세요." className="w-full" />
               </Flex>
               <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-8 flex-shrink-0 flex-grow-0 rounded-full border">
                 <MenuBar editor={editor} />
