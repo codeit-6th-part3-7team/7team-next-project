@@ -54,8 +54,9 @@ export default function LogIn() {
       });
 
       if (response.status === 200) {
-        const { accessToken } = response.data;
+        const { accessToken, refreshToken } = response.data;
         localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         router.push("/");
       }
     } catch (error) {
