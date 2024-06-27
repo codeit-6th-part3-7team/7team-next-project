@@ -1,21 +1,12 @@
-// Post.tsx
+import React, { useEffect, useState } from "react";
+import { Container, Title, Button } from "@mantine/core";
 
-import { useState } from "react";
-import { Container, Title, Text, Card, Group, Button } from "@mantine/core";
-import Image from "next/image";
-import Pagination from "@/components/Pagination";
-import testImage from "../public/assets/img_card_section.png";
-import heart from "../public/assets/ic_heart.svg";
-import search from "../public/assets/ic_search.svg";
-import bottomArrow from "../public/assets/ic_bottom_arrow.svg";
-import upArrow from "../public/assets/ic_up_arrow.svg";
+import Pagination from "@/src/components/Pagination";
+import PostListTable from "@/src/components/boards/PostListTable";
+import BestPosts from "@/src/components/boards/BestPost";
+import SearchBar from "@/src/components/boards/SearchBar";
 
-interface NextImage {
-  src: string;
-  alt?: string;
-  width?: number;
-  height?: number;
-}
+import SortDropdown from "@/src/components/boards/SortDropdown";
 
 interface Post {
   id: number;
@@ -23,7 +14,6 @@ interface Post {
   author: string;
   date: string;
   likes: number;
-  image?: NextImage;
 }
 
 function PostPage() {
@@ -34,12 +24,6 @@ function PostPage() {
       author: "박동욱",
       date: "2024.02.24.",
       likes: 135,
-      image: {
-        src: "/path/to/image1.jpg",
-        alt: "Description of image",
-        width: 250,
-        height: 300,
-      },
     },
     {
       id: 2,
@@ -47,12 +31,6 @@ function PostPage() {
       author: "Michael Johnson",
       date: "June 22, 2024",
       likes: 20,
-      image: {
-        src: "/path/to/image1.jpg",
-        alt: "Description of image",
-        width: 250,
-        height: 300,
-      },
     },
     {
       id: 3,
@@ -60,12 +38,6 @@ function PostPage() {
       author: "Emma Brown",
       date: "June 23, 2024",
       likes: 12,
-      image: {
-        src: "/path/to/image1.jpg",
-        alt: "Description of image",
-        width: 250,
-        height: 300,
-      },
     },
     {
       id: 4,
@@ -73,15 +45,10 @@ function PostPage() {
       author: "David Lee",
       date: "June 24, 2024",
       likes: 18,
-      image: {
-        src: "/path/to/image1.jpg",
-        alt: "Description of image",
-        width: 250,
-        height: 300,
-      },
     },
   ];
-  const PostList: Post[] = [
+
+  const postList: Post[] = [
     { id: 1, title: "Post 1", author: "Alice Johnson", likes: 8, date: "June 15, 2024" },
     { id: 2, title: "Post 2", author: "Bob Lee", likes: 12, date: "June 18, 2024" },
     { id: 3, title: "Post 3", author: "Eve Brown", likes: 5, date: "June 20, 2024" },
@@ -100,61 +67,42 @@ function PostPage() {
     { id: 16, title: "Post 16", author: "Ava Garcia", likes: 11, date: "July 22, 2024" },
   ];
 
-  const [searchValue, setSearchValue] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("latest");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const postsPerPage = 10;
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(postList);
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSearchClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setSearchTerm(searchValue);
-  };
-
-  const handleSearchEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      setSearchTerm(searchValue);
+  useEffect(() => {
+    const sortedPosts = [...filteredPosts];
+    if (sortBy === "latest") {
+      sortedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortBy === "popular") {
+      sortedPosts.sort((a, b) => b.likes - a.likes);
     }
-  };
+    setFilteredPosts(sortedPosts);
+  }, [sortBy, filteredPosts]);
+
   const handleSortLatest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("latest");
   };
+
   const handleSortPopular = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("popular");
   };
-  const handleOpenToggle = (): void => {
-    setIsOpen(!isOpen);
-  };
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleOpenToggle();
-    }
+
+  const handleSearch = (searchValue: string) => {
+    setSearchTerm(searchValue);
+    const filtered = postList.filter((post) => post.title.toLowerCase().includes(searchValue.toLowerCase()));
+    setFilteredPosts(filtered);
+    setCurrentPage(1);
   };
 
-  const filteredPosts = PostList.filter((post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()));
-
-  const sortedPosts = filteredPosts.sort((a, b) => {
-    if (sortBy === "latest") {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    }
-    if (sortBy === "likes") {
-      return b.likes - a.likes;
-    }
-    return 0;
-  });
-
-  const indexOfNextPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfNextPost - postsPerPage;
-  const currentPosts = sortedPosts.slice(indexOfFirstPost, indexOfNextPost);
-  const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+  const indexOfNextPost = currentPage * 10;
+  const indexOfFirstPost = indexOfNextPost - 10;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfNextPost);
+  const totalPages = Math.ceil(filteredPosts.length / 10);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
@@ -165,92 +113,14 @@ function PostPage() {
           게시물 등록하기
         </Button>
       </div>
-      <div className="mb-8 flex flex-row gap-4">
-        {bestPosts.map((post) => (
-          <Card key={post.id} shadow="sm" radius="md" withBorder className="h-[220px] w-[250px] overflow-hidden rounded-md shadow-sm" component="a" href="/boards" target="_self">
-            <Card.Section>{post.image && <Image src={testImage} alt={post.title} width={250} height={131} className="w-full object-cover" />}</Card.Section>
-            <Group className="p-[19px] pb-[14px]">
-              <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">
-                {post.title}
-              </Title>
-              <Group justify="space-between" className="flex justify-between">
-                <Group className="flex gap-2">
-                  <Text className="text-14 text-gray-400">{post.author}</Text>
-                  <Text className="text-14 text-gray-400">{post.date}</Text>
-                </Group>
-                <Text className="flex gap-1 text-14 text-gray-400">
-                  <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likes}개
-                </Text>
-              </Group>
-            </Group>
-          </Card>
-        ))}
+      <BestPosts bestPosts={bestPosts} />
+      <div className="mb-8 flex w-full justify-between gap-2.5">
+        <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
+        <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
       </div>
-      {/* 검색창과 정렬하기 */}
-      <div className="mb-8 flex items-center justify-between">
-        <form className="flex w-full flex-row">
-          <div className="relative mr-5 flex h-[40px] w-full flex-row gap-2.5 rounded-lg bg-gray-100 px-[20px] py-[7px]">
-            <Image src={search} alt="검색" width={22} height={22} />
-            <input placeholder="제목을 검색해주세요" value={searchValue} onChange={handleSearchChange} onKeyPress={handleSearchEnter} className="w-full bg-gray-100" />
-          </div>
-          <Button className="mr-5 h-[45px] w-[80px] rounded-md bg-green-200 text-14 text-white" onClick={handleSearchClick}>
-            검색
-          </Button>
-        </form>
+      <PostListTable posts={currentPosts} />
 
-        <div className="relative">
-          <div
-            onClick={handleOpenToggle}
-            onKeyDown={handleKeyDown}
-            role="button"
-            tabIndex={0}
-            className="flex h-[45px] w-[140px] items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 text-gray-500"
-          >
-            <Text>{sortBy === "latest" ? "최신순" : "좋아요순"}</Text>
-            {!isOpen ? <Image src={bottomArrow} alt="검색" width={22} height={22} /> : <Image src={upArrow} alt="검색" width={22} height={22} />}
-          </div>
-
-          {isOpen && (
-            <div className="absolute mt-1 w-[140px] rounded-md border border-none bg-gray-100 p-1 text-14">
-              <Button onClick={handleSortLatest} className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100">
-                최신순
-              </Button>
-              <Button onClick={handleSortPopular} className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100">
-                좋아요순
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 현재 페이지의 게시글 목록 */}
-      <div className="container mx-auto mt-8">
-        <table className="min-w-full overflow-hidden rounded-lg border border-gray-200 bg-white">
-          <thead className="border-b border-gray-200 bg-gray-100">
-            <tr className="text-xs font-medium uppercase tracking-wider text-gray-600">
-              <th className="w-12 px-4 py-3 text-center">번호</th>
-              <th className="w-64 px-4 py-3 text-center">제목</th>
-              <th className="w-16 px-4 py-3 text-center">작성자</th>
-              <th className="w-12 px-4 py-3 text-center">좋아요 </th>
-              <th className="w-24 px-4 py-3 text-center">작성일자</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {currentPosts.map((post) => (
-              <tr key={post.id}>
-                <td className="px-3 py-3 text-center">{post.id}</td>
-                <td className="px-3 py-3 text-center">{post.title}</td>
-                <td className="px-3 py-3 text-center">{post.author}</td>
-                <td className="px-3 py-3 text-center">{post.likes}</td>
-                <td className="px-3 py-3 text-center">{post.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="mt-8 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
-      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
     </Container>
   );
 }
