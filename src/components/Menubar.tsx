@@ -62,6 +62,21 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
     setLinkValue("");
   }, [editor, linkValue]);
 
+  const handleAnchoring = useCallback(() => {
+    if (linkValue === null) {
+      return;
+    }
+
+    if (linkValue === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    editor.chain().focus().extendMarkRange("link").setLink({ href: linkValue, target: "_blank" }).run();
+    setLinkValue("");
+  }, [editor, linkValue]);
+
   return (
     <Flex py={10} className="control-group sticky basis-full">
       <Flex justify="space-between" px={16} className="button-group basis-full">
