@@ -33,7 +33,7 @@ export default async function checkWikiStatus(wikiCode: string): Promise<CheckWi
           message: "알 수 없는 오류가 발생했습니다. 다시 시도해 주세요",
           color: "red",
         });
-        throw new Error("이미 수정 중인 사용자가 있습니다");
+        throw new Error("알 수 없는 오류가 발생했습니다. 다시 시도해 주세요");
     }
   } catch (e) {
     throw e;
