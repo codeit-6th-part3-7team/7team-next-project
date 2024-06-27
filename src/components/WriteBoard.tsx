@@ -1,4 +1,5 @@
 import { Color } from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import ListItem from "@tiptap/extension-list-item";
@@ -37,6 +38,10 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
       Image,
       UnderLine,
       TextStyle,
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+      }),
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       StarterKit.configure({
         bulletList: {
