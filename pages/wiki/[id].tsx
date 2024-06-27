@@ -73,12 +73,11 @@ export default function Wiki() {
   const handleClickEdit = async () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
-      notifications.show({
+      return notifications.show({
         title: "로그인 필요",
         message: "위키 수정을 위해 로그인이 필요합니다.",
         color: "red",
       });
-      return;
     }
     const wikiStatus = await checkWikiStatus(TEST_CODE);
     if (wikiStatus === null) {
