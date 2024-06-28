@@ -26,6 +26,7 @@ let subscribers: ((token: string) => void)[] = [];
 const postRefreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) throw new Error("No refresh token found");
+
   const response = await instance.post("/auth/refresh-token", { refreshToken });
   return response.data;
 };
@@ -50,11 +51,11 @@ instance.interceptors.response.use(
           localStorage.setItem("refreshToken", newTokens.refreshToken);
           instance.defaults.headers.Authorization = `Bearer ${newTokens.accessToken}`;
           addSubscribers(newTokens.accessToken);
-        } catch (err) {
+        } catch (e) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           window.location.href = "/login";
-          return Promise.reject(err);
+          return new Error("토큰 갱신에 실패했습니다. 다시 로그인 해주세요");
         } finally {
           isRefreshing = false;
         }
