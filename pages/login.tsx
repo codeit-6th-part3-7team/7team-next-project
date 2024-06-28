@@ -2,7 +2,7 @@ import axios, { isAxiosError } from "@/apis/axios";
 import { baseSchema } from "@/schema/userFormSchema";
 import { LoginFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core";
+import { Button, Container, Flex, Group, Text, TextInput, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -100,15 +100,17 @@ export default function LogIn() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <TextInput
-                {...field}
-                label="이메일"
-                id="email"
-                placeholder="이메일을 입력해주세요"
-                error={errors.email && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
-                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
-                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              />
+              <Flex>
+                <TextInput
+                  {...field}
+                  label="이메일"
+                  id="email"
+                  placeholder="이메일을 입력해주세요"
+                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
+                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                />
+                {errors.email && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
+              </Flex>
             )}
           />
         </Group>
@@ -118,16 +120,18 @@ export default function LogIn() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <TextInput
-                {...field}
-                type="password"
-                label="비밀번호"
-                id="password"
-                placeholder="비밀번호를 입력해주세요"
-                error={errors.password && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
-                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
-                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              />
+              <Flex>
+                <TextInput
+                  {...field}
+                  type="password"
+                  label="비밀번호"
+                  id="password"
+                  placeholder="비밀번호를 입력해주세요"
+                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
+                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                />
+                {errors.password && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
+              </Flex>
             )}
           />
         </Group>
