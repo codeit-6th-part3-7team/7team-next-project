@@ -1,6 +1,6 @@
-import { AxiosError } from "axios";
 import axiosInstance from "@/apis/axios";
 import { notifications } from "@mantine/notifications";
+import { AxiosError } from "axios";
 
 type AuthEditRequestBody = {
   securityAnswer: string;
