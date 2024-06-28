@@ -8,11 +8,9 @@
   font-weight: 400;
   font-style: normal;
 }
-
-body {
-  font-family: "Pretendard";
-}
-
-input.mantine-Input-input::placeholder {
-  color: #8f95b2;
+@font-face {
+  font-family: "Nexon";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }

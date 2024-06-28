@@ -1,6 +1,3 @@
-import axios, { isAxiosError } from "@/apis/axios";
-import { signUpSchema } from "@/schema/userFormSchema";
-import { SignUpFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Flex, TextInput, PasswordInput, Button, Title, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
@@ -8,6 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { SignUpFormData } from "@/src/types/userFormData";
+import { signUpSchema } from "@/src/schema/userFormSchema";
+import axios, { isAxiosError } from "@/src/apis/axios";
 
 const showNotification = (title: string, message: string, color: string) => {
   notifications.show({
@@ -77,13 +77,14 @@ export default function SignUp() {
   };
 
   const getInputStyles = (fieldName: keyof SignUpFormData) => {
+    const key = fieldName as string;
     if (errors[fieldName]) {
       return {
         borderColor: "#D14343",
         backgroundColor: "#ffcdd2",
       };
     }
-    if (touchedFields[fieldName]) {
+    if (touchedFields[key]) {
       return {
         borderColor: "#4CBFA4",
         backgroundColor: "#EEF9F6",

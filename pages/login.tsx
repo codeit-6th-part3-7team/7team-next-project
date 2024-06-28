@@ -1,6 +1,6 @@
-import axios, { isAxiosError } from "@/apis/axios";
-import { baseSchema } from "@/schema/userFormSchema";
-import { LoginFormData } from "@/types/userFormData";
+import axios, { isAxiosError } from "@/src/apis/axios";
+import { baseSchema } from "@/src/schema/userFormSchema";
+import { LoginFormData } from "@/src/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
