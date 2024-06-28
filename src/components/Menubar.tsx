@@ -17,7 +17,7 @@ import iconLink from "@/public/assets/ic_link.svg";
 import { useDisclosure } from "@mantine/hooks";
 import FileInput from "./FileInput";
 
-export default function MenuBar({ editor }: { editor: Editor }) {
+export default function MenuBar({ editor, setTitleImage }: { editor: Editor; setTitleImage: (arg0: string) => void }) {
   const [colorPickerOpened, { open: openColorPicker, close: closeColorPicker }] = useDisclosure(false);
   const [uploaderOpened, { open: openUploader, close: closeUploader }] = useDisclosure(false);
   const [anchorOpened, { open: openAnchor, close: closeAnchor }] = useDisclosure(false);
@@ -38,10 +38,12 @@ export default function MenuBar({ editor }: { editor: Editor }) {
       formData.append("image", fileValue);
 
       const res = await axios.post("/images/upload", formData);
+      const { url } = res.data;
 
-      editor.chain().focus().setImage({ src: res.data.url }).run();
+      editor.chain().focus().setImage({ src: url }).run();
       editor.commands.createParagraphNear();
 
+      setTitleImage(url);
       setFileValue(null);
     }
   }, [editor, fileValue]);

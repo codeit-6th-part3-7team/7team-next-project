@@ -42,6 +42,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     writer: initialValues.writer,
     updatedAt: initialValues.updatedAt,
   });
+  const [titleImage, setTitleImage] = useState("");
   const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
   const [length, setLength] = useState<number | undefined>(initialValues.content.length ?? 0);
   const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(initialValues.content.replace(/ /g, "").length);
@@ -96,12 +97,11 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO : 게시글 등록하기
-    // eslint-disable-next-line no-console
 
     await onSubmit({
       title: values.title,
       content: values.content,
+      image: titleImage,
     });
 
     setValues({
@@ -163,7 +163,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
                 <EditorContent editor={editor} content={values.content} placeholder="본문을 입력해주세요." className="w-full" />
               </Flex>
               <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-8 flex-shrink-0 flex-grow-0 rounded-full border">
-                <MenuBar editor={editor} />
+                <MenuBar editor={editor} setTitleImage={setTitleImage} />
               </Flex>
             </Flex>
           </Flex>
