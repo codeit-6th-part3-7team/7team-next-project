@@ -3,6 +3,7 @@ import { Button, Flex } from "@mantine/core";
 import axios from "@/src/apis/axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Header from "@/src/components/Header";
 
 // TODO writer 추후 수정해야함
 const INITIAL_VALUES = {
@@ -21,13 +22,16 @@ export default function AddBoard() {
   };
 
   return (
-    <Flex direction="column">
-      <WriteBoard type="create" initialValues={INITIAL_VALUES} onSubmit={handleSubmit} />
-      <Flex justify="center" h={50}>
-        <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
-          목록으로
-        </Button>
+    <>
+      <Header />
+      <Flex direction="column">
+        <WriteBoard type="create" initialValues={INITIAL_VALUES} onSubmit={handleSubmit} />
+        <Flex justify="center" h={50}>
+          <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+            목록으로
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 }

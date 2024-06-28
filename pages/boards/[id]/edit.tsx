@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
+import Header from "@/src/components/Header";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
@@ -55,13 +56,16 @@ export default function EditBoard({ article, writer }: { article: ArticleType; w
   };
 
   return (
-    <Flex direction="column">
-      <WriteBoard type="edit" initialValues={value} onSubmit={handleSubmit} />
-      <Flex justify="center" h={50}>
-        <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
-          목록으로
-        </Button>
+    <>
+      <Header />
+      <Flex direction="column">
+        <WriteBoard type="edit" initialValues={value} onSubmit={handleSubmit} />
+        <Flex justify="center" h={50}>
+          <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+            목록으로
+          </Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 }
