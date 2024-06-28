@@ -22,6 +22,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
   const [uploaderOpened, { open: openUploader, close: closeUploader }] = useDisclosure(false);
   const [anchorOpened, { open: openAnchor, close: closeAnchor }] = useDisclosure(false);
 
+  const [fileUrl, setFileUrl] = useState<string>("");
   const [fileValue, setFileValue] = useState<File | null>(null);
   const [colorValue, handleColorChange] = useState("");
   const [colorClass, setColorClass] = useState("");
@@ -47,6 +48,21 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
       setFileValue(null);
     }
   }, [editor, fileValue, setTitleImage]);
+
+  const handleAnchoring = useCallback(() => {
+    if (linkValue === null) {
+      return;
+    }
+
+    if (linkValue === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    editor.chain().focus().extendMarkRange("link").setLink({ href: linkValue, target: "_blank" }).run();
+    setLinkValue("");
+  }, [editor, linkValue]);
 
   const handleAnchoring = useCallback(() => {
     if (linkValue === null) {
