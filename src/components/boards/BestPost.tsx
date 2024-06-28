@@ -18,7 +18,7 @@ function BestPosts({ bestPosts }: Props) {
       {/* Desktop view */}
       <div className="hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-4">
         {bestPosts.map((post) => (
-          <div key={post.id} className="col-span-1 sm:col-span-1 lg:col-span-1">
+          <div key={post.id} className="col-span-1 sm:col-span-1 lg:col-span-1" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
             <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
               <Card.Section>
                 <div className="relative h-[131px] overflow-hidden">
@@ -66,7 +66,7 @@ function BestPosts({ bestPosts }: Props) {
         >
           {bestPosts.map((post) => (
             <Carousel.Slide key={post.id}>
-              <div className="mx-2 sm:mx-2 lg:mx-2">
+              <div className="mx-2 sm:mx-2 lg:mx-2" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
                 <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
                   <Card.Section>
                     <div className="relative h-[131px] overflow-hidden">
