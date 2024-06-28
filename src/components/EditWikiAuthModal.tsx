@@ -4,6 +4,8 @@ import ic_lock from "../../public/ic_lock.webp";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import authEditWiki from "@/apis/authEditWiki";
+import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 type EditWikiAuthModal = {
   securityQuestion: string;
@@ -23,7 +25,6 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
     },
   });
 
-  // todo 인증 요청 이전에 로그인 여부 확인하는 로직 추가 필요
   const handleSubmitAnswer = async (value: string) => {
     try {
       const res = await authEditWiki(value, wikiCode);
@@ -32,15 +33,40 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
         message: "인증에 성공했습니다",
         color: "green",
       });
-      // todo 인증 성공 시 수정페이지로 이동시키기
-    } catch (e) {
-      notifications.show({
-        title: "Failed",
-        message: "정답이 아닙니다.",
-        color: "red",
-      });
+      closeModal();
+      // todo 인증 성공 시 수정 컴포넌트 렌더링
+    } catch (error) {
+      // note axios Error instance 활용 에러처리
+      if (error instanceof AxiosError) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 400) {
+          notifications.show({
+            title: "Error",
+            message: "정답이 아닙니다",
+            color: "red",
+          });
+        } else {
+          // note 400 에러 외에 wikiCode 오류 또는 api 경로 오류 발생 시 알림
+          notifications.show({
+            title: "Error",
+            message: "알 수 없는 오류가 발생했습니다. 다시 시도해주세요",
+            color: "red",
+          });
+        }
+      } else {
+        notifications.show({
+          title: "Error",
+          message: "예기치 못한 오류가 발생했습니다. 새로고침 후 다시 시도해주세요",
+          color: "red",
+        });
+      }
+      return null;
     }
   };
+
+  useEffect(() => {
+    form.reset();
+  }, [opened]);
 
   return (
     <>

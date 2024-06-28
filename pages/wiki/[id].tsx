@@ -8,8 +8,9 @@ import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
 import EditWikiAuthModal from "@/components/EditWikiAuthModal";
 import { notifications } from "@mantine/notifications";
+import checkWikiStatus from "@/apis/checkWikiStatus";
 
-const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
+const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
 export default function Wiki() {
@@ -69,14 +70,29 @@ export default function Wiki() {
     getWikiDataByCode();
   }, []);
 
+  const handleClickEdit = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      return notifications.show({
+        title: "로그인 필요",
+        message: "위키 수정을 위해 로그인이 필요합니다.",
+        color: "red",
+      });
+    }
+    const wikiStatus = await checkWikiStatus(TEST_CODE);
+    if (wikiStatus) {
+      openModal();
+    }
+  };
+
   return (
     <main className="max-w-[1200px] w-full mx-auto">
-      <div className="mx-4 flex justify-between gap-2">
+      <div className="mx-4 flex justify-between gap-4">
         <section className="w-[860px] h-full mt-40 relative">
           <section className="w-[860px] h-28">
             <div className="h-12 mb-12 flex justify-between">
               <span className="leading-none text-50 font-semibold text-gray-800">{wikiData.name}</span>
-              <Button color="green.1" size="md" onClick={openModal}>
+              <Button color="green.1" size="md" onClick={handleClickEdit}>
                 위키 참여하기
               </Button>
               <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />

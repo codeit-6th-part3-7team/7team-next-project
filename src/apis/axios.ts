@@ -8,15 +8,14 @@ const instance = axios.create({
 // note 요청 인터셉터
 instance.interceptors.request.use(
   (config) => {
+    const modifiedConfig = { ...config };
     const accessToken = localStorage.getItem("accessToken");
-    if (accessToken && config.headers) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    if (accessToken && modifiedConfig.headers) {
+      modifiedConfig.headers.Authorization = `Bearer ${accessToken}`;
     }
-    return config;
+    return modifiedConfig;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
 // note refreshToken 관련 변수
@@ -27,6 +26,7 @@ let subscribers: ((token: string) => void)[] = [];
 const postRefreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) throw new Error("No refresh token found");
+
   const response = await instance.post("/auth/refresh-token", { refreshToken });
   return response.data;
 };
@@ -42,27 +42,27 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest.retry) {
       if (!isRefreshing) {
         isRefreshing = true;
         try {
           const newTokens = await postRefreshToken();
           localStorage.setItem("accessToken", newTokens.accessToken);
           localStorage.setItem("refreshToken", newTokens.refreshToken);
-          instance.defaults.headers["Authorization"] = `Bearer ${newTokens.accessToken}`;
+          instance.defaults.headers.Authorization = `Bearer ${newTokens.accessToken}`;
           addSubscribers(newTokens.accessToken);
-        } catch (err) {
+        } catch (e) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           window.location.href = "/login";
-          return Promise.reject(err);
+          return new Error("토큰 갱신에 실패했습니다. 다시 로그인 해주세요");
         } finally {
           isRefreshing = false;
         }
       }
       return new Promise((resolve) => {
         subscribers.push((token: string) => {
-          originalRequest.headers["Authorization"] = `Bearer ${token}`;
+          originalRequest.headers.Authorization = `Bearer ${token}`;
           resolve(instance(originalRequest));
         });
       });
