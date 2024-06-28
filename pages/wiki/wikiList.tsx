@@ -38,7 +38,7 @@ export default function WikiList() {
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
   return (
-    <div className="w-[400px] md:w-[700px] lg:w-[1000px] m-auto">
+    <div className="w-[350px] md:w-[700px] lg:w-[860px] m-auto">
       <header>
         <div>헤더</div>
       </header>
