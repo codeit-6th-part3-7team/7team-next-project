@@ -2,12 +2,12 @@ import axios, { isAxiosError } from "@/apis/axios";
 import { signUpSchema } from "@/schema/userFormSchema";
 import { SignUpFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Container, Flex, Group, Text, TextInput, Title } from "@mantine/core";
+import { Flex, TextInput, PasswordInput, Button, Title, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const showNotification = (title: string, message: string, color: string) => {
   notifications.show({
@@ -16,7 +16,7 @@ const showNotification = (title: string, message: string, color: string) => {
     message,
     autoClose: 2000,
     withCloseButton: true,
-    styles: {
+    styles: () => ({
       root: {
         backgroundColor: color,
         width: 400,
@@ -30,14 +30,14 @@ const showNotification = (title: string, message: string, color: string) => {
       title: { color: "white" },
       description: { color: "white" },
       closeButton: { color: "white", width: 50, height: 50, position: "absolute", top: 20, right: 0 },
-    },
+    }),
   });
 };
 
 export default function SignUp() {
   const router = useRouter();
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
   } = useForm<SignUpFormData>({
@@ -76,14 +76,20 @@ export default function SignUp() {
     }
   };
 
-  const getClassName = (fieldName: keyof SignUpFormData) => {
+  const getInputStyles = (fieldName: keyof SignUpFormData) => {
     if (errors[fieldName]) {
-      return "border border-red-500 bg-red-100";
+      return {
+        borderColor: "#D14343",
+        backgroundColor: "#ffcdd2",
+      };
     }
     if (touchedFields[fieldName]) {
-      return "border border-green-300 bg-green-100";
+      return {
+        borderColor: "#4CBFA4",
+        backgroundColor: "#EEF9F6",
+      };
     }
-    return "";
+    return {};
   };
 
   useEffect(() => {
@@ -93,102 +99,129 @@ export default function SignUp() {
     }
   }, [router]);
 
+  const labelStyles = {
+    fontSize: 14,
+    fontWeight: 400,
+    color: "#8F95B2",
+    marginBottom: 10,
+  };
+
+  const inputStyles = {
+    height: "45px",
+    borderRadius: "10px",
+    padding: "10px 20px",
+    marginBottom: 10,
+    backgroundColor: "#F7F7FA",
+  };
+
   return (
-    <Container className="mt-[100px] flex flex-col items-center justify-center">
-      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</Title>
+    <div className="mt-[100px] flex flex-col items-center">
+      <Title order={1} mb={32} size={24} c="gray.4">
+        회원가입
+      </Title>
       <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
-        <Group>
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  label="이름"
-                  id="name"
-                  placeholder="이름을 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.name && <Text className="mt-[10px] text-[14px] font-normal leading-[18px] text-red-500">{errors.name.message}</Text>}
-              </Flex>
-            )}
-          />
-        </Group>
-        <Group>
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  label="이메일"
-                  id="email"
-                  placeholder="이메일을 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.email && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
-              </Flex>
-            )}
-          />
-        </Group>
-        <Group>
-          <Controller
-            name="password"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  type="password"
-                  label="비밀번호"
-                  id="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.password && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
-              </Flex>
-            )}
-          />
-        </Group>
-        <Group>
-          <Controller
-            name="passwordConfirmation"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  type="password"
-                  label="비밀번호 확인"
-                  id="passwordConfirmation"
-                  placeholder="비밀번호를 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.passwordConfirmation && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.passwordConfirmation.message}</Text>}
-              </Flex>
-            )}
-          />
-        </Group>
-        <Button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
+        <TextInput
+          id="name"
+          label="이름"
+          placeholder="이름을 입력해주세요"
+          {...register("name")}
+          styles={(theme) => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("name"),
+            },
+            placeholder: {
+              color: theme.colors.gray[4],
+            },
+          })}
+          error={errors.name?.message}
+          required
+          variant="filled"
+        />
+        <TextInput
+          id="email"
+          label="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          {...register("email")}
+          styles={() => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("email"),
+            },
+            // placeholder: {
+            //   color: errors.password ? "red" : undefined,
+            // },
+          })}
+          error={errors.email?.message}
+          required
+          variant="filled"
+        />
+        <PasswordInput
+          id="password"
+          label="비밀번호"
+          placeholder="비밀번호를 입력해주세요"
+          {...register("password")}
+          styles={() => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("password"),
+            },
+            // placeholder: {
+            //   color: errors.password ? "red" : undefined,
+            // },
+          })}
+          error={errors.password?.message}
+          required
+          variant="filled"
+        />
+        <PasswordInput
+          id="confirmPassword"
+          label="비밀번호 확인"
+          placeholder="비밀번호를 입력해주세요"
+          {...register("passwordConfirmation")}
+          styles={() => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("passwordConfirmation"),
+              "&:focus-within": {
+                borderColor: "green",
+              },
+            },
+            placeholder: {
+              color: errors.passwordConfirmation ? "red" : undefined,
+            },
+          })}
+          error={errors.passwordConfirmation?.message}
+          required
+          variant="filled"
+        />
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
           가입하기
         </Button>
-        <Group className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-          <Text>이미 회원이신가요?</Text>
-          <Link href="/login" className="text-green-200">
-            로그인하기
+        <Flex justify="center" gap={10} mt={10}>
+          <Text size="sm" c="gray.3">
+            이미 회원이신가요?
+          </Text>
+          <Link href="/login" passHref>
+            <Text size="sm" c="green.1" style={{ cursor: "pointer" }}>
+              로그인하기
+            </Text>
           </Link>
-        </Group>
+        </Flex>
       </form>
-    </Container>
+    </div>
   );
 }

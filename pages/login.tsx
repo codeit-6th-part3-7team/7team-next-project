@@ -2,12 +2,12 @@ import axios, { isAxiosError } from "@/apis/axios";
 import { baseSchema } from "@/schema/userFormSchema";
 import { LoginFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Container, Flex, Group, Text, TextInput, Title } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const showNotification = (title: string, message: string, color: string) => {
   notifications.show({
@@ -39,7 +39,7 @@ const loginSchema = baseSchema.pick({ email: true, password: true });
 export default function LogIn() {
   const router = useRouter();
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
   } = useForm<LoginFormData>({
@@ -91,59 +91,46 @@ export default function LogIn() {
   }, [router]);
 
   return (
-    <Container className="mt-[100px] flex flex-col items-center">
-      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">로그인</Title>
+    <div className="mt-[100px] flex flex-col items-center">
+      <h1 className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">로그인</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
-        <Group>
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  label="이메일"
-                  id="email"
-                  placeholder="이메일을 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.email && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.email.message}</Text>}
-              </Flex>
-            )}
+        <Flex direction="column" gap="xs">
+          <label htmlFor="email" className="text-[14px] font-normal leading-[32px] text-gray-500">
+            이메일
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="이메일을 입력해주세요"
+            {...register("email")}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}`}
           />
-        </Group>
-        <Group>
-          <Controller
-            name="password"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Flex>
-                <TextInput
-                  {...field}
-                  type="password"
-                  label="비밀번호"
-                  id="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}` }}
-                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                />
-                {errors.password && <Text className="mt-[10px] text-14 font-normal leading-[18px] text-red-500">{errors.password.message}</Text>}
-              </Flex>
-            )}
+          {errors.email && <p className="text-[12px] font-normal leading-[18px] text-red-500">{errors.email.message}</p>}
+        </Flex>
+
+        <Flex direction="column" gap="xs">
+          <label htmlFor="password" className="text-[14px] font-normal leading-[32px] text-gray-500">
+            비밀번호
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            {...register("password")}
+            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}`}
           />
-        </Group>
-        <Button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
+          {errors.password && <p className="text-[12px] font-normal leading-[18px] text-red-500">{errors.password.message}</p>}
+        </Flex>
+
+        <button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
           로그인
-        </Button>
-        <Group className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-          <Link href="/signup" className="text-green-200">
-            회원가입
-          </Link>
-        </Group>
+        </button>
       </form>
-    </Container>
+      <div className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
+        <Link href="/signup" className="mt-[24px] text-green-200">
+          로그인하기
+        </Link>
+      </div>
+    </div>
   );
 }
