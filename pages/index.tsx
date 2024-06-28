@@ -52,7 +52,7 @@ export default function Home() {
                     <h3>직접 작성해봐요</h3>
                   </Box>
                 </Flex>
-                <Box className="rounded-20 bg-green-200" pr={{ base: 0, sm: 40, lg: 54 }}>
+                <Box className="rounded-[20px] bg-green-200" pr={{ base: 0, sm: 40, lg: 54 }}>
                   <Image src={LandingImg_02} alt="키보드 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Flex>
@@ -77,30 +77,30 @@ export default function Home() {
           <Flex justify="center">
             <Grid maw={1920} mx="-15.4vw" mt={{ base: 40, sm: 80, lg: 120 }} gutter={{ base: "2.7vw", sm: "2.7vw", lg: "3.6vw" }}>
               <Grid.Col span={2}>
-                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
+                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-[25px]" />
               </Grid.Col>
               <Grid.Col span={2}>
-                <Box bg="#B2A5FD" className="rounded-25">
+                <Box bg="#B2A5FD" className="rounded-[25px]">
                   <Image src={LandingImg_04} alt="알림 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Grid.Col>
-              <Grid.Col span={2} className="rounded-25">
-                <Box bg="#ADEDDE" className="rounded-25">
+              <Grid.Col span={2}>
+                <Box bg="#ADEDDE" className="rounded-[25px]">
                   <Image src={LandingImg_05} alt="위키 로고 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Grid.Col>
-              <Grid.Col span={2} className="rounded-25">
-                <Box bg="#DEE5F5" className="rounded-25">
+              <Grid.Col span={2}>
+                <Box bg="#DEE5F5" className="rounded-[25px]">
                   <Image src={LandingImg_06} alt="위키 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Grid.Col>
-              <Grid.Col span={2} className="rounded-25">
-                <Box bg="#DEE5F5" className="rounded-25">
+              <Grid.Col span={2}>
+                <Box bg="#DEE5F5" className="rounded-[25px]">
                   <Image src={LandingImg_07} alt="메시지 이미지" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </Box>
               </Grid.Col>
-              <Grid.Col span={2} className="rounded-25">
-                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-25" />
+              <Grid.Col span={2}>
+                <Box w="100%" h="100%" bg="#DEE5F5" className="rounded-[25px]" />
               </Grid.Col>
             </Grid>
           </Flex>
@@ -122,7 +122,7 @@ export default function Home() {
               </Box>
               <Grid gutter={{ base: 10, sm: 22, lg: 40 }}>
                 <Grid.Col span={4}>
-                  <Box bg="#8E66FF" className="rounded-20">
+                  <Box bg="#8E66FF" className="rounded-[20px]">
                     <Image src={LandingImg_09} alt="알림 이미지" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }} />
                   </Box>
                 </Grid.Col>
