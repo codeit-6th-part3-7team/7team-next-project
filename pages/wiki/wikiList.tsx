@@ -56,7 +56,7 @@ export default function WikiList() {
                 }
               }}
               placeholder="이름으로 위키 찾기"
-              className="w-full h-[45px] m-auto bg-gray-100 rounded-20 py-[20px] pl-[50px] outline-none"
+              className="w-full h-[45px] m-auto bg-gray-100 rounded-20 py-[20px] pl-[50px] pr-[15px] outline-none"
             />
             <div className="absolute left-[20px] top-1/2 transform -translate-y-1/2">
               <Image src={searchIcon} alt="검색 아이콘" width={22} height={22} draggable="false" />
