@@ -1,14 +1,15 @@
 import axios from "@/apis/axios";
+import checkWikiStatus from "@/apis/checkWikiStatus";
+import EditWikiAuthModal from "@/components/EditWikiAuthModal";
 import ProfileCard from "@/components/ProfileCard";
 import { ProfileCardData, ProfileResponse } from "@/types/ProfileResponse";
-import { useEffect, useState } from "react";
 import { Button, CopyButton } from "@mantine/core";
-import ic_copy_link from "../../public/ic_copy_link.svg";
-import Image from "next/image";
 import { useDisclosure } from "@mantine/hooks";
-import EditWikiAuthModal from "@/components/EditWikiAuthModal";
 import { notifications } from "@mantine/notifications";
-import checkWikiStatus from "@/apis/checkWikiStatus";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+import ic_copy_link from "../../public/ic_copy_link.svg";
 
 const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
@@ -73,11 +74,12 @@ export default function Wiki() {
   const handleClickEdit = async () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
-      return notifications.show({
+      notifications.show({
         title: "로그인 필요",
         message: "위키 수정을 위해 로그인이 필요합니다.",
         color: "red",
       });
+      return;
     }
     const wikiStatus = await checkWikiStatus(TEST_CODE);
     if (wikiStatus) {
