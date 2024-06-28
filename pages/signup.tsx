@@ -77,14 +77,13 @@ export default function SignUp() {
   };
 
   const getInputStyles = (fieldName: keyof SignUpFormData) => {
-    const key = fieldName as string;
     if (errors[fieldName]) {
       return {
         borderColor: "#D14343",
         backgroundColor: "#ffcdd2",
       };
     }
-    if (touchedFields[key]) {
+    if (touchedFields[fieldName]) {
       return {
         borderColor: "#4CBFA4",
         backgroundColor: "#EEF9F6",
@@ -110,7 +109,6 @@ export default function SignUp() {
   const inputStyles = {
     height: "45px",
     borderRadius: "10px",
-    padding: "10px 20px",
     marginBottom: 10,
     backgroundColor: "#F7F7FA",
   };
@@ -156,9 +154,6 @@ export default function SignUp() {
               ...inputStyles,
               ...getInputStyles("email"),
             },
-            // placeholder: {
-            //   color: errors.password ? "red" : undefined,
-            // },
           })}
           error={errors.email?.message}
           required
@@ -177,9 +172,6 @@ export default function SignUp() {
               ...inputStyles,
               ...getInputStyles("password"),
             },
-            // placeholder: {
-            //   color: errors.password ? "red" : undefined,
-            // },
           })}
           error={errors.password?.message}
           required

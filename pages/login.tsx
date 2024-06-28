@@ -2,7 +2,7 @@ import axios, { isAxiosError } from "@/src/apis/axios";
 import { baseSchema } from "@/src/schema/userFormSchema";
 import { LoginFormData } from "@/src/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Flex } from "@mantine/core";
+import { Flex, TextInput, PasswordInput, Button, Title, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -73,14 +73,20 @@ export default function LogIn() {
     }
   };
 
-  const getClassName = (fieldName: keyof LoginFormData) => {
+  const getInputStyles = (fieldName: keyof LoginFormData) => {
     if (errors[fieldName]) {
-      return "border border-red-500 bg-red-100";
+      return {
+        borderColor: "#D14343",
+        backgroundColor: "#ffcdd2",
+      };
     }
     if (touchedFields[fieldName]) {
-      return "border border-green-300 bg-green-100";
+      return {
+        borderColor: "#4CBFA4",
+        backgroundColor: "#EEF9F6",
+      };
     }
-    return "";
+    return {};
   };
 
   useEffect(() => {
@@ -90,47 +96,77 @@ export default function LogIn() {
     }
   }, [router]);
 
+  const labelStyles = {
+    fontSize: 14,
+    fontWeight: 400,
+    color: "#8F95B2",
+    marginBottom: 10,
+  };
+
+  const inputStyles = {
+    height: "45px",
+    borderRadius: "10px",
+    marginBottom: 10,
+    backgroundColor: "#F7F7FA",
+  };
+
   return (
     <div className="mt-[100px] flex flex-col items-center">
-      <h1 className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">로그인</h1>
+      <Title order={1} mb={32} size={24} c="gray.4">
+        로그인
+      </Title>
       <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
-        <Flex direction="column" gap="xs">
-          <label htmlFor="email" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            이메일
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            {...register("email")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("email")}`}
-          />
-          {errors.email && <p className="text-[12px] font-normal leading-[18px] text-red-500">{errors.email.message}</p>}
-        </Flex>
+        <TextInput
+          id="email"
+          label="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          {...register("email")}
+          styles={() => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("email"),
+            },
+          })}
+          error={errors.email?.message}
+          required
+          variant="filled"
+          classNames={{ input: "mantine-input" }}
+        />
+        <PasswordInput
+          id="password"
+          label="비밀번호"
+          placeholder="비밀번호를 입력해주세요"
+          {...register("password")}
+          styles={() => ({
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("password"),
+            },
+          })}
+          error={errors.password?.message}
+          required
+          variant="filled"
+          classNames={{ input: "mantine-input" }}
+        />
 
-        <Flex direction="column" gap="xs">
-          <label htmlFor="password" className="text-[14px] font-normal leading-[32px] text-gray-500">
-            비밀번호
-          </label>
-          <input
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("password")}
-            className={`h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("password")}`}
-          />
-          {errors.password && <p className="text-[12px] font-normal leading-[18px] text-red-500">{errors.password.message}</p>}
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
+          가입하기
+        </Button>
+        <Flex justify="center" gap={10} mt={10}>
+          <Link href="/signup" passHref>
+            <Text size="sm" c="green.1" style={{ cursor: "pointer" }}>
+              회원가입
+            </Text>
+          </Link>
         </Flex>
-
-        <button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
-          로그인
-        </button>
       </form>
-      <div className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-        <Link href="/signup" className="mt-[24px] text-green-200">
-          로그인하기
-        </Link>
-      </div>
     </div>
   );
 }
