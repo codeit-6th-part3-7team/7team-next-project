@@ -7,7 +7,7 @@ type CheckWikiStatusResponseBody = {
   userId: number;
 };
 
-export default async function checkWikiStatus(wikiCode: string): Promise<CheckWikiStatusResponseBody | boolean | null> {
+export default async function checkWikiStatus(wikiCode: string): Promise<boolean> {
   try {
     const response = await axiosInstance.get<CheckWikiStatusResponseBody>(`profiles/${wikiCode}/ping`);
 
@@ -21,7 +21,7 @@ export default async function checkWikiStatus(wikiCode: string): Promise<CheckWi
         message: "현재 다른 사용자가 위키를 수정 중 입니다",
         color: "yellow",
       });
-      return response.data;
+      return false;
     } else {
       // note 예상치 못한 상태 코드 확인
       notifications.show({
@@ -29,7 +29,7 @@ export default async function checkWikiStatus(wikiCode: string): Promise<CheckWi
         message: `${response.status} 오류가 발생했습니다`,
         color: "red",
       });
-      return null;
+      return false;
     }
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -55,6 +55,6 @@ export default async function checkWikiStatus(wikiCode: string): Promise<CheckWi
         color: "red",
       });
     }
-    return null;
+    return false;
   }
 }
