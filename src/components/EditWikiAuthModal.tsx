@@ -36,6 +36,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
       closeModal();
       // todo 인증 성공 시 수정 컴포넌트 렌더링
     } catch (error) {
+      // note axios Error instance 활용 에러처리
       if (error instanceof AxiosError) {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response.status === 400) {
@@ -45,9 +46,10 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
             color: "red",
           });
         } else {
+          // note 400 에러 외에 wikiCode 오류 또는 api 경로 오류 발생 시 알림
           notifications.show({
             title: "Error",
-            message: "알 수 없는 오류가 발생했습니다",
+            message: "알 수 없는 오류가 발생했습니다. 다시 시도해주세요",
             color: "red",
           });
         }
