@@ -1,6 +1,10 @@
 import { createTheme, MantineThemeOverride } from "@mantine/core";
 
 const theme: MantineThemeOverride = {
+  breakpoints: {
+    sm: "744px",
+    lg: "1200px",
+  },
   colors: {
     gray: [
       "#F7F7FA",
@@ -68,6 +72,7 @@ const theme: MantineThemeOverride = {
       "#FDD181",
     ],
   },
+  fontFamily: "Pretendard, sans-serif",
 };
 // note  mantine theme 색상 배열타입 기본 길이가 10으로 설정되어 있어서 사용하는 색상 외에는 임의로 채워넣었습니다..
 // theme.colors.gray[0]
