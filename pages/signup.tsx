@@ -16,21 +16,6 @@ const showNotification = (title: string, message: string, color: string) => {
     message,
     autoClose: 2000,
     withCloseButton: true,
-    styles: () => ({
-      root: {
-        backgroundColor: color,
-        width: 400,
-        borderRadius: 10,
-        padding: 25,
-        position: "absolute",
-        top: 0,
-        left: "50%",
-        transform: "translateX(-50%)",
-      },
-      title: { color: "white" },
-      description: { color: "white" },
-      closeButton: { color: "white", width: 50, height: 50, position: "absolute", top: 20, right: 0 },
-    }),
   });
 };
 
@@ -59,19 +44,19 @@ export default function SignUp() {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
-      showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "#32A68A");
+      showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "green.2");
       setTimeout(() => {
         router.push("/");
       }, 2500);
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 400) {
-          showNotification("회원가입 실패!", "이미 존재하는 이메일입니다! 🤥", "#D14343");
+          showNotification("회원가입 실패!", "이미 존재하는 이메일입니다! 🤥", "red.1");
         } else {
-          showNotification("회원가입 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
+          showNotification("회원가입 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "red.1");
         }
       } else {
-        showNotification("회원가입 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
+        showNotification("회원가입 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "red.1");
       }
     }
   };
