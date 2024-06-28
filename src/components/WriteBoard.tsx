@@ -15,6 +15,8 @@ import MenuBar from "./Menubar";
 const INITIAL_VALUES = {
   title: "",
   content: "",
+  writer: "",
+  updatedAt: new Date(),
 };
 
 export const WriteBoardType = {
@@ -22,17 +24,32 @@ export const WriteBoardType = {
   Edit: "edit",
 };
 
-export default function WriteBoard({ initialValues = INITIAL_VALUES, type = WriteBoardType.Create }) {
-  const [title, setTitle] = useState(initialValues.title);
-  const [content, setContent] = useState<string | undefined>(initialValues.content);
+type WriteBoardProps = {
+  onSubmit: (data: { title: string; content: string; image?: string }) => Promise<void>;
+  type: (typeof WriteBoardType)[keyof typeof WriteBoardType];
+  initialValues: {
+    title: string;
+    content: string;
+    writer: string;
+    updatedAt: Date | string;
+  };
+};
+
+export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }: WriteBoardProps) {
+  const [values, setValues] = useState({
+    title: initialValues.title,
+    content: initialValues.content,
+    writer: initialValues.writer,
+    updatedAt: initialValues.updatedAt,
+  });
+  const [titleImage, setTitleImage] = useState("");
   const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
-  const [length, setLength] = useState<number | undefined>(0);
-  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(0);
+  const [length, setLength] = useState<number | undefined>(initialValues.content.length ?? 0);
+  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(initialValues.content.replace(/ /g, "").length);
   const inputSize = useMatches({
     base: "md",
     sm: "xl",
   });
-
   const editor = useEditor({
     extensions: [
       Image,
@@ -60,12 +77,12 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
         placeholder: "본문을 입력해주세요.",
       }),
     ],
-    content,
+    content: values.content,
     onUpdate: () => {
       setLength(editor?.getText().length);
       setLengthExceptSpace(editor?.getText().replace(/ /g, "").length);
-      setSubmitDisabled(!(editor?.getText() !== "" && title.length !== 0));
-      setContent(editor?.getHTML());
+      setSubmitDisabled(!(editor?.getText() !== "" && values.title.length !== 0));
+      setValues((prevValues) => ({ ...prevValues, content: editor?.getHTML() || "" }));
     },
   });
 
@@ -74,15 +91,26 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
   }
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    setValues((prevValues) => ({ ...prevValues, title: e.target.value }));
     setSubmitDisabled(!(editor?.getText() !== "" && e.target.value.length !== 0));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO : 게시글 등록하기
-    // eslint-disable-next-line no-console
-    console.log(title, content);
+
+    await onSubmit({
+      title: values.title,
+      content: values.content,
+      image: titleImage === "" ? undefined : titleImage,
+    });
+
+    setValues({
+      title: INITIAL_VALUES.title,
+      content: INITIAL_VALUES.content,
+      writer: INITIAL_VALUES.writer,
+      updatedAt: INITIAL_VALUES.updatedAt,
+    });
+    editor.commands.clearContent();
   };
 
   return (
@@ -102,8 +130,8 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
           <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">게시물 등록하기</h2>
           <Box my={24} className="order-3">
             <p className="text-12 text-gray-400 md:text-16">
-              <strong className="mr-2 font-normal">이율</strong>
-              <strong className="font-normal">2024.06.25.</strong>
+              <strong className="mr-2 font-normal">{values.writer}</strong>
+              <strong className="font-normal">{values.updatedAt instanceof Date ? values.updatedAt.toLocaleDateString() : new Date(values.updatedAt).toLocaleDateString()}</strong>
             </p>
           </Box>
           <Divider color="#E4E5F0" className="order-4" />
@@ -111,14 +139,14 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
             <Input
               variant="unstyled"
               size={inputSize}
-              value={title}
+              value={values.title}
               maxLength={30}
               onChange={handleTitleChange}
               placeholder="제목을 입력해주세요."
               className="flex-shrink flex-grow text-16 placeholder-gray-400 md:text-20"
             />
             <Flex className="flex-shrink-0 flex-grow-0">
-              <span>{title.length}</span>
+              <span>{values.title.length}</span>
               <span>/</span>
               <span className="text-green-600">30</span>
             </Flex>
@@ -132,10 +160,10 @@ export default function WriteBoard({ initialValues = INITIAL_VALUES, type = Writ
             </p>
             <Flex direction="column" pt={{ base: 16, sm: 20 }} className="flex-shrink flex-grow">
               <Flex className="flex-shrink flex-grow">
-                <EditorContent editor={editor} content={content} placeholder="본문을 입력해주세요." className="w-full" />
+                <EditorContent editor={editor} content={values.content} placeholder="본문을 입력해주세요." className="w-full" />
               </Flex>
               <Flex bg="white" justify={{ base: "center", sm: "flex-start" }} className="sticky bottom-8 flex-shrink-0 flex-grow-0 rounded-full border">
-                <MenuBar editor={editor} />
+                <MenuBar editor={editor} setTitleImage={setTitleImage} />
               </Flex>
             </Flex>
           </Flex>

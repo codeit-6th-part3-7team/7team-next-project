@@ -5,10 +5,9 @@ import icoCamera from "@/public/assets/ic_camera.svg";
 interface FileInputProps {
   value: File | null;
   onChange: (file: File | null) => void;
-  setUrl: (ar0: string) => void;
 }
 
-export default function FileInput({ value, setUrl, onChange }: FileInputProps) {
+export default function FileInput({ value, onChange }: FileInputProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -23,11 +22,10 @@ export default function FileInput({ value, setUrl, onChange }: FileInputProps) {
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
-      setUrl(reader.result as string);
     };
 
     reader.readAsDataURL(value);
-  }, [value, preview, onChange, setPreview, setUrl]);
+  }, [value, preview, onChange, setPreview]);
 
   return (
     <div>
