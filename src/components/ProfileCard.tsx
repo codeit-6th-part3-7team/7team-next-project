@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ic_profile_skeleton from "../../public/ic_profile_skeleton.webp";
 import { ProfileCardData } from "@/types/ProfileResponse";
+import ic_profile_skeleton from "../../public/ic_profile_skeleton.webp";
 
 type ProfileCardProps = {
   profileData: ProfileCardData;
@@ -20,17 +20,15 @@ const labels: Record<keyof ProfileCardData, string> = {
 
 export default function ProfileCard({ profileData, profileImage }: ProfileCardProps) {
   return (
-    <div className="w-80 h-[670px] rounded-xl shadow-lg shadow-gray-300 flex flex-col items-center gap-14 border-none mt-32 px-4">
-      <Image className="w-[200px] h-[200px] object-cover rounded-full mt-14" src={profileImage ? profileImage : ic_profile_skeleton} width={200} height={200} alt="프로필이미지" />
-      <div className="w-60 h-6 grid grid-cols-[75px_auto] gap-4">
-        {Object.entries(profileData).map(([key, value]) => {
-          return (
-            <>
-              <span className="text-sm text-gray-400">{labels[key as keyof ProfileCardData]}</span>
-              <span className="text-sm text-gray-800">{value}</span>
-            </>
-          );
-        })}
+    <div className="mt-32 flex h-[670px] w-80 flex-col items-center gap-14 rounded-xl border-none px-4 shadow-lg shadow-gray-300">
+      <Image className="mt-14 h-[200px] w-[200px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} width={200} height={200} alt="프로필이미지" />
+      <div className="grid h-6 w-60 grid-cols-[75px_auto] gap-4">
+        {Object.entries(profileData).map(([key, value]) => (
+          <>
+            <span className="text-sm text-gray-400">{labels[key as keyof ProfileCardData]}</span>
+            <span className="text-sm text-gray-800">{value}</span>
+          </>
+        ))}
       </div>
     </div>
   );

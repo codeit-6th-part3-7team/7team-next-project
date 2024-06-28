@@ -1,20 +1,18 @@
 import { Button, Modal, TextInput } from "@mantine/core";
 import Image from "next/image";
-import ic_lock from "../../public/ic_lock.webp";
 import { useForm } from "@mantine/form";
-import { notifications } from "@mantine/notifications";
 import authEditWiki from "@/apis/authEditWiki";
 import { useEffect } from "react";
-import { AxiosError } from "axios";
+import ic_lock from "../../public/ic_lock.webp";
 
-type EditWikiAuthModal = {
+type EditWikiAuthModalProps = {
   securityQuestion: string;
   opened: boolean;
   closeModal: () => void;
   wikiCode: string;
 };
 
-export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, wikiCode }: EditWikiAuthModal) {
+export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, wikiCode }: EditWikiAuthModalProps) {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -26,41 +24,10 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   });
 
   const handleSubmitAnswer = async (value: string) => {
-    try {
-      const res = await authEditWiki(value, wikiCode);
-      notifications.show({
-        title: "Success",
-        message: "인증에 성공했습니다",
-        color: "green",
-      });
+    const res = await authEditWiki(value, wikiCode);
+    if (res) {
       closeModal();
       // todo 인증 성공 시 수정 컴포넌트 렌더링
-    } catch (error) {
-      // note axios Error instance 활용 에러처리
-      if (error instanceof AxiosError) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response && axiosError.response.status === 400) {
-          notifications.show({
-            title: "Error",
-            message: "정답이 아닙니다",
-            color: "red",
-          });
-        } else {
-          // note 400 에러 외에 wikiCode 오류 또는 api 경로 오류 발생 시 알림
-          notifications.show({
-            title: "Error",
-            message: "알 수 없는 오류가 발생했습니다. 다시 시도해주세요",
-            color: "red",
-          });
-        }
-      } else {
-        notifications.show({
-          title: "Error",
-          message: "예기치 못한 오류가 발생했습니다. 새로고침 후 다시 시도해주세요",
-          color: "red",
-        });
-      }
-      return null;
     }
   };
 
@@ -69,65 +36,63 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   }, [opened]);
 
   return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={closeModal}
-        size="sm"
-        centered={true}
-        padding={20}
-        radius={10}
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}
-        transitionProps={{ transition: "fade", duration: 300, timingFunction: "linear" }}
+    <Modal
+      opened={opened}
+      onClose={closeModal}
+      size="sm"
+      centered
+      padding={20}
+      radius={10}
+      overlayProps={{
+        backgroundOpacity: 0.55,
+        blur: 3,
+      }}
+      transitionProps={{ transition: "fade", duration: 300, timingFunction: "linear" }}
+    >
+      <div className="mb-4 flex flex-col items-center gap-4">
+        <Image className="mx-auto" src={ic_lock} alt="위키수정권한확인" width={42} height={42} />
+        <span className="text-center text-sm font-normal text-gray-400">
+          다음 퀴즈를 맞추고
+          <br />
+          위키를 작성해 보세요
+        </span>
+      </div>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={form.onSubmit((value) => {
+          handleSubmitAnswer(value.securityAnswer);
+        })}
       >
-        <div className="flex flex-col items-center gap-4 mb-4">
-          <Image className="mx-auto" src={ic_lock} alt="위키수정권한확인" width={42} height={42} />
-          <span className="text-sm text-center font-normal text-gray-400">
-            다음 퀴즈를 맞추고
-            <br />
-            위키를 작성해 보세요
-          </span>
-        </div>
-        <form
-          className="flex flex-col gap-6"
-          onSubmit={form.onSubmit((value) => {
-            handleSubmitAnswer(value.securityAnswer);
+        <TextInput
+          label={securityQuestion}
+          data-autofocus
+          placeholder="답변을 입력해 주세요"
+          styles={(theme) => ({
+            label: {
+              fontSize: 18,
+              fontWeight: 600,
+              color: theme.colors.gray[5],
+              marginBottom: 10,
+              marginLeft: 3,
+            },
+            input: {
+              height: 45,
+              border: 0,
+              background: theme.colors.gray[0],
+              // todo placeholder 스타일 수정 방법 찾아보는중...
+            },
           })}
-        >
-          <TextInput
-            label={securityQuestion}
-            data-autofocus
-            placeholder="답변을 입력해 주세요"
-            styles={(theme) => ({
-              label: {
-                fontSize: 18,
-                fontWeight: 600,
-                color: theme.colors.gray[5],
-                marginBottom: 10,
-                marginLeft: 3,
-              },
-              input: {
-                height: 45,
-                border: 0,
-                background: theme.colors.gray[0],
-                // todo placeholder 스타일 수정 방법 찾아보는중...
-              },
-            })}
-            key={form.key("securityAnswer")}
-            {...form.getInputProps("securityAnswer")}
-          />
-          <Button size="md" color="green.1" type="submit">
-            확인
-          </Button>
-        </form>
-        <div className="leading-tight text-xs font-normal text-gray-400 flex flex-col items-center gap-1 mt-6">
-          <span>위키드는 지인들과 함께하는 즐거운 공간입니다</span>
-          <span>지인에게 상처를 주지 않도록 작성해 주세요</span>
-        </div>
-      </Modal>
-    </>
+          key={form.key("securityAnswer")}
+          {...form.getInputProps("securityAnswer")}
+        />
+        <Button size="md" color="green.1" type="submit">
+          확인
+        </Button>
+      </form>
+      <div className="mt-6 flex flex-col items-center gap-1 text-xs font-normal leading-tight text-gray-400">
+        <span>위키드는 지인들과 함께하는 즐거운 공간입니다</span>
+        <span>지인에게 상처를 주지 않도록 작성해 주세요</span>
+      </div>
+    </Modal>
   );
 }
