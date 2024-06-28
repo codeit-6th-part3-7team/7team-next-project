@@ -1,11 +1,8 @@
 import React from "react";
 import { Post } from "@/src/types/boardTypes";
 import formatDateToCustom from "@/src/utils/formatDate";
-<<<<<<< HEAD
 import Image from "next/image";
 import heart from "@/public/assets/ic_heart.svg";
-=======
->>>>>>> epic/post-list-page
 
 interface Props {
   posts: Post[];
