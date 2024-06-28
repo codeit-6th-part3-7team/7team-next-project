@@ -105,15 +105,15 @@ function PostPage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container className="min-w-screen-sm align-center mx-auto max-w-screen-lg flex-col">
+    <Container className="align-center mx-[20px] min-w-[335px] max-w-screen-lg flex-col sm:mx-[60px] lg:mx-auto">
       <div className="mb-10 flex items-center justify-between">
-        <Title className="text-left text-32 font-semibold leading-40 text-gray-800">베스트 게시글</Title>
-        <Button className="h-[45px] w-[160px] rounded-md bg-green-200 text-14 text-white" onClick={() => {}}>
+        <Title className="text-left text-[24px] font-semibold leading-40 text-gray-800 sm:text-32">베스트 게시글</Title>
+        <Button className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white sm:w-[145px]" onClick={() => {}}>
           게시물 등록하기
         </Button>
       </div>
       {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
-      <div className="mb-8 flex w-full justify-between gap-2.5">
+      <div className="mb-8 gap-2.5 sm:flex">
         <SearchBar onSearch={handleSearch} />
         <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
       </div>

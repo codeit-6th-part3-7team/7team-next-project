@@ -31,7 +31,7 @@ function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps
         onKeyDown={handleKeyDown}
         role="button"
         tabIndex={0}
-        className="flex h-[45px] w-[140px] items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 text-gray-500"
+        className="flex h-[45px] w-full items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 text-gray-500 sm:w-[140px]"
       >
         <Text>{sortBy === "recent" ? "최신순" : "좋아요순"}</Text>
         {!isOpen ? <Image src={bottomArrow} alt="검색" width={22} height={22} /> : <Image src={upArrow} alt="검색" width={22} height={22} />}

@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@mantine/carousel": "^7.10.2",
     "@mantine/core": "^7.10.2",
     "@mantine/dates": "^7.10.2",
     "@mantine/dropzone": "^7.10.2",

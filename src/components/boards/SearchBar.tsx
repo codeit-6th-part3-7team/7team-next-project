@@ -27,7 +27,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   return (
-    <div className="w-full rounded-md">
+    <div className="mb-5 w-full rounded-md">
       <form className="flex flex-row gap-2.5">
         <div className="flex w-full flex-row gap-2.5 rounded-md bg-gray-100 px-3">
           <Image src={searchIcon} alt="검색" width={22} height={22} />
