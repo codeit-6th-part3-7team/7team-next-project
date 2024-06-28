@@ -46,7 +46,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
       setTitleImage(url);
       setFileValue(null);
     }
-  }, [editor, fileValue]);
+  }, [editor, fileValue, setTitleImage]);
 
   const handleAnchoring = useCallback(() => {
     if (linkValue === null) {
