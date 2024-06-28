@@ -1,9 +1,10 @@
 import { Button, Modal, TextInput } from "@mantine/core";
+
 import Image from "next/image";
-import { useForm } from "@mantine/form";
 import authEditWiki from "@/apis/authEditWiki";
-import { useEffect } from "react";
 import ic_lock from "../../public/ic_lock.webp";
+import { useEffect } from "react";
+import { useForm } from "@mantine/form";
 
 type EditWikiAuthModalProps = {
   securityQuestion: string;
