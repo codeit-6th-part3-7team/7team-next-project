@@ -18,14 +18,20 @@ function BestPosts({ bestPosts }: Props) {
       {/* Desktop view */}
       <div className="hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-4">
         {bestPosts.map((post) => (
-          <div key={post.id} className="col-span-1 overflow-hidden rounded-md" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
-            <Card shadow="sm" radius="md" withBorder className="h-[220px]" component="a" href="/boards" target="_self">
+          <div key={post.id} className="col-span-1 sm:col-span-1 lg:col-span-1">
+            <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
               <Card.Section>
-                {post.image ? (
-                  <Image src={post.image.src} alt={`${post.image.alt} 이미지`} width={250} height={131} className="w-full object-cover" />
-                ) : (
-                  <Image src={indexImage} alt="기본 이미지" width={250} height={131} className="w-full object-cover" />
-                )}
+                <div className="relative h-[131px] overflow-hidden">
+                  <Image
+                    src={post.image ? post.image.src : indexImage}
+                    alt={post.image ? post.image.alt : "기본 이미지"}
+                    layout="responsive"
+                    width={250}
+                    height={131}
+                    objectFit="cover"
+                    className="rounded-t-md"
+                  />
+                </div>
               </Card.Section>
               <Group className="p-[19px] pb-[14px]">
                 <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">
@@ -60,14 +66,20 @@ function BestPosts({ bestPosts }: Props) {
         >
           {bestPosts.map((post) => (
             <Carousel.Slide key={post.id}>
-              <div className="mx-2 overflow-hidden rounded-md" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
-                <Card shadow="sm" radius="md" withBorder className="h-[220px]" component="a" href="/boards" target="_self">
+              <div className="mx-2 sm:mx-2 lg:mx-2">
+                <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
                   <Card.Section>
-                    {post.image ? (
-                      <Image src={post.image.src} alt={`${post.image.alt} 이미지`} width={250} height={131} className="w-full object-cover" />
-                    ) : (
-                      <Image src={indexImage} alt="기본 이미지" width={250} height={131} className="w-full object-cover" />
-                    )}
+                    <div className="relative h-[131px] overflow-hidden">
+                      <Image
+                        src={post.image ? post.image.src : indexImage}
+                        alt={post.image ? post.image.alt : "기본 이미지"}
+                        layout="responsive"
+                        width={250}
+                        height={131}
+                        objectFit="cover"
+                        className="rounded-t-md"
+                      />
+                    </div>
                   </Card.Section>
                   <Group className="p-[19px] pb-[14px]">
                     <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">

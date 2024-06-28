@@ -5,6 +5,7 @@ import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
 import SearchBar from "@/src/components/boards/SearchBar";
 import SortDropdown from "@/src/components/boards/SortDropdown";
+import indexImage from "@/public/assets/img_card_section.png";
 import instance from "@/src/apis/axios";
 import { Post } from "@/src/types/boardTypes";
 
@@ -65,7 +66,12 @@ function PostPage() {
         // eslint-disable-next-line no-console
         console.log("Best posts response:", response.data);
         if (Array.isArray(response.data.list)) {
-          setBestPosts(response.data.list);
+          setBestPosts(
+            response.data.list.map((post: Post) => ({
+              ...post,
+              image: { src: post.image || indexImage, alt: post.image ? "업로드 이미지" : "기본 이미지" },
+            })),
+          );
         } else {
           // NOTE: 배열이 아닐시 에러 출력
           // eslint-disable-next-line no-console
