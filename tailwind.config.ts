@@ -49,6 +49,7 @@ const config: Config = {
       "1/2": "50%",
       "20": "20px",
       "25": "25px",
+      "10": "10px",
     },
     lineHeight: {
       "20": "1.25rem",
@@ -57,6 +58,10 @@ const config: Config = {
       "60": "3.75rem",
       "70": "4.375rem",
       "100": "6.25rem",
+    },
+    boxShadow: {
+      xl: "0 4px 20px 0 rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05);",
     },
   },
   plugins: [],

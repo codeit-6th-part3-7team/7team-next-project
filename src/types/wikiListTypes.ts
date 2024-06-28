@@ -13,3 +13,9 @@ export interface Article {
 export interface UserCardProps {
   articles: Article[];
 }
+
+export interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
