@@ -101,7 +101,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     await onSubmit({
       title: values.title,
       content: values.content,
-      image: titleImage,
+      image: titleImage === "" ? undefined : titleImage,
     });
 
     setValues({
