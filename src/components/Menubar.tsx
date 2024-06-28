@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Editor } from "@tiptap/react";
 import { ActionIcon, Button, ColorPicker, Flex, Modal, TextInput } from "@mantine/core";
-
 import { useCallback, useState } from "react";
+import axios from "@/src/apis/axios";
 import iconBold from "@/public/assets/ic_bold.svg";
 import iconItalic from "@/public/assets/ic_italic.svg";
 import iconUnderline from "@/public/assets/ic_underline.svg";
@@ -22,7 +22,6 @@ export default function MenuBar({ editor }: { editor: Editor }) {
   const [uploaderOpened, { open: openUploader, close: closeUploader }] = useDisclosure(false);
   const [anchorOpened, { open: openAnchor, close: closeAnchor }] = useDisclosure(false);
 
-  const [fileUrl, setFileUrl] = useState<string>("");
   const [fileValue, setFileValue] = useState<File | null>(null);
   const [colorValue, handleColorChange] = useState("");
   const [colorClass, setColorClass] = useState("");
@@ -33,15 +32,19 @@ export default function MenuBar({ editor }: { editor: Editor }) {
     editor.chain().focus().setColor(colorValue).run();
   };
 
-  const handleUploading = useCallback(() => {
-    if (fileUrl) {
-      editor.chain().focus().setImage({ src: fileUrl }).run();
+  const handleUploading = useCallback(async () => {
+    if (fileValue) {
+      const formData = new FormData();
+      formData.append("image", fileValue);
+
+      const res = await axios.post("/images/upload", formData);
+
+      editor.chain().focus().setImage({ src: res.data.url }).run();
       editor.commands.createParagraphNear();
 
       setFileValue(null);
-      setFileUrl("");
     }
-  }, [editor, fileUrl]);
+  }, [editor, fileValue]);
 
   const handleAnchoring = useCallback(() => {
     if (linkValue === null) {
@@ -185,7 +188,7 @@ export default function MenuBar({ editor }: { editor: Editor }) {
         title="이미지 선택기"
       >
         <Flex direction="column">
-          <FileInput value={fileValue} onChange={setFileValue} setUrl={setFileUrl} />
+          <FileInput value={fileValue} onChange={setFileValue} />
           <Flex justify="flex-end">
             <Button
               type="submit"

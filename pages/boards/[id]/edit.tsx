@@ -1,5 +1,3 @@
-"use client";
-
 import WriteBoard from "@/src/components/WriteBoard";
 import { Button, Flex } from "@mantine/core";
 import axios from "@/src/apis/axios";
