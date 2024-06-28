@@ -14,21 +14,3 @@
   font-weight: normal;
   font-style: normal;
 }
-
-:root {
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
-
-body {
-  font-family: "Pretendard";
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}

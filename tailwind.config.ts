@@ -4,6 +4,9 @@ const config: Config = {
   content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      height: {
+        "400": "400px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -32,10 +35,19 @@ const config: Config = {
       },
       fontSize: {
         "8": "0.5rem",
+        "9": "0.5625rem",
         "10": "0.625rem",
+        "11": "0.6875rem",
+        "12": "0.75rem",
+        "13": "0.8125rem",
         "14": "0.875rem",
+        "15": "0.9375rem",
         "16": "1rem",
+        "17": "1.0625rem",
+        "18": "1.125rem",
+        "19": "1.1875rem",
         "20": "1.25rem",
+        "24": "1.5rem",
         "30": "1.875rem",
         "32": "2rem",
         "40": "2.5rem",
