@@ -10,10 +10,8 @@ import NoSearchImage from "@/public/img_no_search.webp";
 export default function WikiList() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [value, setValue] = useState<string>("");
-  const [searchText, setSearchText] = useState<string>(value);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const maxLength = 10;
 
   useEffect(() => {
     async function fetchArticles() {
@@ -34,13 +32,8 @@ export default function WikiList() {
       }
     }
 
-    if (value.length > maxLength) {
-      setSearchText(`${value.substring(0, maxLength - 1)}...`);
-    } else if (value.length < maxLength) {
-      setSearchText(`${value}`);
-    }
     fetchArticles();
-  }, [page, value, searchText]);
+  }, [page, value]);
 
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
@@ -63,7 +56,7 @@ export default function WikiList() {
                 }
               }}
               placeholder="이름으로 위키 찾기"
-              className="w-full h-[45px] m-auto bg-gray-100 rounded-20 py-[10px] pl-[55px] outline-none"
+              className="w-full h-[45px] m-auto bg-gray-100 rounded-20 py-[20px] pl-[50px] outline-none"
             />
             <div className="absolute left-[20px] top-1/2 transform -translate-y-1/2">
               <Image src={searchIcon} alt="검색 아이콘" width={22} height={22} draggable="false" />
@@ -73,7 +66,7 @@ export default function WikiList() {
         <section className="w-[340px] md:w-[700px] lg:w-[860px] mb-[60px] m-auto my-[16px] text-[16px] font-[400] text-gray-400">
           {value && searchResults.length > 0 ? (
             <p>
-              &quot;{searchText}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
+              &quot;{value}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
             </p>
           ) : (
             <br />
@@ -84,8 +77,14 @@ export default function WikiList() {
             searchResults.map((article) => <UserCard key={article.id} articles={[article]} />)
           ) : (
             <div>
-              <p className="py-[32px] text-center text-[20px] font-[500] text-gray-400">&quot;{searchText}&quot;과/와 일치하는 검색 결과가 없어요.</p>
-              <Image src={NoSearchImage} alt="검색 결과 없음 이미지" width={144} height={144} draggable="false" className="m-auto" />
+              <div className="flex justify-center py-[32px] text-[18px] md:text-[20px] lg:text-[20px] font-[500] text-gray-400">
+                <div className="flex-none">&quot;</div>
+                <div className="flex-none max-w-[100px] md:max-w-[200px] lg:max-w-[350px] truncate">{value}</div>
+                <div className="flex-none">&quot;과&#47;와 일치하는 검색 결과가 없어요.</div>
+              </div>
+              <div className="w-[100px] md:w-[144px] lg:w-[144px] m-auto">
+                <Image src={NoSearchImage} alt="검색 결과 없음 이미지" draggable="false" />
+              </div>
             </div>
           )}
         </section>
