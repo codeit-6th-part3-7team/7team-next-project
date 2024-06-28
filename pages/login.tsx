@@ -107,7 +107,7 @@ export default function LogIn() {
           type="email"
           placeholder="이메일을 입력해주세요"
           {...register("email")}
-          styles={() => ({
+          styles={{
             label: {
               ...labelStyles,
             },
@@ -115,10 +115,7 @@ export default function LogIn() {
               ...inputStyles,
               ...getInputStyles("email"),
             },
-            placeholder: {
-              color: "gray",
-            },
-          })}
+          }}
           error={errors.email?.message}
           required
           variant="filled"
@@ -129,7 +126,7 @@ export default function LogIn() {
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요"
           {...register("password")}
-          styles={() => ({
+          styles={{
             label: {
               ...labelStyles,
             },
@@ -137,7 +134,7 @@ export default function LogIn() {
               ...inputStyles,
               ...getInputStyles("password"),
             },
-          })}
+          }}
           error={errors.password?.message}
           required
           variant="filled"

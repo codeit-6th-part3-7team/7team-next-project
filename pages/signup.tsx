@@ -109,7 +109,7 @@ export default function SignUp() {
           label="이름"
           placeholder="이름을 입력해주세요"
           {...register("name")}
-          styles={(theme) => ({
+          styles={{
             label: {
               ...labelStyles,
             },
@@ -117,10 +117,7 @@ export default function SignUp() {
               ...inputStyles,
               ...getInputStyles("name"),
             },
-            placeholder: {
-              color: theme.colors.gray[4],
-            },
-          })}
+          }}
           error={errors.name?.message}
           required
           variant="filled"
@@ -131,7 +128,7 @@ export default function SignUp() {
           type="email"
           placeholder="이메일을 입력해주세요"
           {...register("email")}
-          styles={() => ({
+          styles={{
             label: {
               ...labelStyles,
             },
@@ -139,7 +136,7 @@ export default function SignUp() {
               ...inputStyles,
               ...getInputStyles("email"),
             },
-          })}
+          }}
           error={errors.email?.message}
           required
           variant="filled"
@@ -149,7 +146,7 @@ export default function SignUp() {
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요"
           {...register("password")}
-          styles={() => ({
+          styles={{
             label: {
               ...labelStyles,
             },
@@ -157,7 +154,7 @@ export default function SignUp() {
               ...inputStyles,
               ...getInputStyles("password"),
             },
-          })}
+          }}
           error={errors.password?.message}
           required
           variant="filled"
@@ -167,21 +164,15 @@ export default function SignUp() {
           label="비밀번호 확인"
           placeholder="비밀번호를 입력해주세요"
           {...register("passwordConfirmation")}
-          styles={() => ({
+          styles={{
             label: {
               ...labelStyles,
             },
             input: {
               ...inputStyles,
               ...getInputStyles("passwordConfirmation"),
-              "&:focus-within": {
-                borderColor: "green",
-              },
             },
-            placeholder: {
-              color: errors.passwordConfirmation ? "red" : undefined,
-            },
-          })}
+          }}
           error={errors.passwordConfirmation?.message}
           required
           variant="filled"
