@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "@/apis/axios";
-import { signUpSchema } from "@/schema/userFormSchema";
-import { SignUpFormData } from "@/types/userFormData";
+import { baseSchema } from "@/schema/userFormSchema";
+import { LoginFormData } from "@/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Container, Group, Text, TextInput, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
@@ -34,49 +34,46 @@ const showNotification = (title: string, message: string, color: string) => {
   });
 };
 
-export default function SignUp() {
+const loginSchema = baseSchema.pick({ email: true, password: true });
+
+export default function LogIn() {
   const router = useRouter();
   const {
     control,
     handleSubmit,
     formState: { errors, isValid, touchedFields },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     mode: "onBlur",
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await axios.post("auth/signUp", {
-        name: data.name,
+      const response = await axios.post("auth/signIn", {
         email: data.email,
         password: data.password,
-        passwordConfirmation: data.passwordConfirmation,
       });
 
-      const { accessToken, refreshToken } = response.data;
-
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-
-      showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "#32A68A");
-      setTimeout(() => {
+      if (response.status === 200) {
+        const { accessToken, refreshToken } = response.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         router.push("/");
-      }, 2500);
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 400) {
-          showNotification("회원가입 실패!", "이미 존재하는 이메일입니다! 🤥", "#D14343");
+          showNotification("로그인 실패!", "이메일 또는 비밀번호가 일치하지 않습니다. 🤥", "#D14343");
         } else {
-          showNotification("회원가입 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
+          showNotification("로그인 실패!", `오류가 발생했습니다: ${error.response?.data.message || "알 수 없는 오류"}`, "#D14343");
         }
       } else {
-        showNotification("회원가입 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
+        showNotification("로그인 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "#D14343");
       }
     }
   };
 
-  const getClassName = (fieldName: keyof SignUpFormData) => {
+  const getClassName = (fieldName: keyof LoginFormData) => {
     if (errors[fieldName]) {
       return "border border-red-500 bg-red-100";
     }
@@ -94,27 +91,9 @@ export default function SignUp() {
   }, [router]);
 
   return (
-    <Container className="mt-[100px] flex flex-col items-center justify-center">
-      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">회원가입</Title>
+    <Container className="mt-[100px] flex flex-col items-center">
+      <Title className="mb-[32px] text-[24px] font-semibold leading-[32px] text-gray-500">로그인</Title>
       <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
-        <Group>
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                label="이름"
-                id="name"
-                placeholder="이름을 입력해주세요"
-                error={errors.name && <Text className="text-[14px] font-normal leading-[18px] text-red-500">{errors.name.message}</Text>}
-                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("name")}` }}
-                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              />
-            )}
-          />
-        </Group>
         <Group>
           <Controller
             name="email"
@@ -152,32 +131,12 @@ export default function SignUp() {
             )}
           />
         </Group>
-        <Group>
-          <Controller
-            name="passwordConfirmation"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                type="password"
-                label="비밀번호 확인"
-                id="passwordConfirmation"
-                placeholder="비밀번호를 입력해주세요"
-                error={errors.passwordConfirmation && <Text className="text-14 font-normal leading-[18px] text-red-500">{errors.passwordConfirmation.message}</Text>}
-                classNames={{ input: `h-[45px] w-full rounded-[10px] bg-gray-100 py-[10px] pl-[20px] outline-none ${getClassName("passwordConfirmation")}` }}
-                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-              />
-            )}
-          />
-        </Group>
         <Button type="submit" disabled={!isValid} className="h-[45px] w-full rounded-[10px] bg-green-200 text-[14px] font-semibold leading-[24px] text-white hover:bg-green-300 disabled:bg-gray-300">
-          가입하기
+          로그인
         </Button>
         <Group className="flex justify-center gap-[10px] text-[14px] font-normal leading-[24px] text-gray-400">
-          <Text>이미 회원이신가요?</Text>
-          <Link href="/login" className="text-green-200">
-            로그인하기
+          <Link href="/signup" className="text-green-200">
+            회원가입
           </Link>
         </Group>
       </form>
