@@ -1,8 +1,14 @@
 import axios from "axios";
 
+// NOTE 테스트용 myToken, header
+const myToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMxLCJ0ZWFtSWQiOiI2LTciLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTcxOTY0ODg5MCwiZXhwIjoxNzE5NjUwNjkwLCJpc3MiOiJzcC13aWtpZWQifQ.lMQCBTZu2F3yAl7zLBlcFXaLJ-6AZL6WrtvV1naWFsE";
 // note axios instance
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    Authorization: `Bearer ${myToken}`,
+  },
 });
 
 // note 요청 인터셉터

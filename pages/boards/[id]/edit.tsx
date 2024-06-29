@@ -10,11 +10,9 @@ import Header from "@/src/components/Header";
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
   let article;
-  let writer;
   try {
     const articleRes = await axios.get(`/articles/${String(id)}`);
     article = articleRes.data ?? [];
-    writer = articleRes.data.writer ?? [];
   } catch {
     return {
       notFound: true,
@@ -23,7 +21,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       article,
-      writer,
     },
   };
 }
@@ -33,18 +30,18 @@ interface ArticleType {
   content: string;
   image: string;
   updatedAt: Date;
-}
-interface WriterType {
-  id: number;
-  name: string;
+  writer: {
+    id: number;
+    name: string;
+  };
 }
 
-export default function EditBoard({ article, writer }: { article: ArticleType; writer: WriterType }) {
+export default function EditBoard({ article }: { article: ArticleType }) {
   const [value] = useState({
     title: article.title,
     content: article.content,
     image: article.image,
-    writer: writer.name,
+    writer: article.writer.name,
     updatedAt: article.updatedAt,
   });
   const router = useRouter();
@@ -52,7 +49,7 @@ export default function EditBoard({ article, writer }: { article: ArticleType; w
 
   const handleSubmit = async (values: { title: string; content: string; image?: string }) => {
     await axios.patch(`/articles/${id}`, values);
-    router.push("/boards");
+    router.push(`/boards/${id}`);
   };
 
   return (
