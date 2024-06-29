@@ -49,6 +49,8 @@ export default function Wiki() {
   // note mantine modal handler hook
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+
   // note api 호출, url 설정 effect
   useEffect(() => {
     const getWikiDataByCode = async () => {
@@ -87,6 +89,10 @@ export default function Wiki() {
     }
   };
 
+  const toggleProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
+  };
+
   return (
     <main className="max-w-[744px] w-full h-auto">
       <div className="w-full mx-4 mt-16 flex flex-col justify-between gap-4">
@@ -112,7 +118,7 @@ export default function Wiki() {
               </CopyButton>
             </div>
           </section>
-          <ProfileCard profileData={profileData} profileImage={wikiData.image} />
+          <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} />
           {/* content text */}
           <article className="w-[335px] h-auto pb-24 mt-14">{wikiData?.content}</article>
         </section>

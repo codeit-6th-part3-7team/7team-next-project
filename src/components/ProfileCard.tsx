@@ -1,11 +1,12 @@
+import ic_chevron from "@/public/ic_chevron.webp";
+import ic_profile_skeleton from "@/public/ic_profile_skeleton.webp";
 import { ProfileCardData } from "@/src/types/ProfileResponse";
 import Image from "next/image";
-
-import ic_profile_skeleton from "../../public/ic_profile_skeleton.webp";
 
 type ProfileCardProps = {
   profileData: ProfileCardData;
   profileImage: string | null;
+  toggleProfile: () => void;
 };
 
 const labels: Record<keyof ProfileCardData, string> = {
@@ -19,17 +20,24 @@ const labels: Record<keyof ProfileCardData, string> = {
   nationality: "국적",
 };
 
-export default function ProfileCard({ profileData, profileImage }: ProfileCardProps) {
+export default function ProfileCard({ profileData, profileImage, toggleProfile }: ProfileCardProps) {
   return (
-    <div className="mt-32 flex h-[670px] w-80 flex-col items-center gap-14 rounded-xl border-none px-4 shadow-lg shadow-gray-300">
-      <Image className="mt-14 h-[200px] w-[200px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} width={200} height={200} alt="프로필이미지" />
-      <div className="grid h-6 w-60 grid-cols-[75px_auto] gap-4">
-        {Object.entries(profileData).map(([key, value]) => (
-          <>
-            <span className="text-sm text-gray-400">{labels[key as keyof ProfileCardData]}</span>
-            <span className="text-sm text-gray-800">{value}</span>
-          </>
-        ))}
+    <div className="mt-3 flex h-[126px] w-[355px] flex-col gap-2 rounded-xl border-none px-5 py-4 shadow-lg shadow-gray-300">
+      <div className="flex gap-5">
+        <Image className="h-[62px] w-[62px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} width={200} height={200} alt="프로필이미지" />
+        <div className="flex h-[70px] w-[175px] flex-col gap-2 truncate">
+          {Object.entries(profileData).map(([key, value]) => (
+            <div key={key} className="flex gap-5">
+              <div className="w-20 text-12 text-gray-400">{labels[key as keyof ProfileCardData]}</div>
+              <div className="w-40 truncate text-12 text-gray-800">{value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mx-auto h-6 w-6">
+        <button type="button" onClick={toggleProfile}>
+          <Image src={ic_chevron} className="h-6 w-6" alt="프로필 정보 더보기" />
+        </button>
       </div>
     </div>
   );
