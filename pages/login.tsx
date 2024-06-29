@@ -1,5 +1,4 @@
 import axios, { isAxiosError } from "@/src/apis/axios";
-import Header from "@/src/components/Header";
 import { baseSchema } from "@/src/schema/userFormSchema";
 import { LoginFormData } from "@/src/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -104,63 +103,60 @@ export default function LogIn() {
   }, [router]);
 
   return (
-    <>
-      <Header />
-      <div className="mt-[100px] flex flex-col items-center">
-        <Title order={1} mb={32} size={24} c="gray.4">
-          로그인
-        </Title>
-        <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
-          <TextInput
-            id="email"
-            label="이메일"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            {...register("email")}
-            styles={{
-              label: {
-                ...labelStyles,
-              },
-              input: {
-                ...inputStyles,
-                ...getInputStyles("email"),
-              },
-            }}
-            error={errors.email?.message}
-            required
-            variant="filled"
-          />
-          <PasswordInput
-            id="password"
-            label="비밀번호"
-            placeholder="비밀번호를 입력해주세요"
-            {...register("password")}
-            styles={{
-              label: {
-                ...labelStyles,
-              },
-              input: {
-                ...inputStyles,
-                ...getInputStyles("password"),
-              },
-            }}
-            error={errors.password?.message}
-            required
-            variant="filled"
-          />
+    <div className="mt-[100px] flex flex-col items-center">
+      <Title order={1} mb={32} size={24} c="gray.4">
+        로그인
+      </Title>
+      <form onSubmit={handleSubmit(onSubmit)} className="my-0 flex w-[335px] flex-col gap-[24px] md:w-[400px]">
+        <TextInput
+          id="email"
+          label="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+          {...register("email")}
+          styles={{
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("email"),
+            },
+          }}
+          error={errors.email?.message}
+          required
+          variant="filled"
+        />
+        <PasswordInput
+          id="password"
+          label="비밀번호"
+          placeholder="비밀번호를 입력해주세요"
+          {...register("password")}
+          styles={{
+            label: {
+              ...labelStyles,
+            },
+            input: {
+              ...inputStyles,
+              ...getInputStyles("password"),
+            },
+          }}
+          error={errors.password?.message}
+          required
+          variant="filled"
+        />
 
-          <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
-            가입하기
-          </Button>
-          <Flex justify="center" gap={10} mt={10}>
-            <Link href="/signup" passHref>
-              <Text size="sm" c="green.1" style={{ cursor: "pointer" }}>
-                회원가입
-              </Text>
-            </Link>
-          </Flex>
-        </form>
-      </div>
-    </>
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
+          가입하기
+        </Button>
+        <Flex justify="center" gap={10} mt={10}>
+          <Link href="/signup" passHref>
+            <Text size="sm" c="green.1" style={{ cursor: "pointer" }}>
+              회원가입
+            </Text>
+          </Link>
+        </Flex>
+      </form>
+    </div>
   );
 }
