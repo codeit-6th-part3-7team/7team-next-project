@@ -6,7 +6,7 @@ export interface Article {
   image: string;
   code: string;
   name: string;
-  id: number;
+  id: string;
   totalCount: number;
 }
 

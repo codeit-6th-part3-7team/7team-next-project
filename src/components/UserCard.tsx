@@ -7,15 +7,14 @@ import Link from "next/link";
 import { UserCardProps } from "../types/wikiListTypes";
 
 export default function UserCard({ articles }: UserCardProps) {
+  const handleLinkClick = (id: string, code: string) => `/wiki/${id}?code=${encodeURIComponent(code)}`;
+
   return (
     <div>
       {articles.map((article) => (
         <div className="relative" key={article.id}>
-          <Link key={article.id} href={`/wiki/${article.id}`}>
-            <article
-              key={article.id}
-              className="flex-col justify-between sm:flex md:flex-row lg:flex-row w-[340px] md:w-[700px] lg:w-[860px] h-[150px] md:h-[140px] lg:h-[140px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-xl py-[24px]"
-            >
+          <Link href={handleLinkClick(article.id, article.code)} as={`/wiki/${article.id}`}>
+            <article className="flex-col justify-between sm:flex md:flex-row lg:flex-row w-[340px] md:w-[700px] lg:w-[860px] h-[150px] md:h-[140px] lg:h-[140px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-xl py-[24px]">
               <div className="flex">
                 <Image
                   src={article.image ? article.image : userImageNull}
@@ -38,7 +37,7 @@ export default function UserCard({ articles }: UserCardProps) {
               </div>
             </article>
           </Link>
-          <div className="absolute bottom-6 right-6">
+          <div className="absolute bottom-4 right-6">
             <CopyButton value={`${window.location.origin}/wiki/${article.id}`} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
