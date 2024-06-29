@@ -1,6 +1,22 @@
 import Parser from "html-react-parser";
-import { Box, Button, Flex } from "@mantine/core";
+import Image from "next/image";
+import { ActionIcon, Box, Button, Flex, useMatches } from "@mantine/core";
 import { useState } from "react";
+import IcoPencil from "@/public/assets/ic_pencil.svg";
+import IcoBin from "@/public/assets/ic_bin.svg";
+import Link from "next/link";
+
+export interface ArticleType {
+  id: number;
+  title: string;
+  content: string;
+  image: string;
+  updatedAt: Date;
+  writer: {
+    id: number;
+    name: string;
+  };
+}
 
 interface BoardProps {
   initialValues: ArticleType;
@@ -8,20 +24,18 @@ interface BoardProps {
 
 export default function Board({ initialValues }: BoardProps) {
   const [values] = useState(initialValues);
+  const btnColor = useMatches({
+    base: "transparent",
+    sm: "green",
+  });
+  const btnSize = useMatches({
+    base: "compact-xs",
+    sm: "sm",
+  });
 
   return (
     <div className="flex justify-center align-middle">
-      <Flex
-        direction="column"
-        w={{ base: "100%", lg: 1060 }}
-        mih={{ base: "calc(100vh - 130px)", sm: "calc(89vh - 130px)" }}
-        pt={46}
-        pb={30}
-        px={30}
-        mx={{ base: 0, sm: 60, lg: 0 }}
-        my={{ base: 0, sm: "5.5vh" }}
-        className="bg-white md:drop-shadow-md"
-      >
+      <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="40vh" pt={46} pb={30} px={30} mx={{ base: 20, sm: 60, lg: 0 }} my={{ base: 20, sm: 40, lg: 60 }} className="bg-white drop-shadow-md">
         <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{values.title}</h2>
         <Box my={24} className="order-3">
           <p className="text-12 text-gray-400 md:text-16">
@@ -29,15 +43,22 @@ export default function Board({ initialValues }: BoardProps) {
             <strong className="font-normal">{values.updatedAt instanceof Date ? values.updatedAt.toLocaleDateString() : new Date(values.updatedAt).toLocaleDateString()}</strong>
           </p>
         </Box>
-        <Flex direction="column" py={{ base: 16, sm: 20 }} flex="auto" className="order-7">
-          <Flex direction="column" pt={{ base: 16, sm: 20 }} className="flex-shrink flex-grow">
-            {Parser(values.content)}
-          </Flex>
+        <Flex direction="column" py={{ base: 16, sm: 20 }} className="order-4">
+          {Parser(values.content)}
         </Flex>
-        <Flex className="order-2 self-end">
-          <Button type="submit" color="green" mt={-31}>
+        <Flex gap={{ base: 12, lg: 14 }} mt={-31} className="order-2 self-end">
+          <Button href={`/boards/${values.id}/edit`} component={Link} type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm">
             수정하기
           </Button>
+          <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-sm">
+            <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
+          </ActionIcon>
+          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm">
+            삭제하기
+          </Button>
+          <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm">
+            <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
+          </ActionIcon>
         </Flex>
       </Flex>
     </div>

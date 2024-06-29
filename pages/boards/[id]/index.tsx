@@ -1,7 +1,9 @@
 import { GetServerSidePropsContext } from "next";
 import axios from "@/src/apis/axios";
-import Board from "@/src/components/Board";
-import { useState } from "react";
+import Board, { ArticleType } from "@/src/components/Board";
+import Header from "@/src/components/Header";
+import { Button, Flex } from "@mantine/core";
+import Link from "next/link";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
@@ -17,24 +19,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-export interface ArticleType {
-  title: string;
-  content: string;
-  image: string;
-  updatedAt: Date;
-  writer: {
-    id: number;
-    name: string;
-  };
-}
-
 export default function ArticlePage({ article }: { article: ArticleType }) {
   return (
     <>
-      <div>
+      <Header />
+      <Flex direction="column">
         <Board initialValues={article} />
-      </div>
-      <div />
+        <Flex justify="center" h={50}>
+          <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+            목록으로
+          </Button>
+        </Flex>
+      </Flex>
     </>
   );
 }
