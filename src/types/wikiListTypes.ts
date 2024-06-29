@@ -19,3 +19,10 @@ export interface PaginationProps {
   currentPage: number;
   onPageChange: (page: number) => void;
 }
+
+export interface SearchPros {
+  value: string;
+  setValue: (value: string) => void;
+  page: number;
+  setPage: (page: number) => void;
+}
