@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import ic_copy_link from "../../public/ic_copy_link.svg";
 
-const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
+const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
 export default function Wiki() {
@@ -88,28 +88,34 @@ export default function Wiki() {
   };
 
   return (
-    <main className="max-w-[1200px] w-full mx-auto ">
-      <div className="mx-4 flex justify-between gap-4">
-        <section className="w-[860px] h-full mt-40 relative">
-          <section className="w-[860px] h-28">
-            <div className="h-12 mb-12 flex justify-between">
-              <span className="leading-none text-50 font-semibold text-gray-800">{wikiData.name}</span>
-              <Button color="green.1" size="md" onClick={handleClickEdit}>
+    <main className="max-w-[744px] w-full h-auto">
+      <div className="w-full mx-4 mt-16 flex flex-col justify-between gap-4">
+        {/* content section*/}
+        <section className="w-[355px] h-full relative">
+          {/* content header */}
+          <section className="w-full h-[101px] flex flex-col justify-between">
+            {/* content header label */}
+            <div className="w-full h-[43px] flex justify-between">
+              <span className="leading-none text-32 font-semibold text-gray-800">{wikiData.name}</span>
+              <Button color="green.1" size="sm" onClick={handleClickEdit}>
                 위키 참여하기
               </Button>
               <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
             </div>
-            <CopyButton value={wikiUrl}>
-              {({ copied, copy }) => (
-                <Button color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} width={20} height={20} alt="위키링크복사하기" />} onClick={copy}>
-                  <span className="text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</span>
-                </Button>
-              )}
-            </CopyButton>
+            <div className="w-50">
+              <CopyButton value={wikiUrl}>
+                {({ copied, copy }) => (
+                  <Button size="sm" color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} alt="위키링크복사하기" />} onClick={copy}>
+                    <span className="text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</span>
+                  </Button>
+                )}
+              </CopyButton>
+            </div>
           </section>
-          <article className="w-[860px] h-auto pb-24 mt-14">{wikiData?.content}</article>
+          <ProfileCard profileData={profileData} profileImage={wikiData.image} />
+          {/* content text */}
+          <article className="w-[335px] h-auto pb-24 mt-14">{wikiData?.content}</article>
         </section>
-        <ProfileCard profileData={profileData} profileImage={wikiData.image} />
       </div>
     </main>
   );
