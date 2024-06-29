@@ -9,16 +9,6 @@ import { SignUpFormData } from "@/src/types/userFormData";
 import { signUpSchema } from "@/src/schema/userFormSchema";
 import axios, { isAxiosError } from "@/src/apis/axios";
 
-const showNotification = (title: string, message: string, color: string) => {
-  notifications.show({
-    color,
-    title,
-    message,
-    autoClose: 2000,
-    withCloseButton: true,
-  });
-};
-
 export default function SignUp() {
   const router = useRouter();
   const {
@@ -29,6 +19,16 @@ export default function SignUp() {
     resolver: zodResolver(signUpSchema),
     mode: "onBlur",
   });
+
+  const showNotification = (title: string, message: string, color: string) => {
+    notifications.show({
+      color,
+      title,
+      message,
+      autoClose: 2000,
+      withCloseButton: true,
+    });
+  };
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
@@ -61,29 +61,6 @@ export default function SignUp() {
     }
   };
 
-  const getInputStyles = (fieldName: keyof SignUpFormData) => {
-    if (errors[fieldName]) {
-      return {
-        borderColor: "#D14343",
-        backgroundColor: "#ffcdd2",
-      };
-    }
-    if (touchedFields[fieldName]) {
-      return {
-        borderColor: "#4CBFA4",
-        backgroundColor: "#EEF9F6",
-      };
-    }
-    return {};
-  };
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      router.push("/");
-    }
-  }, [router]);
-
   const labelStyles = {
     fontSize: 14,
     fontWeight: 400,
@@ -96,7 +73,36 @@ export default function SignUp() {
     borderRadius: "10px",
     marginBottom: 10,
     backgroundColor: "#F7F7FA",
+    "--input-bd-focus": "#4CBFA4",
+    "--input-placeholder-color": "#8F95B2",
   };
+
+  const getInputStyles = (fieldName: keyof SignUpFormData) => {
+    if (errors[fieldName]) {
+      return {
+        borderColor: "#D14343",
+        backgroundColor: "#ffcdd2",
+        "--input-placeholder-color": "#D14343",
+      };
+    }
+    if (touchedFields[fieldName]) {
+      return {
+        borderColor: "#4CBFA4",
+        backgroundColor: "#EEF9F6",
+        "--input-placeholder-color": "#4CBFA4",
+      };
+    }
+    return {
+      "--input-placeholder-color": "#8F95B2",
+    };
+  };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <div className="mt-[100px] flex flex-col items-center">
