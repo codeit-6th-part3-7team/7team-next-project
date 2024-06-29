@@ -6,8 +6,10 @@ import ImgLogo from "@/public/assets/img_logo.webp";
 import IcoBurger from "@/public/assets/ic_burger.svg";
 import IcoProfile from "@/public/assets/ic_profile.svg";
 import { notifications } from "@mantine/notifications";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathName = usePathname();
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogout = () => {
@@ -30,7 +32,7 @@ export default function Header() {
     } else {
       setLoggedIn(false);
     }
-  }, []);
+  }, [pathName]);
 
   return (
     <div className="h-20">

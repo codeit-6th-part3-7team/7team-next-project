@@ -147,7 +147,7 @@ export default function LogIn() {
         />
 
         <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
-          가입하기
+          로그인
         </Button>
         <Flex justify="center" gap={10} mt={10}>
           <Link href="/signup" passHref>
