@@ -1,4 +1,4 @@
-import { ProfileCardData } from "@/types/ProfileResponse";
+import { ProfileCardData } from "@/src/types/ProfileResponse";
 import Image from "next/image";
 
 import ic_profile_skeleton from "../../public/ic_profile_skeleton.webp";

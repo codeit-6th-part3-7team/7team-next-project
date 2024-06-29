@@ -1,8 +1,8 @@
-import axios from "@/apis/axios";
-import checkWikiStatus from "@/apis/checkWikiStatus";
-import EditWikiAuthModal from "@/components/EditWikiAuthModal";
-import ProfileCard from "@/components/ProfileCard";
-import { ProfileCardData, ProfileResponse } from "@/types/ProfileResponse";
+import axios from "@/src/apis/axios";
+import checkWikiStatus from "@/src/apis/checkWikiStatus";
+import EditWikiAuthModal from "@/src/components/EditWikiAuthModal";
+import ProfileCard from "@/src/components/ProfileCard";
+import { ProfileCardData, ProfileResponse } from "@/src/types/ProfileResponse";
 import { Button, CopyButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -88,7 +88,7 @@ export default function Wiki() {
   };
 
   return (
-    <main className="max-w-[1200px] w-full mx-auto">
+    <main className="max-w-[1200px] w-full mx-auto ">
       <div className="mx-4 flex justify-between gap-4">
         <section className="w-[860px] h-full mt-40 relative">
           <section className="w-[860px] h-28">
