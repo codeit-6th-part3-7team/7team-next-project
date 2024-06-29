@@ -9,7 +9,7 @@ import Header from "@/src/components/Header";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
-  let article;
+  let article: ArticleType | null = null;
   try {
     const articleRes = await axios.get(`/articles/${String(id)}`);
     article = articleRes.data ?? [];
