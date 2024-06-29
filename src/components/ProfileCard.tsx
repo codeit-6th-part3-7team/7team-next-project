@@ -23,28 +23,31 @@ const labels: Record<keyof ProfileCardData, string> = {
 
 export default function ProfileCard({ profileData, profileImage, toggleProfile, isProfileOpen }: ProfileCardProps) {
   return (
-    <div
-      className={`mt-3 flex w-[355px] flex-col items-center gap-2 rounded-xl border-none px-5 py-4 shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out 
-    ${isProfileOpen ? "h-[260px]" : "h-[126px]"}`}
+    <section
+      className={`flex flex-col rounded-xl border-none px-5 md:px-6 py-3 md:px-5 shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out 
+      ${isProfileOpen ? "h-[260px] md:h-[285px]" : "h-[126px] md:h-[130px]"}`}
     >
-      <div className="w-[315px] flex gap-5">
-        <Image className="h-[62px] w-[62px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} width={200} height={200} alt="프로필이미지" />
-        <div className={`flex flex-col gap-2 truncate transition-all duration-300 ease-in-out ${isProfileOpen ? "h-[205px]" : "h-[70px]"}`}>
+      <article className="flex-grow flex justify-start gap-5 md:gap-8">
+        <Image className="w-[62px] md:w-[71px] h-[62px] md:h-[71px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
+        <div
+          className={`flex flex-col gap-2 truncate transition-all duration-300 ease-in-out
+        ${isProfileOpen ? "h-[205px] md:h-[234px]" : "h-[70px] md:h-[80px]"}`}
+        >
           {Object.entries(profileData).map(([key, value]) => (
             <div key={key} className="flex gap-5">
-              <div className="w-20 text-12 text-gray-400">{labels[key as keyof ProfileCardData]}</div>
-              <div className="w-40 truncate text-12 text-gray-800">{value}</div>
+              <div className="w-20 text-12 md:text-14 text-gray-400">{labels[key as keyof ProfileCardData]}</div>
+              <div className="min-w-40 truncate text-12 md:text-14 text-gray-800">{value}</div>
             </div>
           ))}
         </div>
-      </div>
-      <button type="button" onClick={toggleProfile}>
+      </article>
+      <button className="mx-auto" type="button" onClick={toggleProfile}>
         <Image
           src={ic_chevron}
           className={`h-6 w-6 transform transition-transform duration-300 ease-in-out ${isProfileOpen ? "rotate-180" : ""}`}
           alt={`${isProfileOpen ? "프로필 상세 닫기" : "프로필 상세 보기"}`}
         />
       </button>
-    </div>
+    </section>
   );
 }
