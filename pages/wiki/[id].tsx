@@ -49,7 +49,7 @@ export default function Wiki() {
   // note mantine modal handler hook
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
-  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(true);
 
   // note api 호출, url 설정 effect
   useEffect(() => {
@@ -90,39 +90,41 @@ export default function Wiki() {
   };
 
   const toggleProfile = () => {
-    setIsOpenProfile(!isOpenProfile);
+    setIsProfileOpen(!isProfileOpen);
   };
 
   return (
-    <main className="max-w-[744px] w-full h-auto">
-      <div className="w-full mx-4 mt-16 flex flex-col justify-between gap-4">
-        {/* content section*/}
-        <section className="w-[355px] h-full relative">
-          {/* content header */}
-          <section className="w-full h-[101px] flex flex-col justify-between">
-            {/* content header label */}
-            <div className="w-full h-[43px] flex justify-between">
-              <span className="leading-none text-32 font-semibold text-gray-800">{wikiData.name}</span>
-              <Button color="green.1" size="sm" onClick={handleClickEdit}>
-                위키 참여하기
-              </Button>
-              <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
-            </div>
-            <div className="w-50">
-              <CopyButton value={wikiUrl}>
-                {({ copied, copy }) => (
-                  <Button size="sm" color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} alt="위키링크복사하기" />} onClick={copy}>
-                    <span className="text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</span>
-                  </Button>
-                )}
-              </CopyButton>
-            </div>
+    <>
+      <main className="max-w-[744px] h-full mx-auto">
+        <div className="min-w-[335px] mx-4 mt-16 flex flex-col justify-between gap-4">
+          {/* content section*/}
+          <section className="w-full h-full relative">
+            {/* content header */}
+            <section className="w-full h-[101px] flex flex-col justify-between">
+              {/* content header label */}
+              <div className="w-full h-[43px] px-auto flex justify-between">
+                <span className="leading-none text-32 font-semibold text-gray-800">{wikiData.name}</span>
+                <Button color="green.1" size="sm" onClick={handleClickEdit}>
+                  위키 참여하기
+                </Button>
+              </div>
+              <div className="w-50">
+                <CopyButton value={wikiUrl}>
+                  {({ copied, copy }) => (
+                    <Button size="sm" color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} alt="위키링크복사하기" />} onClick={copy}>
+                      <span className="text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</span>
+                    </Button>
+                  )}
+                </CopyButton>
+              </div>
+            </section>
+            <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
+            {/* content text */}
+            <article className="w-[335px] h-auto pb-24 mt-14">{wikiData?.content}</article>
           </section>
-          <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} />
-          {/* content text */}
-          <article className="w-[335px] h-auto pb-24 mt-14">{wikiData?.content}</article>
-        </section>
-      </div>
-    </main>
+        </div>
+      </main>
+      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
+    </>
   );
 }
