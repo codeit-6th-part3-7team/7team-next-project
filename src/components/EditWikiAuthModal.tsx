@@ -34,7 +34,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
 
   useEffect(() => {
     form.reset();
-  }, [opened]);
+  }, []);
 
   return (
     <Modal
