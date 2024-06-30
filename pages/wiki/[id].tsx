@@ -95,12 +95,12 @@ export default function Wiki() {
 
   return (
     <>
-      <main className="max-w-[744px] md:max-w-[1200px] h-full mx-auto">
+      <main className="max-w-[744px] md:max-w-[1200px] xl:max-w-[1520px] h-full mx-auto">
         <section className="mx-5 md:mx-20 mt-16 flex flex-col justify-between gap-3 md:gap-6">
           {/* content header */}
-          <div className="w-full flex flex-col justify-between gap-6 md:gap-8">
+          <div className="xl:max-w-[860px] xl:mr-[400px] flex flex-col justify-between gap-6 md:gap-8">
             {/* content header label */}
-            <div className="w-full h-[43px] px-auto flex justify-between">
+            <div className="h-[43px] px-auto flex justify-between">
               <span className="leading-none text-32 md:text-[48px] font-semibold text-gray-800">{wikiData.name}</span>
               <Button className="" color="green.1" size="sm" onClick={handleClickEdit}>
                 위키 참여하기
@@ -116,9 +116,11 @@ export default function Wiki() {
               </CopyButton>
             </div>
           </div>
-          <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
+          <div className="xl:fixed xl:top-[120px] xl:left-[70%]">
+            <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
+          </div>
           {/* content text */}
-          <article className="h-auto pb-24 mt-8">{wikiData?.content}</article>
+          <article className="h-auto pb-24 mt-8 xl:max-w-[860px] xl:mr-[400px]">{wikiData?.content}</article>
         </section>
       </main>
       <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
