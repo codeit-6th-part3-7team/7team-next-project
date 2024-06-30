@@ -1,4 +1,4 @@
-import authEditWiki from "@/apis/authEditWiki";
+import authEditWiki from "@/src/apis/authEditWiki";
 import { Button, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Image from "next/image";
@@ -34,7 +34,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
 
   useEffect(() => {
     form.reset();
-  }, [opened, form]);
+  }, []);
 
   return (
     <Modal

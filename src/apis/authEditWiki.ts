@@ -1,4 +1,4 @@
-import axiosInstance from "@/apis/axios";
+import axiosInstance from "@/src/apis/axios";
 import { notifications } from "@mantine/notifications";
 import { AxiosError } from "axios";
 
