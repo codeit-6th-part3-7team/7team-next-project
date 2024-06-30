@@ -1,13 +1,14 @@
 import Parser from "html-react-parser";
 import Image from "next/image";
 import { ActionIcon, Button, Flex, useMatches } from "@mantine/core";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import IcoPencil from "@/public/assets/ic_pencil.svg";
 import IcoBin from "@/public/assets/ic_bin.svg";
 import IcoHeart from "@/public/assets/ic_heart.svg";
 import IcoHeartOn from "@/public/assets/ic_heart_on.svg";
 import Link from "next/link";
 import axios from "@/src/apis/axios";
+import { useRouter } from "next/router";
 
 export interface ArticleType {
   id: number;
@@ -31,6 +32,7 @@ export default function Board({ initialValues }: BoardProps) {
   const [values] = useState(initialValues);
   const [like, setLike] = useState(initialValues.isLiked);
   const [likeCount, setLikeCount] = useState(initialValues.likeCount);
+  const router = useRouter();
   const btnColor = useMatches({
     base: "transparent",
     sm: "green",
@@ -49,6 +51,11 @@ export default function Board({ initialValues }: BoardProps) {
       setLikeCount((prevValue) => prevValue - 1);
     }
     setLike(!e.target.checked);
+  };
+
+  const handleDelete = async () => {
+    await axios.delete(`/articles/${values.id}`);
+    router.push("/boards");
   };
 
   return (
@@ -80,10 +87,10 @@ export default function Board({ initialValues }: BoardProps) {
           <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-sm">
             <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
           </ActionIcon>
-          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm">
+          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm" onClick={handleDelete}>
             삭제하기
           </Button>
-          <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm">
+          <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm" onClick={handleDelete}>
             <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
           </ActionIcon>
         </Flex>
