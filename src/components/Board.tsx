@@ -1,6 +1,6 @@
 import Parser from "html-react-parser";
 import Image from "next/image";
-import { ActionIcon, Button, Flex, useMatches } from "@mantine/core";
+import { ActionIcon, Button, Flex, Modal, useMatches } from "@mantine/core";
 import { ChangeEvent, useState } from "react";
 import IcoPencil from "@/public/assets/ic_pencil.svg";
 import IcoBin from "@/public/assets/ic_bin.svg";
@@ -9,6 +9,7 @@ import IcoHeartOn from "@/public/assets/ic_heart_on.svg";
 import Link from "next/link";
 import axios from "@/src/apis/axios";
 import { useRouter } from "next/router";
+import { useDisclosure } from "@mantine/hooks";
 
 export interface ArticleType {
   id: number;
@@ -32,6 +33,7 @@ export default function Board({ initialValues }: BoardProps) {
   const [values] = useState(initialValues);
   const [like, setLike] = useState(initialValues.isLiked);
   const [likeCount, setLikeCount] = useState(initialValues.likeCount);
+  const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const router = useRouter();
   const btnColor = useMatches({
     base: "transparent",
@@ -87,14 +89,33 @@ export default function Board({ initialValues }: BoardProps) {
           <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-sm">
             <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
           </ActionIcon>
-          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm" onClick={handleDelete}>
+          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm" onClick={openDeleteModal}>
             삭제하기
           </Button>
-          <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm" onClick={handleDelete}>
+          <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm" onClick={openDeleteModal}>
             <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
           </ActionIcon>
         </Flex>
       </Flex>
+      <Modal opened={deleteModalOpened} onClose={closeDeleteModal} size="xs" centered>
+        <Flex direction="column" align="center" gap={40}>
+          <p>정말 삭제하시겠습니까?</p>
+          <Flex gap={10}>
+            <Button
+              type="submit"
+              color="green"
+              onClick={() => {
+                handleDelete();
+              }}
+            >
+              삭제하기
+            </Button>
+            <Button variant="outline" color="green" onClick={closeDeleteModal}>
+              취소하기
+            </Button>
+          </Flex>
+        </Flex>
+      </Modal>
     </div>
   );
 }
