@@ -6,7 +6,7 @@ export interface Article {
   image: string;
   code: string;
   name: string;
-  id: number;
+  id: string;
   totalCount: number;
 }
 
@@ -18,4 +18,11 @@ export interface PaginationProps {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
+}
+
+export interface SearchPros {
+  value: string;
+  setValue: (value: string) => void;
+  page: number;
+  setPage: (page: number) => void;
 }

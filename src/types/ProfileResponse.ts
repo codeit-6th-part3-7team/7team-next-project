@@ -15,5 +15,5 @@ export type ProfileResponse = {
   image: string;
   code: string;
   name: string;
-  id: number;
+  id: string;
 };

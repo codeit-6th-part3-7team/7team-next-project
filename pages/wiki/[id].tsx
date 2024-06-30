@@ -1,24 +1,60 @@
-import axios from "@/src/apis/axios";
 import { ProfileResponse } from "@/src/types/ProfileResponse";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
-// 테스트 완료 후, code 변수 추가 할 때 삭제 예정
+import instance from "@/src/apis/axios";
 
 export default function Wiki() {
-  const [wikiData, setWikiData] = useState<ProfileResponse>();
+  const [wikiData, setWikiData] = useState<ProfileResponse | null>(null);
+  const router = useRouter();
+
+  const fetchWikiData = async (code: string) => {
+    try {
+      const response = await instance.get(`/profiles/${code}`);
+      setWikiData(response.data);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to fetch wiki data:", error);
+    }
+  };
 
   useEffect(() => {
-    const getWikiDataByCode = async () => {
-      const { data } = await axios.get(`profiles/${TEST_CODE}`);
-      // TODO : 프로필 데이터 호출 url path의 code 부분 변수로 수정 예정, 테스트용
-      if (data) {
-        setWikiData(data);
+    const { code, ...query } = router.query;
+
+    if (code && typeof code === "string") {
+      localStorage.setItem("code", code);
+      router.replace(
+        {
+          pathname: router.pathname,
+          query,
+        },
+        undefined,
+        { shallow: true },
+      );
+    } else {
+      const storedState = localStorage.getItem("code");
+      if (storedState) {
+        fetchWikiData(storedState);
       }
-    };
+    }
+  }, [router, router.query]);
 
-    getWikiDataByCode();
-  }, []);
-
-  return <div>{wikiData?.content}</div>;
+  return (
+    <div>
+      {wikiData ? (
+        <div>
+          <div>{wikiData.name}</div>
+          <div>{wikiData.birthday}</div>
+          <div>{wikiData.bloodType}</div>
+          <div>{wikiData.city}</div>
+          <div>{wikiData.nationality}</div>
+          <div>{wikiData.family}</div>
+          <div>{wikiData.job}</div>
+          <div>{wikiData.mbti}</div>
+          <div>{wikiData.content}</div>
+        </div>
+      ) : (
+        "Loading..."
+      )}
+    </div>
+  );
 }

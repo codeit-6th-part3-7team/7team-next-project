@@ -15,14 +15,6 @@
   font-style: normal;
 }
 
-:root {
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
-
 body {
   font-family: "Pretendard";
 }
