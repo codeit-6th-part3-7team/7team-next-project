@@ -24,20 +24,15 @@ const labels: Record<keyof ProfileCardData, string> = {
 export default function ProfileCard({ profileData, profileImage, toggleProfile, isProfileOpen }: ProfileCardProps) {
   return (
     <section
-      className={`xl:max-w-[320px] xl:h-[671px]
-      flex flex-col rounded-xl border-none px-5 py-3 md:px-5 md:py-6 xl:p-[30px] shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out 
-      ${isProfileOpen ? "h-[260px] md:h-[290px]" : "h-[126px] md:h-[130px]"}`}
+      className={`flex flex-col rounded-xl border-none px-5 py-3 shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out md:px-5 md:py-6 xl:h-[671px] xl:max-w-[320px] xl:p-[30px] ${isProfileOpen ? "h-[260px] md:h-[290px]" : "h-[126px] md:h-[130px]"}`}
     >
-      <article className="flex xl:flex-col flex-grow gap-5 md:gap-8 xl:gap-[30px]">
-        <Image className="size-[62px] md:size-[71px] xl:size-[200px] rounded-full object-cover xl:m-[30px]" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
-        <div
-          className={`flex flex-col gap-2 xl:gap-4 truncate transition-all duration-300 ease-in-out xl:h-[304px]
-        ${isProfileOpen ? "h-[205px] md:h-[234px]" : "h-[70px] md:h-[80px]"}`}
-        >
+      <article className="flex flex-grow gap-5 md:gap-8 xl:flex-col xl:gap-[30px]">
+        <Image className="size-[62px] rounded-full object-cover md:size-[71px] xl:m-[30px] xl:size-[200px]" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
+        <div className={`flex flex-col gap-2 truncate transition-all duration-300 ease-in-out xl:h-[304px] xl:gap-4 ${isProfileOpen ? "h-[205px] md:h-[234px]" : "h-[70px] md:h-[80px]"}`}>
           {Object.entries(profileData).map(([key, value]) => (
             <div key={key} className="flex gap-5">
               <div className="w-20 text-12 text-gray-400 md:text-14">{labels[key as keyof ProfileCardData]}</div>
-              <div className="min-w-40 truncate text-12 text-gray-800 md:text-14">{value}</div>
+              <div className="min-w-40 truncate text-12 text-gray-800 md:text-14">{value.length > 0 ? value : "정보없음"}</div>
             </div>
           ))}
         </div>

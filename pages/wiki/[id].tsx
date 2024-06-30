@@ -1,17 +1,16 @@
+import ic_copy_link from "@/public/ic_copy_link.svg";
 import axios from "@/src/apis/axios";
 import checkWikiStatus from "@/src/apis/checkWikiStatus";
 import EditWikiAuthModal from "@/src/components/EditWikiAuthModal";
 import ProfileCard from "@/src/components/ProfileCard";
 import { ProfileCardData, ProfileResponse } from "@/src/types/ProfileResponse";
-import { Button, CopyButton } from "@mantine/core";
+import { Button, Center, CopyButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import ic_copy_link from "../../public/ic_copy_link.svg";
-
-const TEST_CODE: string = "77348674-31f5-4d09-8c1c-c92a1af25f63";
+const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
 export default function Wiki() {
@@ -102,7 +101,7 @@ export default function Wiki() {
             {/* content header label */}
             <div className="h-[43px] px-auto flex justify-between">
               <span className="leading-none text-32 md:text-[48px] font-semibold text-gray-800">{wikiData.name}</span>
-              <Button className="" color="green.1" size="sm" onClick={handleClickEdit}>
+              <Button color="green.1" size="sm" onClick={handleClickEdit}>
                 위키 참여하기
               </Button>
             </div>
@@ -120,7 +119,18 @@ export default function Wiki() {
             <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
           </div>
           {/* content text */}
-          <article className="h-auto pb-24 mt-8 xl:max-w-[860px] xl:mr-[400px]">{wikiData?.content}</article>
+          {/* note 위키 콘텐츠 없을 때 조건부 렌더링 */}
+          {wikiData?.content.length > 0 ? (
+            <article className="h-auto pb-24 mt-8 xl:max-w-[860px] xl:mr-[400px]">{wikiData.content}</article>
+          ) : (
+            <div className="h-auto p-12 mt-8 xl:max-w-[860px] xl:mr-[400px] flex flex-col justify-center items-center bg-gray-100">
+              <span className="text-16 text-gray-400">아직 작성된 내용이 없네요</span>
+              <span className="text-16 text-gray-400">위키에 참여해 보세요!</span>
+              <Button className="mt-5" color="green.1" size="sm">
+                시작하기
+              </Button>
+            </div>
+          )}
         </section>
       </main>
       <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={TEST_CODE} />
