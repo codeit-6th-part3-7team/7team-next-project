@@ -1,10 +1,13 @@
 import Parser from "html-react-parser";
 import Image from "next/image";
-import { ActionIcon, Box, Button, Flex, useMatches } from "@mantine/core";
-import { useState } from "react";
+import { ActionIcon, Button, Flex, useMatches } from "@mantine/core";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import IcoPencil from "@/public/assets/ic_pencil.svg";
 import IcoBin from "@/public/assets/ic_bin.svg";
+import IcoHeart from "@/public/assets/ic_heart.svg";
+import IcoHeartOn from "@/public/assets/ic_heart_on.svg";
 import Link from "next/link";
+import axios from "@/src/apis/axios";
 
 export interface ArticleType {
   id: number;
@@ -16,6 +19,8 @@ export interface ArticleType {
     id: number;
     name: string;
   };
+  likeCount: number;
+  isLiked: boolean;
 }
 
 interface BoardProps {
@@ -24,6 +29,8 @@ interface BoardProps {
 
 export default function Board({ initialValues }: BoardProps) {
   const [values] = useState(initialValues);
+  const [like, setLike] = useState(initialValues.isLiked);
+  const [likeCount, setLikeCount] = useState(initialValues.likeCount);
   const btnColor = useMatches({
     base: "transparent",
     sm: "green",
@@ -33,16 +40,36 @@ export default function Board({ initialValues }: BoardProps) {
     sm: "sm",
   });
 
+  const handleHeart = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      await axios.post(`/articles/${values.id}/like`);
+      setLikeCount((prevValue) => prevValue + 1);
+    } else {
+      await axios.delete(`/articles/${values.id}/like`);
+      setLikeCount((prevValue) => prevValue - 1);
+    }
+    setLike(!e.target.checked);
+  };
+
   return (
     <div className="flex justify-center align-middle">
       <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="40vh" pt={46} pb={30} px={30} mx={{ base: 20, sm: 60, lg: 0 }} my={{ base: 20, sm: 40, lg: 60 }} className="bg-white drop-shadow-md">
         <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{values.title}</h2>
-        <Box my={24} className="order-3">
+        <Flex my={24} justify="space-between" className="order-3">
           <p className="text-12 text-gray-400 md:text-16">
             <strong className="mr-2 font-normal">{values.writer.name}</strong>
             <strong className="font-normal">{values.updatedAt instanceof Date ? values.updatedAt.toLocaleDateString() : new Date(values.updatedAt).toLocaleDateString()}</strong>
           </p>
-        </Box>
+          <label htmlFor="like" className="flex">
+            {like ? (
+              <Image src={IcoHeartOn} width={18} height={18} alt="아이콘" aria-hidden="true" className="mr-1" />
+            ) : (
+              <Image src={IcoHeart} width={18} height={18} alt="아이콘" aria-hidden="true" className="mr-1" />
+            )}
+            <span>{likeCount}</span>
+          </label>
+          <input type="checkbox" id="like" checked={like} onChange={handleHeart} className="hidden" />
+        </Flex>
         <Flex direction="column" py={{ base: 16, sm: 20 }} className="order-4">
           {Parser(values.content)}
         </Flex>
