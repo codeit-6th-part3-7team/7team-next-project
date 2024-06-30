@@ -24,7 +24,7 @@ const labels: Record<keyof ProfileCardData, string> = {
 export default function ProfileCard({ profileData, profileImage, toggleProfile, isProfileOpen }: ProfileCardProps) {
   return (
     <section
-      className={`flex flex-col rounded-xl border-none px-5 py-3 shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out md:px-5 md:py-6 xl:h-[671px] xl:max-w-[320px] xl:p-[30px] ${isProfileOpen ? "h-[260px] md:h-[290px]" : "h-[126px] md:h-[130px]"}`}
+      className={`flex flex-col rounded-xl border-none px-5 py-3 shadow-lg shadow-gray-300 transition-all duration-300 ease-in-out md:px-5 md:py-6 xl:h-[671px] xl:max-w-[320px] xl:p-[30px] ${isProfileOpen ? "h-[260px] md:h-[290px]" : "h-[126px] md:h-[135px]"}`}
     >
       <article className="flex flex-grow gap-5 md:gap-8 xl:flex-col xl:gap-[30px]">
         <Image className="size-[62px] rounded-full object-cover md:size-[71px] xl:m-[30px] xl:size-[200px]" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
