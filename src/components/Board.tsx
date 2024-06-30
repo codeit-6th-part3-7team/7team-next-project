@@ -52,7 +52,7 @@ export default function Board({ initialValues }: BoardProps) {
       await axios.delete(`/articles/${values.id}/like`);
       setLikeCount((prevValue) => prevValue - 1);
     }
-    setLike(!e.target.checked);
+    setLike(!like);
   };
 
   const handleDelete = async () => {
