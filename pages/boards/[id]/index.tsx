@@ -11,7 +11,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const articleRes = await axios.get(`/articles/${String(id)}`);
     article = articleRes.data ?? [];
-  } catch {}
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       article,
