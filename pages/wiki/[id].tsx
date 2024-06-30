@@ -4,7 +4,7 @@ import checkWikiStatus from "@/src/apis/checkWikiStatus";
 import EditWikiAuthModal from "@/src/components/EditWikiAuthModal";
 import ProfileCard from "@/src/components/ProfileCard";
 import { ProfileCardData, ProfileResponse } from "@/src/types/ProfileResponse";
-import { Button, Center, CopyButton } from "@mantine/core";
+import { Button, CopyButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import Image from "next/image";
@@ -94,13 +94,13 @@ export default function Wiki() {
 
   return (
     <>
-      <main className="max-w-[744px] md:max-w-[1200px] xl:max-w-[1520px] h-full mx-auto">
-        <section className="mx-5 md:mx-20 mt-16 flex flex-col justify-between gap-3 md:gap-6">
+      <main className="mx-auto h-full max-w-[744px] md:max-w-[1200px] xl:max-w-[1520px]">
+        <section className="mx-5 mt-16 flex flex-col justify-between gap-3 md:mx-20 md:gap-6">
           {/* content header */}
-          <div className="xl:max-w-[860px] xl:mr-[400px] flex flex-col justify-between gap-6 md:gap-8">
+          <div className="flex flex-col justify-between gap-6 md:gap-8 xl:mr-[400px] xl:max-w-[860px]">
             {/* content header label */}
-            <div className="h-[43px] px-auto flex justify-between">
-              <span className="leading-none text-32 md:text-[48px] font-semibold text-gray-800">{wikiData.name}</span>
+            <div className="px-auto flex h-[43px] justify-between">
+              <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px]">{wikiData.name}</span>
               <Button color="green.1" size="sm" onClick={handleClickEdit}>
                 위키 참여하기
               </Button>
@@ -109,21 +109,21 @@ export default function Wiki() {
               <CopyButton value={wikiUrl}>
                 {({ copied, copy }) => (
                   <Button size="sm" color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} alt="위키링크복사하기" />} onClick={copy}>
-                    <div className="truncate text-sm text-green-300 font-normal">{copied ? "Copied!" : wikiUrl}</div>
+                    <div className="truncate text-sm font-normal text-green-300">{copied ? "Copied!" : wikiUrl}</div>
                   </Button>
                 )}
               </CopyButton>
             </div>
           </div>
-          <div className="xl:fixed xl:top-[120px] xl:left-[70%]">
+          <div className="xl:fixed xl:left-[70%] xl:top-[120px]">
             <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
           </div>
           {/* content text */}
           {/* note 위키 콘텐츠 없을 때 조건부 렌더링 */}
           {wikiData?.content.length > 0 ? (
-            <article className="h-auto pb-24 mt-8 xl:max-w-[860px] xl:mr-[400px]">{wikiData.content}</article>
+            <article className="mt-8 h-auto pb-24 xl:mr-[400px] xl:max-w-[860px]">{wikiData.content}</article>
           ) : (
-            <div className="h-auto p-12 mt-8 xl:max-w-[860px] xl:mr-[400px] flex flex-col justify-center items-center bg-gray-100">
+            <div className="mt-8 flex h-auto flex-col items-center justify-center bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
               <span className="text-16 text-gray-400">아직 작성된 내용이 없네요</span>
               <span className="text-16 text-gray-400">위키에 참여해 보세요!</span>
               <Button className="mt-5" color="green.1" size="sm">
