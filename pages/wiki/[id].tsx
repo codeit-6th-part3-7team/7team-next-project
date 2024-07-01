@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import instance from "@/src/apis/axios";
 
 export default function Wiki() {
-  const [wikiData, setWikiData] = useState<ProfileResponse | null>(null);
+  const [wikiData, setWikiData] = useState<ProfileResponse>();
   const router = useRouter();
 
   const fetchWikiData = async (code: string) => {
