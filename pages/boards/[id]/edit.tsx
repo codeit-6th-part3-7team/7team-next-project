@@ -11,7 +11,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let article;
   let writer;
   try {
-    const articleRes = await axios.get(`/articles/${String(id)}`);
+    const articleRes = await axios.get(`/articles/${id}`);
     article = articleRes.data ?? [];
     writer = articleRes.data.writer ?? [];
   } catch {
@@ -21,6 +21,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
   return {
     props: {
+      id,
       article,
       writer,
     },
@@ -38,7 +39,7 @@ interface WriterType {
   name: string;
 }
 
-export default function EditBoard({ article, writer }: { article: ArticleType; writer: WriterType }) {
+export default function EditBoard({ id, article, writer }: { id: number; article: ArticleType; writer: WriterType }) {
   const [value] = useState({
     title: article.title,
     content: article.content,
@@ -47,11 +48,10 @@ export default function EditBoard({ article, writer }: { article: ArticleType; w
     updatedAt: article.updatedAt,
   });
   const router = useRouter();
-  const { id } = router.query;
 
   const handleSubmit = async (values: { title: string; content: string; image?: string }) => {
     await axios.patch(`/articles/${id}`, values);
-    router.push("/boards");
+    router.push(`/boards/${id}`);
   };
 
   return (
