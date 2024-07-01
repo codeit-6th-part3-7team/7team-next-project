@@ -6,6 +6,7 @@ import { Article } from "@/src/types/wikiListTypes";
 import Pagination from "@/src/components/Pagination";
 import NoSearchImage from "@/public/img_no_search.webp";
 import SearchFrom from "@/src/components/SearchFrom";
+import Header from "@/src/components/Header";
 
 export default function WikiList() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -39,21 +40,23 @@ export default function WikiList() {
 
   return (
     <>
-      <header>
-        <div>헤더</div>
+      <header className="mb-[40px] md:mb-[70px] lg:mb-[80px]">
+        <Header />
       </header>
       <div className="w-[350px] md:w-[700px] lg:w-[860px] m-auto">
         <main>
-          <SearchFrom value={value} setValue={setValue} page={page} setPage={setPage} />
-          <section className="w-[340px] md:w-[700px] lg:w-[860px] mb-[60px] m-auto my-4 px-4 text-[16px] font-[400] text-gray-400">
-            {value && searchResults.length > 0 ? (
-              <p>
-                &quot;{value}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
-              </p>
-            ) : (
-              <br />
-            )}
-          </section>
+          <div>
+            <SearchFrom value={value} setValue={setValue} page={page} setPage={setPage} />
+            <section className="w-[340px] md:w-[700px] lg:w-[860px] m-auto my-4 px-4 text-[16px] font-[400] text-gray-400">
+              {value && searchResults.length > 0 ? (
+                <p>
+                  &quot;{value}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
+                </p>
+              ) : (
+                <br />
+              )}
+            </section>
+          </div>
           <section className="h-[470px] my-20">
             {searchResults.length > 0 ? (
               searchResults.map((article) => <UserCard key={article.id} articles={[article]} />)
