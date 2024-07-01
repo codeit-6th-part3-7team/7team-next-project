@@ -3,7 +3,9 @@ import WikiEditor from "@/src/components/WikiEditor";
 export default function Wiki() {
   return (
     <div className="m-5">
-      <WikiEditor />
+      <div className="element">
+        <WikiEditor />
+      </div>
     </div>
   );
 }
