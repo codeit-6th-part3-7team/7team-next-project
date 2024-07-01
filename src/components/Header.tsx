@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <div className="h-[60px] md:h-[80px]">
-      <header className="fixed z-10 h-[60px] w-full bg-white px-[20px] drop-shadow-md md:h-[80px] md:px-20 md:px-[80px]">
+      <header className="fixed z-10 h-[60px] w-full bg-white px-[20px] drop-shadow-md md:h-[80px] md:px-[80px]">
         <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
@@ -24,7 +24,7 @@ export default function Header() {
           </Group>
           <Group>
             <Group visibleFrom="sm">
-              <Link href="/login" className="text-sm text-gray-400">
+              <Link href="/login" className="text-14 text-gray-400">
                 로그인
               </Link>
             </Group>
