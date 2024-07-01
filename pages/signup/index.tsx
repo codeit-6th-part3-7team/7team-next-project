@@ -25,7 +25,7 @@ export default function SignUp() {
       color,
       title,
       message,
-      autoClose: 2000,
+      autoClose: 1500,
       withCloseButton: true,
     });
   };
@@ -45,9 +45,7 @@ export default function SignUp() {
       localStorage.setItem("refreshToken", refreshToken);
 
       showNotification("회원가입 성공!", "가입이 완료되었습니다! 😊", "green.2");
-      setTimeout(() => {
-        router.push("/");
-      }, 2500);
+      router.push("/");
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 400) {
