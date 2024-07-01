@@ -61,22 +61,6 @@ export default function SignUp() {
     }
   };
 
-  const labelStyles = {
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#8F95B2",
-    marginBottom: 10,
-  };
-
-  const inputStyles = {
-    height: "45px",
-    borderRadius: "10px",
-    marginBottom: 10,
-    backgroundColor: "#F7F7FA",
-    "--input-bd-focus": "#4CBFA4",
-    "--input-placeholder-color": "#8F95B2",
-  };
-
   const getInputStyles = (fieldName: keyof SignUpFormData) => {
     if (errors[fieldName]) {
       return {
@@ -115,15 +99,22 @@ export default function SignUp() {
           label="이름"
           placeholder="이름을 입력해주세요"
           {...register("name")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("name"),
             },
-          }}
+          })}
           error={errors.name?.message}
           required
           variant="filled"
@@ -134,15 +125,22 @@ export default function SignUp() {
           type="email"
           placeholder="이메일을 입력해주세요"
           {...register("email")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("email"),
             },
-          }}
+          })}
           error={errors.email?.message}
           required
           variant="filled"
@@ -152,15 +150,22 @@ export default function SignUp() {
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요"
           {...register("password")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("password"),
             },
-          }}
+          })}
           error={errors.password?.message}
           required
           variant="filled"
@@ -170,15 +175,22 @@ export default function SignUp() {
           label="비밀번호 확인"
           placeholder="비밀번호를 입력해주세요"
           {...register("passwordConfirmation")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("passwordConfirmation"),
             },
-          }}
+          })}
           error={errors.passwordConfirmation?.message}
           required
           variant="filled"
