@@ -17,7 +17,7 @@ export default function SignUp() {
     formState: { errors, isValid, touchedFields },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
-    mode: "onBlur",
+    mode: "all",
   });
 
   const showNotification = (title: string, message: string, color: string) => {

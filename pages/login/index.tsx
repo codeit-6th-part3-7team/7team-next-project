@@ -20,7 +20,7 @@ export default function LogIn() {
     formState: { errors, isValid, touchedFields },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    mode: "onBlur",
+    mode: "all",
   });
 
   const showNotification = (title: string, message: string, color: string) => {
