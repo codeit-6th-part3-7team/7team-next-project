@@ -20,7 +20,7 @@ export default function LogIn() {
     formState: { errors, isValid, touchedFields },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    mode: "onBlur",
+    mode: "all",
   });
 
   const showNotification = (title: string, message: string, color: string) => {
@@ -57,22 +57,6 @@ export default function LogIn() {
         showNotification("로그인 실패!", "예기치 않은 오류가 발생했습니다. 다시 시도해주세요.🤥", "red.1");
       }
     }
-  };
-
-  const labelStyles = {
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#8F95B2",
-    marginBottom: 10,
-  };
-
-  const inputStyles = {
-    height: "45px",
-    borderRadius: "10px",
-    marginBottom: 10,
-    backgroundColor: "#F7F7FA",
-    "--input-bd-focus": "#4CBFA4",
-    "--input-placeholder-color": "#8F95B2",
   };
 
   const getInputStyles = (fieldName: keyof LoginFormData) => {
@@ -114,15 +98,22 @@ export default function LogIn() {
           type="email"
           placeholder="이메일을 입력해주세요"
           {...register("email")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("email"),
             },
-          }}
+          })}
           error={errors.email?.message}
           required
           variant="filled"
@@ -132,20 +123,26 @@ export default function LogIn() {
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요"
           {...register("password")}
-          styles={{
+          styles={(theme) => ({
             label: {
-              ...labelStyles,
+              fontSize: 14,
+              fontWeight: 400,
+              color: theme.colors.gray[3],
+              marginBottom: 10,
             },
             input: {
-              ...inputStyles,
+              height: "45px",
+              borderRadius: "10px",
+              marginBottom: 10,
+              backgroundColor: theme.colors.gray[0],
+              "--input-bd-focus": theme.colors.green[1],
               ...getInputStyles("password"),
             },
-          }}
+          })}
           error={errors.password?.message}
           required
           variant="filled"
         />
-
         <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
           로그인
         </Button>

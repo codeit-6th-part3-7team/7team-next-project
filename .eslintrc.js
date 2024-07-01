@@ -28,12 +28,6 @@ module.exports = {
         endOfLine: "auto",
       },
     ],
-    "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
-    // 'import/prefer-default-export': 'off',
-    // '@typescript-eslint/explicit-module-boundary-types': 'off',
-    "react/prop-types": "off",
-    "no-console": "error",
-    "react/jsx-props-no-spreading": "off",
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -42,6 +36,12 @@ module.exports = {
         },
       },
     ],
+    "react/react-in-jsx-scope": "off", // Next.js doesn't require React to be in scope
+    // 'import/prefer-default-export': 'off',
+    // '@typescript-eslint/explicit-module-boundary-types': 'off',
+    "react/prop-types": "off",
+    "no-console": "error",
+    "react/jsx-props-no-spreading": "off",
   },
   settings: {
     react: {
