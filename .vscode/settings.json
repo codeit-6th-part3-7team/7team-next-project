@@ -1,7 +1,6 @@
 {
   "files.eol": "\n",
   "editor.formatOnSave": true, // 저장시 format
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.fixAll.eslint": "explicit"
@@ -67,6 +66,5 @@
         }
       ]
     }
-  },
-  "cSpell.words": ["mantine", "mbti", "nprogress", "tabler", "tailwindcss", "tiptap", "webp"]
+  }
 }

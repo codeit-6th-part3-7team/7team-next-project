@@ -15,8 +15,20 @@
   font-style: normal;
 }
 
+:root {
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
+
 body {
   font-family: "Pretendard";
 }
 
-@media (max-width: 1200px) { body{overflow-x: hidden;} }
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
