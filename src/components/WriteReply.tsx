@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import instance from "../apis/axios";
 
-export default function WriteReply() {
+export default function WriteReply({ onUpdate }: { onUpdate: () => void }) {
   const [content, setContent] = useState("");
   const router = useRouter();
   const { id } = router.query;
@@ -11,6 +11,8 @@ export default function WriteReply() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await instance.post(`/articles/${id}/comments`, { content });
+    setContent("");
+    onUpdate();
   };
   return (
     <form onSubmit={handleSubmit} className="w-full">

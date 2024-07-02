@@ -66,7 +66,7 @@ export default function ArticlePage() {
       </Flex>
       <Flex direction="column" w={{ base: "100%", lg: 1060 }} px={{ base: 20, sm: 60, lg: 0 }}>
         <Flex>
-          <WriteReply />
+          <WriteReply onUpdate={handleLoad} />
         </Flex>
         <Flex direction="column" gap={{ base: 14, sm: 16, lg: 24 }} mt={{ base: 24, lg: 42 }}>
           {replies?.map((reply) => <Reply reply={reply} key={reply.id} />)}
