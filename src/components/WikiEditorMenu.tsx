@@ -30,6 +30,11 @@ export default function EditorMenu({ editor }: EditorMenuProps) {
         {/* note 단락 */}
         <Button onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")} iconName="bullet_list" alt="글머리기호" />
         <Button onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive("orderedList")} iconName="number_list" alt="글머리번호" />
+        <Button onClick={() => editor.chain().focus().setTextAlign("justify").run()} active={editor.isActive({ textAlign: "justify" })} iconName="number_list" alt="일반정렬" />
+        <Button onClick={() => editor.chain().focus().setTextAlign("left").run()} active={editor.isActive({ textAlign: "left" })} iconName="number_list" alt="왼쪽정렬" />
+        <Button onClick={() => editor.chain().focus().setTextAlign("center").run()} active={editor.isActive({ textAlign: "center" })} iconName="number_list" alt="가운데정렬" />
+        <Button onClick={() => editor.chain().focus().setTextAlign("right").run()} active={editor.isActive({ textAlign: "right" })} iconName="number_list" alt="오른쪽정렬" />
+        {/* todo 아이콘 추가하고 컴포넌트로 변경 */}
         <button type="button" onClick={() => editor.chain().focus().setHorizontalRule().run()} className="flex h-6 w-6 items-center justify-center">
           -
         </button>

@@ -4,7 +4,8 @@ import { useForm } from "@mantine/form";
 import Image from "next/image";
 import { useEffect } from "react";
 
-import ic_lock from "../../public/ic_lock.webp";
+import ic_lock from "@/public/ic_lock.webp";
+import { notifications } from "@mantine/notifications";
 
 type EditWikiAuthModalProps = {
   securityQuestion: string;
@@ -28,6 +29,11 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
     const res = await authEditWiki(value, wikiCode);
     if (res) {
       closeModal();
+      notifications.show({
+        title: "인증 성공",
+        message: "인증에 성공했습니다.",
+        color: "green",
+      });
       // todo 인증 성공 시 수정 컴포넌트 렌더링
     }
   };
