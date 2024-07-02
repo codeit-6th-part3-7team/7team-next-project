@@ -1,5 +1,5 @@
 import { Button, Flex, Textarea } from "@mantine/core";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import instance from "../apis/axios";
 
@@ -8,13 +8,12 @@ export default function WriteReply() {
   const router = useRouter();
   const { id } = router.query;
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("content", content);
-    await instance.post(`/articles/${id}/comments`, formData);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await instance.post(`/articles/${id}/comments`, { content });
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-full">
       <Flex className="relative">
         <Textarea
           name="content"

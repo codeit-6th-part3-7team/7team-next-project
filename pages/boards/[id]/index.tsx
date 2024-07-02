@@ -5,11 +5,13 @@ import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import WriteReply from "@/src/components/WriteReply";
+import Reply, { ReplyType } from "@/src/components/Reply";
 
 export default function ArticlePage() {
   const router = useRouter();
   const { id } = router.query;
   const [Article, setArticle] = useState<ArticleType | null>(null);
+  const [replies, setReplies] = useState<ReplyType[] | null>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +21,10 @@ export default function ArticlePage() {
     try {
       if (id !== undefined) {
         const response = await instance.get(`/articles/${id}`);
+        const replyResponse = await instance.get(`/articles/${id}/comments?limit=100`);
+
         setArticle(response.data);
+        setReplies(replyResponse.data.list);
       }
     } catch (e) {
       setError("게시글을 불러오는 중 오류가 발생했습니다.");
@@ -52,14 +57,21 @@ export default function ArticlePage() {
   }
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" align="center">
       <Board initialValues={Article} />
       <Flex justify="center" h={50}>
         <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
           목록으로
         </Button>
       </Flex>
-      <WriteReply />
+      <Flex direction="column" w={{ base: "100%", lg: 1060 }} px={{ base: 20, sm: 60, lg: 0 }}>
+        <Flex>
+          <WriteReply />
+        </Flex>
+        <Flex direction="column" gap={{ base: 14, sm: 16, lg: 24 }} mt={{ base: 24, lg: 42 }}>
+          {replies?.map((reply) => <Reply reply={reply} key={reply.id} />)}
+        </Flex>
+      </Flex>
     </Flex>
   );
 }
