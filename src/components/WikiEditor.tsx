@@ -8,7 +8,6 @@ import EditorMenu from "./EditorMenu";
 export default function WikiEditor() {
   const editor = useEditor({
     extensions: [
-      StarterKit,
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       StarterKit.configure({
         bulletList: {
@@ -41,7 +40,7 @@ export default function WikiEditor() {
 
   return (
     <>
-      <EditorMenu editor={editor} />
+      {editor && <EditorMenu editor={editor} />}
       <EditorContent editor={editor} />
     </>
   );
