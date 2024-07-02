@@ -9,7 +9,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
   let article: ArticleType | null = null;
   try {
-    const articleRes = await axios.get(`/articles/${String(id)}`);
+    const articleRes = await axios.get(`/articles/${id}`);
     article = articleRes.data ?? [];
   } catch {
     return {
