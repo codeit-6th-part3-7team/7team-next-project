@@ -1,6 +1,10 @@
-import { createTheme, MantineThemeOverride } from "@mantine/core";
+import { MantineThemeOverride, createTheme } from "@mantine/core";
 
 const theme: MantineThemeOverride = {
+  breakpoints: {
+    sm: "744px",
+    lg: "1200px",
+  },
   colors: {
     gray: [
       "#F7F7FA",
