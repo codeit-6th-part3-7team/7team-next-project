@@ -1,5 +1,5 @@
 import IcoBurger from "@/public/assets/ic_burger.svg";
-import ImgLogo from "@/public/assets/img_logo.webp";
+import ImgLogo from "@/public/assets/img_logo.svg";
 import { Group, Menu } from "@mantine/core";
 import { useState, useEffect } from "react";
 import Image from "next/image";
