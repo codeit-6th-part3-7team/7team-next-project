@@ -1,3 +1,6 @@
+import { Box, Button, Flex, Grid, useMatches } from "@mantine/core";
+import Image from "next/image";
+import Link from "next/link";
 import LandingImg_01 from "@/public/assets/img_landing_01.webp";
 import LandingImg_02 from "@/public/assets/img_landing_02.webp";
 import LandingImg_03 from "@/public/assets/img_landing_03.webp";
@@ -8,11 +11,6 @@ import LandingImg_07 from "@/public/assets/img_landing_07.webp";
 import LandingImg_08 from "@/public/assets/img_landing_08.webp";
 import LandingImg_09 from "@/public/assets/img_landing_09.webp";
 import LandingImg_10 from "@/public/assets/img_landing_10.webp";
-import Header from "@/src/components/Header";
-import { Box, Button, Flex, Grid, useMatches } from "@mantine/core";
-import Image from "next/image";
-import Link from "next/link";
-
 export default function Home() {
   const btnSize = useMatches({
     base: "lg",
@@ -20,7 +18,6 @@ export default function Home() {
   });
   return (
     <>
-      <Header />
       <div className="relative overflow-hidden">
         <div className="absolute -left-10 -right-10 bottom-0 h-56 translate-y-1/2 rounded-1/2 bg-gray-800" />
         <Flex bg="#F1F4FD" direction="column" align="center">
