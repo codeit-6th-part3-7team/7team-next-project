@@ -105,15 +105,18 @@ export default function Wiki() {
                 위키 참여하기
               </Button>
             </div>
-            <div className="w-50 md:w-[235px]">
-              <CopyButton value={wikiUrl}>
-                {({ copied, copy }) => (
-                  <Button size="sm" color={copied ? "gray.1" : "green.0"} leftSection={<Image src={ic_copy_link} alt="위키링크복사하기" />} onClick={copy}>
-                    <div className="truncate text-sm font-normal text-green-300">{copied ? "Copied!" : wikiUrl}</div>
-                  </Button>
-                )}
-              </CopyButton>
-            </div>
+            <CopyButton value={wikiUrl}>
+              {({ copied, copy }) => (
+                <button
+                  type="button"
+                  className={`flex h-[34px] max-w-[235px] items-center gap-1 rounded-[10px] px-[10px] text-green-300 ${copied ? "bg-gray-200" : "bg-green-100 hover:brightness-95"}`}
+                  onClick={copy}
+                >
+                  <Image className="h-5 w-5" src={ic_copy_link} alt="위키링크복사하기" />
+                  <div className="truncate text-sm font-normal">{copied ? "Copied!" : wikiUrl}</div>
+                </button>
+              )}
+            </CopyButton>
           </div>
           <div className="xl:fixed xl:left-[70%] xl:top-[120px]">
             <ProfileCard profileData={profileData} profileImage={wikiData.image} toggleProfile={toggleProfile} isProfileOpen={isProfileOpen} />
