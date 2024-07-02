@@ -35,8 +35,8 @@ export default function Header() {
   }, [pathName]);
 
   return (
-    <div className="h-20">
-      <header className="fixed z-10 h-20 w-full bg-white px-10 drop-shadow-md md:px-20">
+    <div className="h-[60px] md:h-[80px]">
+      <header className="fixed z-10 h-[60px] w-full bg-white px-[20px] drop-shadow-md md:h-[80px] md:px-[80px]">
         <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
