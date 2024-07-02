@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
-import { Button } from "@mantine/core";
+import { Box, Button, TextInput } from "@mantine/core";
 import Image from "next/image";
 import searchIcon from "@/public/assets/ic_search.svg";
 
@@ -28,16 +28,34 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <div className="mb-5 w-full rounded-md">
-      <form className="flex flex-row gap-2.5">
-        <div className="flex w-full flex-row gap-2.5 rounded-md bg-gray-100 px-3">
+      <form className="flex flex-row gap-[15px]">
+        <Box className="flex w-full flex-row items-center gap-2.5 rounded-md bg-gray-100 px-3">
           <Image src={searchIcon} alt="검색" width={22} height={22} />
-          <input placeholder="제목을 검색해주세요" value={searchValue} onChange={handleSearchChange} onKeyPress={handleSearchEnter} className="w-full bg-gray-100" />
-        </div>
-        <div className="w-[80px]">
-          <Button className="mr-5 h-[45px] w-[80px] rounded-md bg-green-200 text-14 text-white" onClick={handleSearchClick}>
-            검색
-          </Button>
-        </div>
+          <TextInput
+            placeholder="제목을 검색해주세요"
+            value={searchValue}
+            onChange={handleSearchChange}
+            onKeyPress={handleSearchEnter}
+            styles={{
+              input: { backgroundColor: "transparent", border: "none", width: "100%", "::placeholder": { color: "gray" } },
+            }}
+          />
+        </Box>
+        <Button
+          styles={{
+            root: {
+              height: "45px",
+              width: "80px",
+              backgroundColor: "#4CBFA4",
+              fontSize: "14px",
+              color: "white",
+              borderRadius: "md",
+            },
+          }}
+          onClick={handleSearchClick}
+        >
+          검색
+        </Button>
       </form>
     </div>
   );

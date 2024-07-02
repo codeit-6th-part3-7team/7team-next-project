@@ -14,11 +14,11 @@ function PostListTable({ posts }: Props) {
       <table className="mb-8 min-w-full overflow-hidden rounded-lg border border-gray-200 bg-white">
         <thead className="hidden border-b border-gray-200 bg-gray-100 sm:table-header-group">
           <tr className="text-16 font-normal text-gray-400">
-            <th className="w-12 px-2 py-3 text-center sm:w-[100px]">번호</th>
-            <th className="w-64 px-4 py-3 text-center">제목</th>
-            <th className="w-16 px-2 py-3 text-center sm:w-[110px]">작성자</th>
-            <th className="px-2 py-3 text-center sm:w-[100px]">좋아요</th>
-            <th className="w-24 px-2 py-3 text-center">작성일자</th>
+            <th className="w-12 px-2 py-3 text-center font-normal sm:w-[100px]">번호</th>
+            <th className="w-64 px-4 py-3 text-center font-normal">제목</th>
+            <th className="w-16 px-2 py-3 text-center font-normal sm:w-[110px]">작성자</th>
+            <th className="px-2 py-3 text-center font-normal sm:w-[100px]">좋아요</th>
+            <th className="w-24 px-2 py-3 text-center font-normal">작성일자</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-16 font-normal text-gray-800">

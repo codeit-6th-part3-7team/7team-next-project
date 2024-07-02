@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Group, Title, Text } from "@mantine/core";
+import { Card, Group, Text } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import Image from "next/image";
 import indexImage from "@/public/assets/img_card_section.png";
@@ -18,89 +18,78 @@ function BestPosts({ bestPosts }: Props) {
       {/* Desktop view */}
       <div className="hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-4">
         {bestPosts.map((post) => (
-          <div key={post.id} className="col-span-1 sm:col-span-1 lg:col-span-1" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
-            <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
-              <Card.Section>
-                <div className="relative h-[131px] overflow-hidden">
-                  <Image
-                    src={post.image ? post.image.src : indexImage}
-                    alt={post.image ? post.image.alt : "기본 이미지"}
-                    layout="responsive"
-                    width={250}
-                    height={131}
-                    objectFit="cover"
-                    className="rounded-t-md"
-                  />
+          <Card
+            key={post.id}
+            shadow="sm"
+            radius="md"
+            className="h-[200px] w-[250px] sm:w-[302px] lg:w-[250px]"
+            component="a"
+            href="/boards"
+            target="_self"
+            style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}
+          >
+            <Card.Section className="relative h-[131px]">
+              <div className="flex h-full items-center justify-center">
+                <div className="relative h-[131px] w-[250px] sm:h-[131px] sm:w-[302px] lg:h-[131px] lg:w-[250px]">
+                  <Image src={post.image ? post.image.src : indexImage} alt={post.image ? post.image.alt : "기본 이미지"} layout="fill" objectFit="cover" className="rounded-t-md" />
                 </div>
-              </Card.Section>
-              <Group className="p-[19px] pb-[14px]">
-                <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">
-                  {post.title}
-                </Title>
-                <Group className="flex justify-between">
-                  <Group className="flex gap-2">
-                    <Text className="text-14 text-gray-400">{post.writer.name}</Text>
-                    <Text className="text-14 text-gray-400">{formatDateToCustom(post.createdAt)}</Text>
-                  </Group>
-                  <Text className="flex gap-1 text-14 text-gray-400">
-                    <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likeCount}개
-                  </Text>
-                </Group>
+              </div>
+            </Card.Section>
+            <Text fw={600} mt={11} className="text-16 leading-6 text-gray-800">
+              {" "}
+              {post.title}
+            </Text>
+            <Group justify="space-between">
+              <Group justify="space-between" gap={8}>
+                <Text fw={500} className="text-12 text-gray-400">
+                  {post.writer.name}
+                </Text>
+                <Text fw={500} className="text-12 text-gray-400">
+                  {formatDateToCustom(post.createdAt)}
+                </Text>
               </Group>
-            </Card>
-          </div>
+              <Text fw={500} className="flex gap-1 text-12 text-gray-400">
+                <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likeCount}개
+              </Text>
+            </Group>
+          </Card>
         ))}
       </div>
 
       {/* Mobile view */}
-      <div className="sm:hidden lg:hidden">
-        <Carousel
-          slideSize="70%"
-          height={220}
-          slideGap="md"
-          align="start"
-          classNames={{
-            root: "overflow-visible",
-            container: "overflow-visible",
-          }}
-        >
-          {bestPosts.map((post) => (
-            <Carousel.Slide key={post.id}>
-              <div className="mx-2 sm:mx-2 lg:mx-2" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
-                <Card shadow="sm" radius="md" withBorder className="h-[220px] rounded-md" component="a" href="/boards" target="_self">
-                  <Card.Section>
-                    <div className="relative h-[131px] overflow-hidden">
-                      <Image
-                        src={post.image ? post.image.src : indexImage}
-                        alt={post.image ? post.image.alt : "기본 이미지"}
-                        layout="responsive"
-                        width={250}
-                        height={131}
-                        objectFit="cover"
-                        className="rounded-t-md"
-                      />
-                    </div>
-                  </Card.Section>
-                  <Group className="p-[19px] pb-[14px]">
-                    <Title order={2} className="mb-[14px] text-18 font-semibold leading-6 text-gray-800">
-                      {post.title}
-                    </Title>
-                    <Group className="flex justify-between">
-                      <Group className="flex gap-2">
-                        <Text className="text-14 text-gray-400">{post.writer.name}</Text>
-                        <Text className="text-14 text-gray-400">{formatDateToCustom(post.createdAt)}</Text>
-                      </Group>
-                      <Text className="flex gap-1 text-14 text-gray-400">
-                        <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likeCount}개
-                      </Text>
-                    </Group>
-                  </Group>
-                </Card>
-              </div>
-            </Carousel.Slide>
-          ))}
-        </Carousel>
-      </div>
+
+      <Carousel slideSize={250} height={200} align="start" slideGap="md" withControls={false} className="sm:hidden lg:hidden" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
+        {bestPosts.map((post) => (
+          <Carousel.Slide key={post.id}>
+            <Card shadow="sm" radius="md" className="h-[200px] w-[250px]" component="a" href="/boards" target="_self">
+              <Card.Section className="relative h-[131px]">
+                <div className="flex h-full items-center justify-center">
+                  <div className="relative h-[131px] w-[250px] sm:h-[131px] sm:w-[302px] md:h-[131px] md:w-[250px]">
+                    <Image src={post.image ? post.image.src : indexImage} alt={post.image ? post.image.alt : "기본 이미지"} layout="fill" objectFit="cover" className="rounded-t-md" />
+                  </div>
+                </div>
+              </Card.Section>
+              <Text fw={600} mt={11} className="text-16 leading-6 text-gray-800">
+                {" "}
+                {post.title}
+              </Text>
+              <Group justify="space-between">
+                <Group justify="space-between" gap={8}>
+                  <Text fw={500} className="text-12 text-gray-400">
+                    {post.writer.name}
+                  </Text>
+                  <Text fw={500} className="text-12 text-gray-400">
+                    {formatDateToCustom(post.createdAt)}
+                  </Text>
+                </Group>
+                <Text fw={500} className="flex gap-1 text-12 text-gray-400">
+                  <Image src={heart} alt="좋아요" width={18} height={18} /> {post.likeCount}개
+                </Text>
+              </Group>
+            </Card>
+          </Carousel.Slide>
+        ))}
+      </Carousel>
     </div>
   );
 }
