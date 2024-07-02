@@ -81,7 +81,7 @@ export default function WikiEdit() {
     <div className="m-3">
       <ProfileCardEditor profileData={profileData} profileImage={wikiData.image} />
       <div className="mt-3 flex flex-col gap-4">
-        <WikiEditor />
+        <WikiEditor initialData={wikiData.content} />
       </div>
     </div>
   );

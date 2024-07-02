@@ -7,7 +7,11 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import WikiEditorMenu from "./WikiEditorMenu";
 
-export default function WikiEditor() {
+type WikiEditorProps = {
+  initialData: string;
+};
+
+export default function WikiEditor({ initialData }: WikiEditorProps) {
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -32,21 +36,7 @@ export default function WikiEditor() {
       },
     },
     // todo initialValue prop으로 받아서 content 넣어주기
-    content: `
-    <h2>
-      제목1
-    </h2>
-    <p>
-      본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.
-    </p>
-    <br/>
-    <h2>
-      제목2
-    </h2>
-    <p>
-      내용입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.
-    </p>
-    `,
+    content: `${initialData ? initialData : "<h1>제목</h1><p>본문</p>"}`,
   });
 
   return (
