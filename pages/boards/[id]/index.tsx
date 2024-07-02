@@ -59,7 +59,7 @@ export default function ArticlePage() {
   return (
     <Flex direction="column" align="center">
       <Board initialValues={Article} />
-      <Flex justify="center" h={50}>
+      <Flex justify="center" mb={{ base: 40, lg: 60 }}>
         <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
           목록으로
         </Button>
@@ -69,7 +69,7 @@ export default function ArticlePage() {
           <WriteReply onUpdate={handleLoad} />
         </Flex>
         <Flex direction="column" gap={{ base: 14, sm: 16, lg: 24 }} mt={{ base: 24, lg: 42 }}>
-          {replies?.map((reply) => <Reply reply={reply} key={reply.id} />)}
+          {replies?.map((reply) => <Reply reply={reply} key={reply.id} onUpdate={handleLoad} />)}
         </Flex>
       </Flex>
     </Flex>

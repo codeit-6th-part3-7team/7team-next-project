@@ -25,6 +25,7 @@ export default function WriteReply({ onUpdate }: { onUpdate: () => void }) {
           py={13}
           px={15}
           value={content}
+          maxLength={500}
           onChange={(e) => setContent(e.target.value)}
           placeholder="댓글을 입력해주세요."
           className="w-full rounded-[10px] bg-gray-50"
