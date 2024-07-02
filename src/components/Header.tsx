@@ -15,7 +15,7 @@ export default function Header() {
               <Image src={ImgLogo} width={107} height={30} alt="로고" />
             </Link>
             <Group h="100%" gap={40} visibleFrom="sm">
-              <Link href="/wiki/wikiList" className="text-14 text-gray-800">
+              <Link href="/wikilist" className="text-14 text-gray-800">
                 위키목록
               </Link>
               <Link href="/boards" className="text-14 text-gray-800">
@@ -36,7 +36,7 @@ export default function Header() {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Link href="/wiki/wikiList" className="flex justify-center p-2 text-14 text-gray-800">
+                  <Link href="/wikilist" className="flex justify-center p-2 text-14 text-gray-800">
                     위키 목록
                   </Link>
                   <Link href="/boards" className="flex justify-center p-2 text-14 text-gray-800">
