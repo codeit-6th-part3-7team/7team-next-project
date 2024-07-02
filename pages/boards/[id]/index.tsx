@@ -4,6 +4,7 @@ import Board, { ArticleType } from "@/src/components/Board";
 import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import WriteReply from "@/src/components/WriteReply";
 
 export default function ArticlePage() {
   const router = useRouter();
@@ -58,6 +59,7 @@ export default function ArticlePage() {
           목록으로
         </Button>
       </Flex>
+      <WriteReply />
     </Flex>
   );
 }
