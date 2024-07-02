@@ -62,7 +62,7 @@ export default function Board({ initialValues }: BoardProps) {
 
   return (
     <div className="flex justify-center align-middle">
-      <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="40vh" pt={46} pb={30} px={30} mx={{ base: 20, sm: 60, lg: 0 }} my={{ base: 20, sm: 40, lg: 60 }} className="bg-white drop-shadow-md">
+      <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="40vh" pt={46} pb={30} px={30} mx={{ base: 20, sm: 60, lg: 0 }} className="rounded-[10px] bg-white drop-shadow-md">
         <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{values?.title}</h2>
         <Flex my={24} justify="space-between" className="order-3">
           <p className="text-12 text-gray-400 md:text-16">
