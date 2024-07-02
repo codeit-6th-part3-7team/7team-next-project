@@ -54,7 +54,7 @@ export default function WikiEditor() {
       {editor && <WikiEditorMenu editor={editor} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
-      <div className="prose prose-sm md:prose-base max-w-none">
+      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] px-3 shadow-md">
         <EditorContent editor={editor} className="w-full" />
       </div>
     </>
