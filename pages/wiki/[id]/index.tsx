@@ -13,41 +13,46 @@ import { useEffect, useState } from "react";
 const TEST_CODE: string = "9ac0573f-7daa-4e2d-a1a2-9c7f6c9c4823";
 // TODO 테스트 완료 후, code 변수 추가 할 때 삭제 예정
 
+const WIKI_INITIAL = {
+  id: 0,
+  code: "",
+  image: null,
+  city: "",
+  mbti: "",
+  job: "",
+  sns: "",
+  birthday: "",
+  nickname: "",
+  bloodType: "",
+  family: "",
+  nationality: "",
+  content: "",
+  teamId: "",
+  securityQuestion: "",
+  updatedAt: "",
+  name: "",
+};
+
+const PROFILE_INITIAL = {
+  city: "",
+  mbti: "",
+  job: "",
+  sns: "",
+  birthday: "",
+  nickname: "",
+  bloodType: "",
+  nationality: "",
+};
+
 export default function Wiki() {
-  const [wikiData, setWikiData] = useState<ProfileResponse>({
-    id: 0,
-    code: "",
-    image: null,
-    city: "",
-    mbti: "",
-    job: "",
-    sns: "",
-    birthday: "",
-    nickname: "",
-    bloodType: "",
-    family: "",
-    nationality: "",
-    content: "",
-    teamId: "",
-    securityQuestion: "",
-    updatedAt: "",
-    name: "",
-  });
-  const [profileData, setProfileData] = useState<ProfileCardData>({
-    city: "",
-    mbti: "",
-    job: "",
-    sns: "",
-    birthday: "",
-    nickname: "",
-    bloodType: "",
-    nationality: "",
-  });
+  const [wikiData, setWikiData] = useState<ProfileResponse>(WIKI_INITIAL);
+  const [profileData, setProfileData] = useState<ProfileCardData>(PROFILE_INITIAL);
   const [wikiUrl, setWikiUrl] = useState<string>("");
 
   // note mantine modal handler hook
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
+  // note profileCard(모바일, 태블릿) 상세보기 상태 state
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   // note api 호출, url 설정 effect
