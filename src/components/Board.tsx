@@ -67,7 +67,7 @@ export default function Board({ initialValues }: BoardProps) {
         <Flex my={24} justify="space-between" className="order-3">
           <p className="text-12 text-gray-400 md:text-16">
             <strong className="mr-2 font-normal">{values?.writer.name}</strong>
-            <strong className="font-normal">{values?.updatedAt.toLocaleDateString()}</strong>
+            <strong className="font-normal">{new Date(values?.updatedAt ?? "").toLocaleDateString()}</strong>
           </p>
           <label htmlFor="like" className="flex">
             {like ? (
