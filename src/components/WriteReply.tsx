@@ -32,7 +32,7 @@ export default function WriteReply({ onUpdate }: { onUpdate: () => void }) {
           styles={() => ({ input: { "--input-placeholder-color": "#8F95B2" } })}
         />
         <Flex justify="space-between" align="flex-end" className="absolute bottom-0 w-full px-[15px] py-[13px]">
-          <p className="text-gray-300">{content.length} / 500</p>
+          <p className="text-14 text-gray-300">{content.length} / 500</p>
           <Button type="submit" color="green" disabled={!content.length}>
             댓글 등록
           </Button>
