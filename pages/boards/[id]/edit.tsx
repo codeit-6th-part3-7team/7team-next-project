@@ -33,8 +33,12 @@ export default function EditBoard() {
       } else {
         router.push(`/boards/${id}`);
       }
-    } catch (e) {
-      setError(e);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e);
+      } else {
+        setError(new Error("알 수 없는 에러가 발생했습니다."));
+      }
     } finally {
       setLoading(false);
     }
@@ -48,8 +52,12 @@ export default function EditBoard() {
     setLoading(true);
     try {
       await instance.patch(`/articles/${id}`, data);
-    } catch (e) {
-      setError(e);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e);
+      } else {
+        setError(new Error("알 수 없는 에러가 발생했습니다."));
+      }
     } finally {
       setLoading(false);
       router.push(`/boards/${id}`);
