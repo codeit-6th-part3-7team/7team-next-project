@@ -26,7 +26,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
   const [colorClass, setColorClass] = useState("");
   const [linkValue, setLinkValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState(null);
 
   const handleColoring = () => {
     setColorClass(editor.isActive("textStyle", { color: colorValue }) ? "is-active" : "");
@@ -61,7 +61,6 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
 
     if (linkValue === "") {
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
       return;
     }
 
