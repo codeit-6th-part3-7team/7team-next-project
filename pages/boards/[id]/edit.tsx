@@ -19,10 +19,7 @@ export default function EditBoard() {
   const router = useRouter();
   const { id } = router.query;
 
-  const handleLoad = useCallback(async () => {
-    if (!id) {
-      return;
-    }
+  const handleLoad = async () => {
     setLoading(true);
     try {
       const userRes = await instance.get(`/users/me`);
@@ -42,7 +39,7 @@ export default function EditBoard() {
     } finally {
       setLoading(false);
     }
-  }, [id, router]);
+  };
 
   const handleSubmit = async (data: { title: string; content: string; image?: string }) => {
     if (!id) {
@@ -65,8 +62,10 @@ export default function EditBoard() {
   };
 
   useEffect(() => {
-    handleLoad();
-  }, [handleLoad]);
+    if (id) {
+      handleLoad();
+    }
+  }, [id]);
 
   if (loading) {
     return (

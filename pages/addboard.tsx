@@ -2,7 +2,7 @@ import WriteBoard from "@/src/components/WriteBoard";
 import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import instance from "@/src/apis/axios";
 
 export default function AddBoard() {
@@ -13,14 +13,14 @@ export default function AddBoard() {
     title: "",
     content: "",
     writer: "",
-    updatedAt: new Date(),
+    updatedAt: "",
   });
 
-  const handleLoad = useCallback(async () => {
+  const handleLoad = async () => {
     setLoading(true);
     try {
       const userRes = await instance.get("/users/me");
-      setValues((prevValue) => ({ ...prevValue, writer: userRes.data.name }));
+      setValues((prevValue) => ({ ...prevValue, writer: userRes.data.name, updatedAt: new Date().toLocaleDateString() }));
     } catch (e: unknown) {
       if (e instanceof Error) {
         setError(e);
@@ -30,7 +30,7 @@ export default function AddBoard() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   const handleSubmit = async (data: { title: string; content: string; image?: string }) => {
     setLoading(true);
@@ -50,7 +50,7 @@ export default function AddBoard() {
 
   useEffect(() => {
     handleLoad();
-  }, [handleLoad]);
+  }, []);
 
   if (loading) {
     return (
