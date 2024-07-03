@@ -127,7 +127,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
           my={{ base: 0, sm: "5.5vh" }}
           className="bg-white md:drop-shadow-md"
         >
-          <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">게시물 등록하기</h2>
+          <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{type === "edit" ? "게시물 수정하기" : "게시물 등록하기"}</h2>
           <Box my={24} className="order-3">
             <p className="text-12 text-gray-400 md:text-16">
               <strong className="mr-2 font-normal">{values.writer}</strong>

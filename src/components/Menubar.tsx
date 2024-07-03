@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Editor } from "@tiptap/react";
-import { ActionIcon, Button, ColorPicker, Flex, Modal, TextInput } from "@mantine/core";
+import { ActionIcon, Button, ColorPicker, Flex, Loader, Modal, TextInput } from "@mantine/core";
 import { useCallback, useState } from "react";
 import axios from "@/src/apis/axios";
 import iconBold from "@/public/assets/ic_bold.svg";
@@ -25,6 +25,8 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
   const [colorValue, handleColorChange] = useState("");
   const [colorClass, setColorClass] = useState("");
   const [linkValue, setLinkValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
 
   const handleColoring = () => {
     setColorClass(editor.isActive("textStyle", { color: colorValue }) ? "is-active" : "");
@@ -35,15 +37,20 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
     if (fileValue) {
       const formData = new FormData();
       formData.append("image", fileValue);
+      setLoading(true);
+      try {
+        const res = await axios.post("/images/upload", formData);
+        const { url } = res.data;
 
-      const res = await axios.post("/images/upload", formData);
-      const { url } = res.data;
-
-      editor.chain().focus().setImage({ src: url }).run();
-      editor.commands.createParagraphNear();
-
-      setTitleImage(url);
-      setFileValue(null);
+        editor.chain().focus().setImage({ src: url }).run();
+        setTitleImage(url);
+      } catch (e) {
+        setError(e);
+      } finally {
+        setLoading(false);
+        editor.commands.createParagraphNear();
+        setFileValue(null);
+      }
     }
   }, [editor, fileValue, setTitleImage]);
 
@@ -190,6 +197,16 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
         title="이미지 선택기"
       >
         <Flex direction="column">
+          {loading && (
+            <Flex justify="center" align="center" className="absolute inset-0 bg-white">
+              <Loader size="md" />
+            </Flex>
+          )}
+          {error && (
+            <Flex justify="center" align="center" className="absolute inset-0 bg-white">
+              {error?.message}
+            </Flex>
+          )}
           <FileInput value={fileValue} onChange={setFileValue} />
           <Flex justify="flex-end">
             <Button
