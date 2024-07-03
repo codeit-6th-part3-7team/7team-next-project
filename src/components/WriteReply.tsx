@@ -10,7 +10,7 @@ interface WriteReplyProps {
   replyId?: number;
 }
 
-export default function WriteReply({ type, onUpdate, replyId, initialValue }: WriteReplyProps) {
+export default function WriteReply({ type, onUpdate, replyId = 0, initialValue = "" }: WriteReplyProps) {
   const [content, setContent] = useState(initialValue);
   const router = useRouter();
   const { id } = router.query;
@@ -44,8 +44,8 @@ export default function WriteReply({ type, onUpdate, replyId, initialValue }: Wr
           styles={() => ({ input: { "--input-placeholder-color": "#8F95B2" } })}
         />
         <Flex justify="space-between" align="flex-end" className="absolute bottom-0 w-full px-[15px] py-[13px]">
-          <p className="text-14 text-gray-300">{content.length} / 500</p>
-          <Button type="submit" color="green" disabled={!content.length}>
+          <p className="text-14 text-gray-300">{content?.length} / 500</p>
+          <Button type="submit" color="green" disabled={!content?.length}>
             댓글 등록
           </Button>
         </Flex>
