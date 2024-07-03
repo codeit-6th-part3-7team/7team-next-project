@@ -75,7 +75,7 @@ export default function Wiki() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   // note 수정모드 여부 확인 state
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(true);
 
   // note api 호출, url 설정 effect
   useEffect(() => {
@@ -174,8 +174,8 @@ export default function Wiki() {
   return (
     <>
       {isEditing ? (
-        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px]" onSubmit={handleSubmit}>
-          <div className="flex h-10 items-center justify-between">
+        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px] md:mx-[60px] md:mt-[47px] md:gap-[10px]" onSubmit={handleSubmit}>
+          <div className="flex h-10 items-center justify-between md:mb-[10px]">
             <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px]">{wikiData.name}</span>
             <div className="flex gap-[10px]">
               <Button
@@ -184,6 +184,7 @@ export default function Wiki() {
                   width: "65px",
                   height: "40px",
                   border: "solid",
+                  borderWidth: "1px",
                   borderColor: theme.colors.green[1],
                   color: theme.colors.green[1],
                   "--button-hover": theme.colors.green[0],
@@ -198,6 +199,7 @@ export default function Wiki() {
                   width: "65px",
                   height: "40px",
                   border: "solid",
+                  borderWidth: "1px",
                   borderColor: theme.colors.green[1],
                 })}
               >
@@ -206,7 +208,7 @@ export default function Wiki() {
             </div>
           </div>
           <ProfileCardEditor profileData={profileData} profileImage={wikiData.image} handleChangeProfile={handleChangeProfile} />
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 md:mt-[30px]">
             <WikiEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} />
           </div>
         </form>
