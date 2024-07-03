@@ -20,7 +20,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
       <button
         key={i}
         onClick={() => onPageChange(i)}
-        className={`w-[45px] h-[45px] rounded-10 shadow-lg text-gray-400 focus:text-green-200 ${currentPage === i ? "text-green-200 font-[700]" : ""}`}
+        className={`h-[45px] w-[45px] rounded-10 text-gray-400  shadow-lg focus:text-green-200 ${currentPage === i ? "font-[700] text-green-200 " : ""}`}
         type="button"
       >
         {i}
@@ -29,7 +29,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
   }
 
   return (
-    <div className="flex justify-center mt-4 gap-3">
+    <div className="mt-4 flex justify-center gap-3">
       <div className="relative w-[45px] h-[45px]">
         <button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}

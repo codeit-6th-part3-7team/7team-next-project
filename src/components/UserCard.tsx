@@ -12,7 +12,7 @@ export default function UserCard({ articles }: UserCardProps) {
       {articles.map((article) => (
         <div className="relative" key={article.name}>
           <Link href={`/wiki/${article.name}`}>
-            <article className="flex-col justify-between sm:flex md:flex-row lg:flex-row w-[340px] md:w-[700px] lg:w-[860px] h-[150px] md:h-[140px] lg:h-[140px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-lg py-[24px]">
+            <article className="m-auto my-[24px] h-[150px] w-[340px] flex-col justify-between rounded-25 bg-[#fff] py-[24px] shadow-lg sm:flex md:h-[140px] md:w-[700px] md:flex-row lg:h-[140px] lg:w-[860px] lg:flex-row">
               <div className="flex">
                 <Image
                   src={article.image ? article.image : userImageNull}
