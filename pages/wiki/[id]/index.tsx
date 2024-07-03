@@ -46,6 +46,21 @@ const PROFILE_INITIAL = {
   nationality: "",
 };
 
+type RenderedHTMLProps = {
+  htmlContent: string;
+};
+
+function RenderedHTML({ htmlContent }: RenderedHTMLProps) {
+  function createMarkup() {
+    return { __html: htmlContent };
+  }
+  return (
+    <div className="rendered-html prose">
+      <div dangerouslySetInnerHTML={createMarkup()} />
+    </div>
+  );
+}
+
 export default function Wiki() {
   const [wikiData, setWikiData] = useState<ProfileResponse>(WIKI_INITIAL);
   const [profileData, setProfileData] = useState<ProfileCardData>(PROFILE_INITIAL);
@@ -100,7 +115,7 @@ export default function Wiki() {
       }
     };
     getWikiDataByCode();
-  }, [isEditing]);
+  }, [isEditing, answer]);
 
   const handleClickEdit = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -154,17 +169,6 @@ export default function Wiki() {
         color: "red",
       });
     }
-  };
-
-  const RenderedHTML = (htmlContent: string) => {
-    const createMarkup = () => {
-      return { __html: htmlContent };
-    };
-    return (
-      <div className="rendered-html prose">
-        <div dangerouslySetInnerHTML={createMarkup()} />
-      </div>
-    );
   };
 
   return (
@@ -237,7 +241,9 @@ export default function Wiki() {
             {/* content text */}
             {/* note 위키 콘텐츠 없을 때 조건부 렌더링 */}
             {wikiData?.content.length > 0 ? (
-              <article className="mt-8 h-auto pb-24 xl:mr-[400px] xl:max-w-[860px]">{RenderedHTML(wikiData.content)}</article>
+              <article className="mt-8 h-auto pb-24 xl:mr-[400px] xl:max-w-[860px]">
+                <RenderedHTML htmlContent={wikiData.content} />
+              </article>
             ) : (
               <div className="mt-8 flex h-auto flex-col items-center justify-center bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
                 <span className="text-16 text-gray-400">아직 작성된 내용이 없네요</span>
