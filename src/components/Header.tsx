@@ -89,7 +89,9 @@ export default function Header() {
                   </Link>
                 </Menu.Item>
                 <Menu.Item onClick={handleLogout}>
-                  <div className="flex justify-center p-2 text-14 text-gray-800">로그아웃</div>
+                  <Link href="/" className="flex justify-center p-2 text-14 text-gray-800">
+                    로그아웃
+                  </Link>
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
