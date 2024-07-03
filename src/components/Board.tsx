@@ -123,6 +123,5 @@ export default function Board({ initialValues, isMine }: BoardProps) {
         </Flex>
       </Modal>
     </>
-
   );
 }
