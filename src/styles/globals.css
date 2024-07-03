@@ -19,8 +19,4 @@ body {
   font-family: "Pretendard";
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+@media (max-width: 1200px) { body{overflow-x: hidden;} }

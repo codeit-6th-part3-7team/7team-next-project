@@ -1,19 +1,30 @@
 export type ProfileResponse = {
-  updatedAt: string;
-  securityQuestion: string;
-  teamId: string;
-  content: string;
-  nationality: string;
-  family: string;
-  bloodType: string;
-  nickname: string;
-  birthday: string;
-  sns: string;
-  job: string;
-  mbti: string;
-  city: string;
-  image: string;
+  id: number;
   code: string;
+  image: string | null;
+  city: string;
+  mbti: string;
+  job: string;
+  sns: string;
+  birthday: string;
+  nickname: string;
+  bloodType: string;
+  family: string;
+  nationality: string;
+  content: string;
+  teamId: string;
+  securityQuestion: string;
+  updatedAt: string;
   name: string;
-  id: string;
+};
+
+export type ProfileCardData = {
+  city: string;
+  mbti: string;
+  job: string;
+  sns: string;
+  birthday: string;
+  nickname: string;
+  bloodType: string;
+  nationality: string;
 };

@@ -38,21 +38,20 @@ export default function WikiList() {
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
   return (
-    <div className="w-[350px] md:w-[700px] lg:w-[860px] m-auto">
-      <header>
-        <div>헤더</div>
-      </header>
+    <div className="mt-[40px] md:mt-[60px] lg:mt-[80px] w-[350px] md:w-[700px] lg:w-[860px] m-auto">
       <main>
-        <SearchFrom value={value} setValue={setValue} page={page} setPage={setPage} />
-        <section className="w-[340px] md:w-[700px] lg:w-[860px] mb-[60px] m-auto my-4 px-4 text-[16px] font-[400] text-gray-400">
-          {value && searchResults.length > 0 ? (
-            <p>
-              &quot;{value}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
-            </p>
-          ) : (
-            <br />
-          )}
-        </section>
+        <div>
+          <SearchFrom value={value} setValue={setValue} page={page} setPage={setPage} />
+          <section className="w-[340px] md:w-[700px] lg:w-[860px] m-auto my-4 px-4 text-[16px] font-[400] text-gray-400">
+            {value && searchResults.length > 0 ? (
+              <p>
+                &quot;{value}&quot;님을 총<span className="text-green-200">&nbsp;{searchResults.length}</span>명 찾았습니다.
+              </p>
+            ) : (
+              <br />
+            )}
+          </section>
+        </div>
         <section className="h-[470px] my-20">
           {searchResults.length > 0 ? (
             searchResults.map((article) => <UserCard key={article.id} articles={[article]} />)
