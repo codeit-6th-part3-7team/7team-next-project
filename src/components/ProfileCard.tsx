@@ -32,7 +32,7 @@ export default function ProfileCard({ profileData, profileImage, toggleProfile, 
           {Object.entries(profileData).map(([key, value]) => (
             <div key={key} className="flex gap-5">
               <div className="w-20 text-12 text-gray-400 md:text-14">{labels[key as keyof ProfileCardData]}</div>
-              <div className="min-w-40 truncate text-12 text-gray-800 md:text-14">{value.length > 0 ? value : "정보없음"}</div>
+              <div className="min-w-40 truncate text-12 text-gray-800 md:text-14">{value && value.length > 0 ? value : "정보없음"}</div>
             </div>
           ))}
         </div>

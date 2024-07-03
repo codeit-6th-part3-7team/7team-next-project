@@ -7,13 +7,11 @@ import Link from "next/link";
 import { UserCardProps } from "../types/wikiListTypes";
 
 export default function UserCard({ articles }: UserCardProps) {
-  const handleLinkClick = (id: string, code: string) => `/wiki/${id}?code=${encodeURIComponent(code)}`;
-
   return (
     <div>
       {articles.map((article) => (
-        <div className="relative" key={article.id}>
-          <Link href={handleLinkClick(article.id, article.code)} as={`/wiki/${article.id}`}>
+        <div className="relative" key={article.name}>
+          <Link href={`/wiki/${article.name}`}>
             <article className="flex-col justify-between sm:flex md:flex-row lg:flex-row w-[340px] md:w-[700px] lg:w-[860px] h-[150px] md:h-[140px] lg:h-[140px] bg-[#fff] my-[24px] m-auto rounded-25 shadow-lg py-[24px]">
               <div className="flex">
                 <Image
@@ -38,14 +36,14 @@ export default function UserCard({ articles }: UserCardProps) {
             </article>
           </Link>
           <div className="absolute bottom-4 right-6">
-            <CopyButton value={`${window.location.origin}/wiki/${article.id}`} timeout={2000}>
+            <CopyButton value={`${window.location.origin}/wiki/${article.name}`} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
                   <button className="flex items-center w-[150px] md:w-[220px] lg:w-[220px] md:text-14 lg:text-14 font-[400] text-green-200 bg-green-100 rounded-10" type="button" onClick={copy}>
                     <ActionIcon variant="gradient" size="md" aria-label="위키 복사 버튼" gradient={{ from: "#EEF9F6", to: "#EEF9F6", deg: 90 }}>
                       {copied ? <IconCheck style={{ width: 20, color: "#4CBFA4" }} /> : <Image src={icCopy} alt="링크 복사 아이콘" style={{ width: 20 }} />}
                     </ActionIcon>
-                    <span className="truncate">{`${window.location.origin}/wiki/${article.id}`}</span>
+                    <span className="truncate">{`${window.location.origin}/wiki/${article.name}`}</span>
                   </button>
                 </Tooltip>
               )}
