@@ -70,7 +70,7 @@ export default function ArticlePage() {
           <span className="text-green-200">{replies?.length}</span>
         </Flex>
         <Flex>
-          <WriteReply onUpdate={handleLoad} />
+          <WriteReply type="submit" onUpdate={handleLoad} />
         </Flex>
         <Flex direction="column" gap={{ base: 14, sm: 16, lg: 24 }} mt={{ base: 24, lg: 42 }}>
           {replies?.map((reply) => <Reply reply={reply} key={reply.id} onUpdate={handleLoad} />)}

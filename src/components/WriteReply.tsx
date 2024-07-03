@@ -3,14 +3,26 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import instance from "../apis/axios";
 
-export default function WriteReply({ onUpdate }: { onUpdate: () => void }) {
-  const [content, setContent] = useState("");
+interface WriteReplyProps {
+  type: string;
+  onUpdate: () => void;
+  initialValue?: string;
+  replyId?: number;
+}
+
+export default function WriteReply({ type, onUpdate, replyId, initialValue }: WriteReplyProps) {
+  const [content, setContent] = useState(initialValue);
   const router = useRouter();
   const { id } = router.query;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await instance.post(`/articles/${id}/comments`, { content });
+    if (type === "edit") {
+      await instance.patch(`/comments/${replyId}`, { content });
+    }
+    if (type === "submit") {
+      await instance.post(`/articles/${id}/comments`, { content });
+    }
     setContent("");
     onUpdate();
   };
@@ -41,3 +53,8 @@ export default function WriteReply({ onUpdate }: { onUpdate: () => void }) {
     </form>
   );
 }
+
+WriteReply.defaultProps = {
+  initialValue: "",
+  replyId: 0,
+};

@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Flex, Modal, Textarea } from "@mantine/core";
+import { ActionIcon, Button, Flex, Modal } from "@mantine/core";
 import Image from "next/image";
 import ImgUser from "@/public/assets/user.svg";
 import IcoPencil from "@/public/assets/ic_pencil.svg";
@@ -6,6 +6,7 @@ import IcoBin from "@/public/assets/ic_bin.svg";
 import { useDisclosure } from "@mantine/hooks";
 import { FormEvent, useState } from "react";
 import instance from "../apis/axios";
+import WriteReply from "./WriteReply";
 
 export interface ReplyType {
   writer: {
@@ -21,19 +22,12 @@ export interface ReplyType {
 export default function Reply({ reply, onUpdate }: { reply: ReplyType; onUpdate: () => void }) {
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [onEdit, setOnEdit] = useState(false);
-  const [replyContent, setReplyContent] = useState(reply?.content);
+  const [replyContent] = useState(reply?.content);
 
   const handleDelete = async () => {
     await instance.delete(`/comments/${reply.id}`);
     onUpdate();
     closeDeleteModal();
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await instance.patch(`/comments/${reply.id}`, { content: replyContent });
-    setReplyContent("");
-    onUpdate();
   };
 
   return (
@@ -72,34 +66,7 @@ export default function Reply({ reply, onUpdate }: { reply: ReplyType; onUpdate:
               </ActionIcon>
             </Flex>
           </Flex>
-          {onEdit ? (
-            <form onSubmit={handleSubmit} className="w-full">
-              <Flex className="relative">
-                <Textarea
-                  name="content"
-                  variant="unstyled"
-                  size="md"
-                  mih={133}
-                  py={13}
-                  px={15}
-                  value={replyContent}
-                  maxLength={500}
-                  onChange={(e) => setReplyContent(e.target.value)}
-                  placeholder="댓글을 입력해주세요."
-                  className="w-full rounded-[10px] bg-gray-50"
-                  styles={() => ({ input: { "--input-placeholder-color": "#8F95B2" } })}
-                />
-                <Flex justify="space-between" align="flex-end" className="absolute bottom-0 w-full px-[15px] py-[13px]">
-                  <p className="text-14 text-gray-300">{replyContent.length} / 500</p>
-                  <Button type="submit" color="green" disabled={!replyContent.length}>
-                    댓글 등록
-                  </Button>
-                </Flex>
-              </Flex>
-            </form>
-          ) : (
-            <p className="text-14 text-gray-800 md:text-16">{reply?.content}</p>
-          )}
+          {onEdit ? <WriteReply type="edit" replyId={reply.id} onUpdate={onUpdate} initialValue={replyContent} /> : <p className="text-14 text-gray-800 md:text-16">{reply?.content}</p>}
           <span className="mt-[4px] text-12 text-gray-400 md:text-14">{new Date(reply?.updatedAt).toLocaleDateString()}</span>
         </Flex>
       </Flex>
