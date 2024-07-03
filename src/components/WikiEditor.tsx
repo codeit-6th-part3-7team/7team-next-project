@@ -7,7 +7,12 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import WikiEditorMenu from "./WikiEditorMenu";
 
-export default function WikiEditor() {
+type WikiEditorProps = {
+  initialData: string;
+  handleChangeContent: (value: string) => void;
+};
+
+export default function WikiEditor({ initialData, handleChangeContent }: WikiEditorProps) {
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -31,22 +36,10 @@ export default function WikiEditor() {
         class: "focus:outline-none",
       },
     },
-    // todo initialValue prop으로 받아서 content 넣어주기
-    content: `
-    <h2>
-      제목1
-    </h2>
-    <p>
-      본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.
-    </p>
-    <br/>
-    <h2>
-      제목2
-    </h2>
-    <p>
-      내용입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.본문입니다.
-    </p>
-    `,
+    content: `${initialData || "<h1>제목</h1><p>본문</p>"}`,
+    onUpdate: () => {
+      handleChangeContent(editor?.getHTML() || "");
+    },
   });
 
   return (
@@ -54,7 +47,7 @@ export default function WikiEditor() {
       {editor && <WikiEditorMenu editor={editor} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
-      <div className="prose prose-sm md:prose-base max-w-none">
+      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] p-3 shadow-lg shadow-gray-200">
         <EditorContent editor={editor} className="w-full" />
       </div>
     </>
