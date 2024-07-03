@@ -8,7 +8,7 @@ import instance from "@/src/apis/axios";
 export default function AddBoard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const [values, setValues] = useState({
     title: "",
     content: "",
@@ -55,7 +55,7 @@ export default function AddBoard() {
   if (error) {
     return (
       <Flex direction="column" justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
-        <p className="text-red-200">{error}</p>
+        <p className="text-red-200">{error?.message}</p>
         <Button href="/boards" component={Link} variant="outline" color="green" mt={4}>
           목록으로
         </Button>

@@ -5,17 +5,6 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import instance from "@/src/apis/axios";
 
-interface ArticleType {
-  title: string;
-  content: string;
-  image: string;
-  updatedAt: Date;
-}
-interface WriterType {
-  id: number;
-  name: string;
-}
-
 export default function EditBoard() {
   const [values, setValues] = useState({
     title: "",
@@ -26,7 +15,7 @@ export default function EditBoard() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
   const { id } = router.query;
 
@@ -49,7 +38,7 @@ export default function EditBoard() {
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, router]);
 
   const handleSubmit = async (data: { title: string; content: string; image?: string }) => {
     if (!id) {
