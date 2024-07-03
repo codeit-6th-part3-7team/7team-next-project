@@ -26,7 +26,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
   const [colorClass, setColorClass] = useState("");
   const [linkValue, setLinkValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const handleColoring = () => {
     setColorClass(editor.isActive("textStyle", { color: colorValue }) ? "is-active" : "");
@@ -44,8 +44,12 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
 
         editor.chain().focus().setImage({ src: url }).run();
         setTitleImage(url);
-      } catch (e) {
-        setError(e);
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e);
+        } else {
+          setError(new Error("알 수 없는 에러가 발생했습니다."));
+        }
       } finally {
         setLoading(false);
         editor.commands.createParagraphNear();

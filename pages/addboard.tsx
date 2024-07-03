@@ -21,8 +21,12 @@ export default function AddBoard() {
     try {
       const userRes = await instance.get("/users/me");
       setValues((prevValue) => ({ ...prevValue, writer: userRes.data.name }));
-    } catch (e) {
-      setError(e);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e);
+      } else {
+        setError(new Error("알 수 없는 에러가 발생했습니다."));
+      }
     } finally {
       setLoading(false);
     }
@@ -32,8 +36,12 @@ export default function AddBoard() {
     setLoading(true);
     try {
       await instance.post("/articles", data);
-    } catch (e) {
-      setError(e);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e);
+      } else {
+        setError(new Error("알 수 없는 에러가 발생했습니다."));
+      }
     } finally {
       setLoading(false);
       router.push("/boards");
