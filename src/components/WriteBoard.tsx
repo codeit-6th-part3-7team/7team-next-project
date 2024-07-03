@@ -16,7 +16,7 @@ const INITIAL_VALUES = {
   title: "",
   content: "",
   writer: "",
-  updatedAt: new Date(),
+  updatedAt: "",
 };
 
 export const WriteBoardType = {
@@ -35,6 +35,12 @@ type WriteBoardProps = {
   };
 };
 
+function extractTextFromHTML(htmlString) {
+  const regex = /<[^>]*>/g;
+  const pureText = htmlString.replace(regex, "");
+  return pureText;
+}
+
 export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }: WriteBoardProps) {
   const [values, setValues] = useState({
     title: initialValues.title,
@@ -44,8 +50,8 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
   });
   const [titleImage, setTitleImage] = useState("");
   const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
-  const [length, setLength] = useState<number | undefined>(initialValues.content.length ?? 0);
-  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(initialValues.content.replace(/ /g, "").length);
+  const [length, setLength] = useState<number | undefined>(extractTextFromHTML(initialValues.content).length ?? 0);
+  const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(extractTextFromHTML(initialValues.content).replace(/ /g, "").length);
   const inputSize = useMatches({
     base: "md",
     sm: "xl",
@@ -79,8 +85,8 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     ],
     content: values.content,
     onUpdate: () => {
-      setLength(editor?.getText().length);
-      setLengthExceptSpace(editor?.getText().replace(/ /g, "").length);
+      setLength(extractTextFromHTML(editor?.getHTML()).length);
+      setLengthExceptSpace(extractTextFromHTML(editor?.getHTML()).replace(/ /g, "").length);
       setSubmitDisabled(!(editor?.getText() !== "" && values.title.length !== 0));
       setValues((prevValues) => ({ ...prevValues, content: editor?.getHTML() || "" }));
     },
