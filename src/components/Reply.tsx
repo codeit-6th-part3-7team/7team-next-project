@@ -19,7 +19,7 @@ export interface ReplyType {
   id: number;
 }
 
-export default function Reply({ reply, onUpdate }: { reply: ReplyType; onUpdate: () => void }) {
+export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; isMine: boolean; onUpdate: () => void }) {
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [onEdit, setOnEdit] = useState(false);
   const [replyContent] = useState(reply?.content);
@@ -49,21 +49,25 @@ export default function Reply({ reply, onUpdate }: { reply: ReplyType; onUpdate:
           <Flex justify="space-between">
             <strong className="text-16 text-gray-800 md:text-18">{reply?.writer?.name}</strong>
             <Flex gap={{ base: 15, sm: 20 }}>
-              <ActionIcon variant="transparent" aria-label="수정하기">
-                <Image
-                  src={IcoPencil}
-                  width={24}
-                  height={24}
-                  alt="아이콘"
-                  aria-hidden="true"
-                  onClick={() => {
-                    setOnEdit(!onEdit);
-                  }}
-                />
-              </ActionIcon>
-              <ActionIcon variant="transparent" aria-label="삭제하기" onClick={openDeleteModal}>
-                <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
-              </ActionIcon>
+              {isMine && (
+                <>
+                  <ActionIcon variant="transparent" aria-label="수정하기">
+                    <Image
+                      src={IcoPencil}
+                      width={24}
+                      height={24}
+                      alt="아이콘"
+                      aria-hidden="true"
+                      onClick={() => {
+                        setOnEdit(!onEdit);
+                      }}
+                    />
+                  </ActionIcon>
+                  <ActionIcon variant="transparent" aria-label="삭제하기" onClick={openDeleteModal}>
+                    <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
+                  </ActionIcon>
+                </>
+              )}
             </Flex>
           </Flex>
           {onEdit ? <WriteReply type="edit" replyId={reply.id} onUpdate={onUpdate} initialValue={replyContent} /> : <p className="text-14 text-gray-800 md:text-16">{reply?.content}</p>}
