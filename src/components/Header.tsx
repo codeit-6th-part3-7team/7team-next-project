@@ -88,11 +88,6 @@ export default function Header() {
                     마이페이지
                   </Link>
                 </Menu.Item>
-                <Menu.Item>
-                  <Link href="/account-settings" className="flex justify-center p-2 text-14 text-gray-800">
-                    계정 설정
-                  </Link>
-                </Menu.Item>
                 <Menu.Item onClick={handleLogout}>
                   <div className="flex justify-center p-2 text-14 text-gray-800">로그아웃</div>
                 </Menu.Item>
