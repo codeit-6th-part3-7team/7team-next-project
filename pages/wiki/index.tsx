@@ -1,15 +1,12 @@
 import { GetServerSideProps } from "next";
 
 export default function WikiPage() {
-  // note
-  return;
+  return null;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    redirect: {
-      destination: "/wikilist",
-      permanent: false, // 301 Moved Permanently(false)
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = async () => ({
+  redirect: {
+    destination: "/wikilist",
+    permanent: true, // If true, HTTP 308; if false, HTTP 307
+  },
+});

@@ -1,5 +1,4 @@
 import ic_profile_skeleton from "@/public/ic_profile_skeleton.webp";
-// import { ProfileCardData } from "@/src/types/ProfileResponse";
 import { TextInput } from "@mantine/core";
 import Image from "next/image";
 import { ProfileCardData } from "../types/ProfileResponse";
@@ -7,6 +6,7 @@ import { ProfileCardData } from "../types/ProfileResponse";
 type ProfileCardProps = {
   profileData: ProfileCardData;
   profileImage: string | null;
+  handleChangeProfile: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const labels: Record<keyof ProfileCardData, string> = {
@@ -20,17 +20,20 @@ const labels: Record<keyof ProfileCardData, string> = {
   nationality: "국적",
 };
 
-export default function ProfileCardEditor({ profileData, profileImage }: ProfileCardProps) {
+export default function ProfileCardEditor({ profileData, profileImage, handleChangeProfile }: ProfileCardProps) {
   return (
-    <section className="flex h-[511px] flex-col items-center gap-5 rounded-xl border-none px-[34px] py-4 shadow-md shadow-gray-200">
+    <section className="flex h-[511px] flex-col items-center gap-5 rounded-xl border-none px-[34px] py-4 shadow-lg shadow-gray-200">
       <Image className="size-[62px] rounded-full object-cover" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
       <div className="flex flex-col gap-2">
-        <form className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {/* todo 프로필카드 초기데이터 prop 설정 후 map 함수 사용해서 렌더링 */}
           {Object.entries(profileData).map(([key, value]) => (
             <div key={key} className="flex items-center gap-5">
               <div className="w-[60px] text-12 text-gray-400 md:text-14">{labels[key as keyof ProfileCardData]}</div>
               <TextInput
+                key={key}
+                name={key}
+                onChange={handleChangeProfile}
                 placeholder="정보를 입력해 주세요"
                 styles={(theme) => ({
                   input: {
@@ -48,7 +51,7 @@ export default function ProfileCardEditor({ profileData, profileImage }: Profile
               />
             </div>
           ))}
-        </form>
+        </div>
       </div>
     </section>
   );

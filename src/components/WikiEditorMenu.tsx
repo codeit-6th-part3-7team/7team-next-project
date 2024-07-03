@@ -11,10 +11,7 @@ export default function EditorMenu({ editor }: EditorMenuProps) {
   }
 
   return (
-    <div
-      className="scrollbar-hide relative h-[60px] overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-50 px-5 py-[18px] shadow-md"
-      style={{ boxShadow: "inset -10px 0 30px -20px rgba(0, 0, 0, 0.3)" }}
-    >
+    <div className="scrollbar-hide relative h-[60px] overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
       <div className="flex w-[1000px] items-center gap-5">
         {/* note 글자모양 */}
         <Button onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} iconName="bold" alt="글자굵게" />

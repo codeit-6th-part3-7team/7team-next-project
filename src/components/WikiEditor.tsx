@@ -9,9 +9,10 @@ import WikiEditorMenu from "./WikiEditorMenu";
 
 type WikiEditorProps = {
   initialData: string;
+  handleChangeContent: (value: string) => void;
 };
 
-export default function WikiEditor({ initialData }: WikiEditorProps) {
+export default function WikiEditor({ initialData, handleChangeContent }: WikiEditorProps) {
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -35,8 +36,10 @@ export default function WikiEditor({ initialData }: WikiEditorProps) {
         class: "focus:outline-none",
       },
     },
-    // todo initialValue prop으로 받아서 content 넣어주기
-    content: `${initialData ? initialData : "<h1>제목</h1><p>본문</p>"}`,
+    content: `${initialData || "<h1>제목</h1><p>본문</p>"}`,
+    onUpdate: () => {
+      handleChangeContent(editor?.getHTML() || "");
+    },
   });
 
   return (
@@ -44,7 +47,7 @@ export default function WikiEditor({ initialData }: WikiEditorProps) {
       {editor && <WikiEditorMenu editor={editor} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
-      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] px-3 shadow-md">
+      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] p-3 shadow-lg shadow-gray-200">
         <EditorContent editor={editor} className="w-full" />
       </div>
     </>
