@@ -65,6 +65,10 @@ export default function ArticlePage() {
         </Button>
       </Flex>
       <Flex direction="column" w={{ base: "100%", lg: 1060 }} px={{ base: 20, sm: 60, lg: 0 }}>
+        <Flex gap={5} className="font-semibold" mb={{ base: 8, sm: 14 }}>
+          <span className="text-gray-800">댓글</span>
+          <span className="text-green-200">{replies?.length}</span>
+        </Flex>
         <Flex>
           <WriteReply onUpdate={handleLoad} />
         </Flex>
