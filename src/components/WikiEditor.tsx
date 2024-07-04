@@ -32,7 +32,9 @@ export default function WikiEditor({ initialData, title, handleChangeContent }: 
           keepAttributes: false,
         },
       }),
-      Image,
+      Image.configure({
+        inline: true,
+      }),
     ],
     editorProps: {
       attributes: {
