@@ -3,8 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "@/src/apis/axios";
 import { notifications } from "@mantine/notifications";
 import { useRef } from "react";
+import { useDisclosure } from "@mantine/hooks";
 import Button from "./WikiEditorButton";
 import Dropdown from "./HeadingsDropdown";
+import SetLinkModal from "./SetLinkModal";
 
 type EditorMenuProps = {
   editor: Editor;
@@ -13,6 +15,8 @@ type EditorMenuProps = {
 
 export default function EditorMenu({ editor, title }: EditorMenuProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [opened, { open: openLinkModal, close: closeLinkModal }] = useDisclosure(false);
 
   if (!editor) {
     return null;
@@ -60,6 +64,13 @@ export default function EditorMenu({ editor, title }: EditorMenuProps) {
     }
   };
 
+  const handleSetLink = (url: string) => {
+    if (url) {
+      const validUrl = url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`;
+      editor.chain().focus().extendMarkRange("link").setLink({ href: validUrl }).run();
+    }
+  };
+
   return (
     <div className="scrollbar-hide relative flex h-[60px] items-center justify-between gap-5 overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
       <span className="hidden leading-none xl:block xl:text-20 xl:font-semibold">{title}</span>
@@ -95,8 +106,9 @@ export default function EditorMenu({ editor, title }: EditorMenuProps) {
           <input ref={fileInputRef} id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleInputImage} />
         </label>
         {/* <Button onClick={() => {}} active={false} iconName="video" alt="비디오삽입" /> */}
-        <Button onClick={() => {}} active={false} iconName="link" alt="링크삽입" />
+        <Button onClick={openLinkModal} active={false} iconName="link" alt="링크삽입" />
       </div>
+      <SetLinkModal opened={opened} onClose={closeLinkModal} setLink={handleSetLink} />
     </div>
   );
 }
