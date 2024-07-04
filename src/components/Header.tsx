@@ -8,10 +8,24 @@ import IcoProfile from "@/public/assets/ic_profile.svg";
 import IcoAlarm from "@/public/assets/ic_alarm.svg";
 import { notifications } from "@mantine/notifications";
 import { usePathname } from "next/navigation";
+import { useDisclosure } from "@mantine/hooks";
+import { NotiData } from "@/src/types/NotificationResponse";
+import EditNotification from "./WikiEditNotification";
 
 export default function Header() {
   const pathName = usePathname();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [notiData, setNotiData] = useState<NotiData>({
+    totalCount: 0,
+    list: [
+      {
+        createdAt: "",
+        content: "",
+        id: 0,
+      },
+    ],
+  });
+  const [opened, { open: openNoti, close: closeNoti }] = useDisclosure(false);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -24,6 +38,14 @@ export default function Header() {
       autoClose: 2000,
       withCloseButton: true,
     });
+  };
+
+  const activeNoti = () => {
+    if (opened) {
+      closeNoti();
+    } else {
+      openNoti();
+    }
   };
 
   useEffect(() => {
@@ -57,7 +79,7 @@ export default function Header() {
             <Menu width={120} position="bottom" radius="md" shadow="md" withinPortal>
               <Group>
                 <Group>
-                  <Box style={{ position: "relative" }}>
+                  <Box style={{ position: "relative" }} onClick={activeNoti}>
                     <Image src={IcoAlarm} width={32} height={32} alt="알림" className="cursor-pointer" />
                     <Box>
                       <ThemeIcon radius="xl" size="xs" color="red" style={{ position: "absolute", top: 0, left: 15, fontSize: 12 }}>
@@ -144,6 +166,7 @@ export default function Header() {
           )}
         </Group>
       </header>
+      <EditNotification opened={opened} notiData={notiData} />
     </div>
   );
 }
