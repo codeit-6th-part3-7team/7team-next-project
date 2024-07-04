@@ -78,10 +78,10 @@ export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; i
         <Flex direction="column" align="center" gap={40}>
           <p>정말 삭제하시겠습니까?</p>
           <Flex gap={10}>
-            <Button type="submit" color="green" onClick={handleDelete}>
+            <Button type="submit" color="#4CBFA4" className="button" onClick={handleDelete}>
               삭제하기
             </Button>
-            <Button variant="outline" color="green" onClick={closeDeleteModal}>
+            <Button variant="outline" color="#4CBFA4" className="button" onClick={closeDeleteModal}>
               취소하기
             </Button>
           </Flex>

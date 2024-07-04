@@ -40,10 +40,6 @@ export default function Board({ initialValues, isMine }: BoardProps) {
     base: "transparent",
     sm: "#4CBFA4",
   });
-  const btnSize = useMatches({
-    base: "compact-xs",
-    sm: "sm",
-  });
 
   const handleHeart = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -71,16 +67,24 @@ export default function Board({ initialValues, isMine }: BoardProps) {
             </Box>
             {isMine && (
               <Flex gap={{ base: 12, lg: 14 }} className="float-right">
-                <Button href={`/boards/${values?.id}/edit`} component={Link} type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm">
+                <Button
+                  href={`/boards/${values?.id}/edit`}
+                  component={Link}
+                  type="submit"
+                  color={btnColor}
+                  w={{ sm: 120, lg: 140 }}
+                  h={{ base: 40, sm: 45 }}
+                  className="button mantine-visible-from-lg"
+                >
                   수정하기
                 </Button>
-                <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-sm">
+                <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-lg">
                   <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
                 </ActionIcon>
-                <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm" onClick={openDeleteModal}>
+                <Button type="submit" color={btnColor} w={{ sm: 120, lg: 140 }} h={{ base: 40, sm: 45 }} className="button mantine-visible-from-lg" onClick={openDeleteModal}>
                   삭제하기
                 </Button>
-                <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm" onClick={openDeleteModal}>
+                <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-lg" onClick={openDeleteModal}>
                   <Image src={IcoBin} width={24} height={24} alt="아이콘" aria-hidden="true" />
                 </ActionIcon>
               </Flex>
