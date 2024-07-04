@@ -69,7 +69,6 @@ export default function Wiki() {
         }
       }
     };
-
     getWikiDataByCode();
   }, [id]);
 
