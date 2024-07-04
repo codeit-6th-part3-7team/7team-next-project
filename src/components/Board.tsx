@@ -37,7 +37,7 @@ export default function Board({ initialValues }: BoardProps) {
   const router = useRouter();
   const btnColor = useMatches({
     base: "transparent",
-    sm: "green",
+    sm: "#4CBFA4",
   });
   const btnSize = useMatches({
     base: "compact-xs",
@@ -62,7 +62,17 @@ export default function Board({ initialValues }: BoardProps) {
 
   return (
     <div className="flex justify-center align-middle">
-      <Flex direction="column" w={{ base: "100%", lg: 1060 }} mih="40vh" pt={46} pb={30} px={30} mx={{ base: 20, sm: 60, lg: 0 }} my={{ base: 20, sm: 40, lg: 60 }} className="bg-white drop-shadow-md">
+      <Flex
+        direction="column"
+        w={{ base: "100%", lg: 1060 }}
+        mih="40vh"
+        pt={46}
+        pb={30}
+        px={30}
+        mx={{ base: 20, sm: 60, lg: 0 }}
+        my={{ base: 20, sm: 40, lg: 60 }}
+        className="rounded-[10px] bg-white drop-shadow-md"
+      >
         <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{values?.title}</h2>
         <Flex my={24} justify="space-between" className="order-3">
           <p className="text-12 text-gray-400 md:text-16">
@@ -83,13 +93,22 @@ export default function Board({ initialValues }: BoardProps) {
           {Parser(values?.content ?? "")}
         </Flex>
         <Flex gap={{ base: 12, lg: 14 }} mt={-31} className="order-2 self-end">
-          <Button href={`/boards/${values?.id}/edit`} component={Link} type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm">
+          <Button
+            href={`/boards/${values?.id}/edit`}
+            component={Link}
+            type="submit"
+            w={{ base: 90, sm: 140 }}
+            h={{ base: 40, sm: 45 }}
+            color={btnColor}
+            size={btnSize}
+            className="button mantine-visible-from-sm"
+          >
             수정하기
           </Button>
           <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-sm">
             <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
           </ActionIcon>
-          <Button type="submit" color={btnColor} size={btnSize} className="mantine-visible-from-sm" onClick={openDeleteModal}>
+          <Button type="submit" w={{ base: 90, sm: 140 }} h={{ base: 40, sm: 45 }} color={btnColor} size={btnSize} className="button mantine-visible-from-sm" onClick={openDeleteModal}>
             삭제하기
           </Button>
           <ActionIcon variant="transparent" aria-label="삭제하기" className="mantine-hidden-from-sm" onClick={openDeleteModal}>

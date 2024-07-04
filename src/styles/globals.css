@@ -24,3 +24,9 @@ body {
     overflow-x: hidden;
   }
 }
+
+.button:disabled,
+.button[data-disabled] {
+  color: #fff;
+  background-color: #c6cada;
+}
