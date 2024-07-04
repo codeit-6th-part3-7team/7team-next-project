@@ -1,10 +1,11 @@
 import IcoBurger from "@/public/assets/ic_burger.svg";
 import ImgLogo from "@/public/assets/img_logo.webp";
-import { Group, Menu } from "@mantine/core";
+import { Group, Menu, Box, ThemeIcon } from "@mantine/core";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import IcoProfile from "@/public/assets/ic_profile.svg";
+import IcoAlarm from "@/public/assets/ic_alarm.svg";
 import { notifications } from "@mantine/notifications";
 import { usePathname } from "next/navigation";
 
@@ -55,6 +56,17 @@ export default function Header() {
           {loggedIn ? (
             <Menu width={120} position="bottom" radius="md" shadow="md" withinPortal>
               <Group>
+                <Group>
+                  <Box style={{ position: "relative" }}>
+                    <Image src={IcoAlarm} width={32} height={32} alt="알림" className="cursor-pointer" />
+                    <Box>
+                      <ThemeIcon radius="xl" size="xs" color="red" style={{ position: "absolute", top: 0, left: 15, fontSize: 12 }}>
+                        {0}
+                      </ThemeIcon>
+                    </Box>
+                  </Box>
+                </Group>
+
                 <Menu.Target>
                   <Group>
                     <Group hiddenFrom="sm">
