@@ -63,7 +63,7 @@ export default function ArticlePage() {
     <Flex direction="column" align="center" my={{ base: 20, sm: 40, lg: 60 }}>
       <Board initialValues={article} isMine={(article?.writer.id ?? false) === myId} />
       <Flex justify="center" my={{ base: 40, lg: 60 }}>
-        <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+        <Button href="/boards" component={Link} variant="outline" color="#4CBFA4" px={40}>
           목록으로
         </Button>
       </Flex>
