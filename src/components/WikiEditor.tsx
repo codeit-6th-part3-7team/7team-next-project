@@ -1,4 +1,6 @@
 import { useEditor, EditorContent } from "@tiptap/react";
+import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
 import StarterKit from "@tiptap/starter-kit";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
@@ -9,10 +11,11 @@ import WikiEditorMenu from "./WikiEditorMenu";
 
 type WikiEditorProps = {
   initialData: string;
+  title: string;
   handleChangeContent: (value: string) => void;
 };
 
-export default function WikiEditor({ initialData, handleChangeContent }: WikiEditorProps) {
+export default function WikiEditor({ initialData, title, handleChangeContent }: WikiEditorProps) {
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -30,6 +33,10 @@ export default function WikiEditor({ initialData, handleChangeContent }: WikiEdi
           keepAttributes: false,
         },
       }),
+      Image.configure({
+        inline: true,
+      }),
+      Link,
     ],
     editorProps: {
       attributes: {
@@ -44,11 +51,17 @@ export default function WikiEditor({ initialData, handleChangeContent }: WikiEdi
 
   return (
     <>
-      {editor && <WikiEditorMenu editor={editor} />}
+      {editor && <WikiEditorMenu editor={editor} title={title} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
-      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] p-3 shadow-lg shadow-gray-200">
-        <EditorContent editor={editor} className="w-full" />
+      <div className="prose prose-sm md:prose-base min-h-[600px] max-w-none overflow-auto rounded-[10px] px-5 py-10 shadow-lg shadow-gray-200">
+        <EditorContent
+          editor={editor}
+          style={{
+            overflow: "auto",
+            minHeight: "500px",
+          }}
+        />
       </div>
     </>
   );

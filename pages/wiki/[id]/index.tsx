@@ -174,47 +174,51 @@ export default function Wiki() {
   return (
     <>
       {isEditing ? (
-        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px]" onSubmit={handleSubmit}>
-          <div className="flex h-10 items-center justify-between">
-            <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px]">{wikiData.name}</span>
-            <div className="flex gap-[10px]">
-              <Button
-                color="white"
-                style={(theme) => ({
-                  width: "65px",
-                  height: "40px",
-                  border: "solid",
-                  borderColor: theme.colors.green[1],
-                  color: theme.colors.green[1],
-                  "--button-hover": theme.colors.green[0],
-                })}
-              >
-                취소
-              </Button>
-              <Button
-                type="submit"
-                color="green.1"
-                style={(theme) => ({
-                  width: "65px",
-                  height: "40px",
-                  border: "solid",
-                  borderColor: theme.colors.green[1],
-                })}
-              >
-                저장
-              </Button>
+        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px] md:mx-[60px] md:mt-[47px] md:gap-[10px] xl:mx-auto xl:max-w-[1700px]" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[70%] xl:top-[120px] xl:flex-col-reverse">
+            <div className="flex h-10 items-center justify-between md:mb-[10px]">
+              <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">{wikiData.name}</span>
+              <div className="flex gap-[10px]">
+                <Button
+                  color="white"
+                  style={(theme) => ({
+                    width: "65px",
+                    height: "40px",
+                    border: "solid",
+                    borderWidth: "1px",
+                    borderColor: theme.colors.green[1],
+                    color: theme.colors.green[1],
+                    "--button-hover": theme.colors.green[0],
+                  })}
+                >
+                  취소
+                </Button>
+                <Button
+                  type="submit"
+                  color="green.1"
+                  style={(theme) => ({
+                    width: "65px",
+                    height: "40px",
+                    border: "solid",
+                    borderWidth: "1px",
+                    borderColor: theme.colors.green[1],
+                  })}
+                >
+                  저장
+                </Button>
+              </div>
             </div>
+            <ProfileCardEditor profileData={profileData} profileImage={wikiData.image} handleChangeProfile={handleChangeProfile} />
           </div>
-          <ProfileCardEditor profileData={profileData} profileImage={wikiData.image} handleChangeProfile={handleChangeProfile} />
-          <div className="flex flex-col gap-4">
-            <WikiEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} />
+          <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
+            <WikiEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} title={wikiData.name} />
           </div>
         </form>
       ) : (
         <main className="mx-auto h-full max-w-[744px] md:max-w-[1200px] xl:max-w-[1520px]">
           <section className="mx-5 mt-16 flex flex-col justify-between gap-3 md:mx-20 md:gap-6">
             {/* content header */}
-            <div className="flex flex-col justify-between gap-6 md:gap-8 xl:mr-[400px] xl:max-w-[860px]">
+            <div className="flex flex-col justify-between gap-6 md:gap-8 xl:mr-[450px] xl:max-w-[860px]">
               {/* content header label */}
               <div className="px-auto flex h-[43px] justify-between">
                 <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px]">{wikiData.name}</span>
