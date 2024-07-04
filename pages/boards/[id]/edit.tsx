@@ -2,7 +2,7 @@ import WriteBoard from "@/src/components/WriteBoard";
 import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import instance from "@/src/apis/axios";
 
 export default function EditBoard() {
