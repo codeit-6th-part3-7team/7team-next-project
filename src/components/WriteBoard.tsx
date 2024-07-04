@@ -49,7 +49,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     updatedAt: initialValues.updatedAt,
   });
   const [titleImage, setTitleImage] = useState("");
-  const [submitDisabled, setSubmitDisabled] = useState(initialValues === INITIAL_VALUES);
+  const [submitDisabled, setSubmitDisabled] = useState(initialValues.title === "" && initialValues.content === "");
   const [length, setLength] = useState<number | undefined>(extractTextFromHTML(initialValues.content).length ?? 0);
   const [lengthExceptSpace, setLengthExceptSpace] = useState<number | undefined>(extractTextFromHTML(initialValues.content).replace(/ /g, "").length);
   const inputSize = useMatches({
@@ -87,7 +87,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
     onUpdate: () => {
       setLength(extractTextFromHTML(editor?.getHTML()).length);
       setLengthExceptSpace(extractTextFromHTML(editor?.getHTML()).replace(/ /g, "").length);
-      setSubmitDisabled(!(editor?.getText() !== "" && values.title.length !== 0));
+      setSubmitDisabled(editor?.getText() === "" || values.title.length === 0);
       setValues((prevValues) => ({ ...prevValues, content: editor?.getHTML() || "" }));
     },
   });
@@ -98,7 +98,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prevValues) => ({ ...prevValues, title: e.target.value }));
-    setSubmitDisabled(!(editor?.getText() !== "" && e.target.value.length !== 0));
+    setSubmitDisabled(values.content.length === 0 || e.target.value.length === 0);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

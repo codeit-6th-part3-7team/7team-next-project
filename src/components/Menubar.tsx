@@ -182,6 +182,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
           <ColorPicker format="rgba" size="lg" value={colorValue} onChange={handleColorChange} />
           <Button
             type="submit"
+            className="button self-end"
             color="#4CBFA4"
             w={89}
             h={40}
@@ -190,7 +191,6 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
               handleColoring();
               closeColorPicker();
             }}
-            className="self-end"
           >
             선택
           </Button>
@@ -224,6 +224,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
           <Flex justify="flex-end">
             <Button
               type="submit"
+              className="button"
               color="#4CBFA4"
               disabled={!fileValue}
               w={89}
@@ -234,7 +235,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
                 closeUploader();
               }}
             >
-              선택
+              삽입하기
             </Button>
           </Flex>
         </Flex>
@@ -256,6 +257,7 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
           />
           <Button
             type="submit"
+            className="button self-end"
             color="#4CBFA4"
             disabled={!linkValue}
             w={89}
@@ -265,7 +267,6 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
               handleAnchoring();
               closeAnchor();
             }}
-            className="self-end"
           >
             만들기
           </Button>
