@@ -23,3 +23,9 @@ input.mantine-Input-input::placeholder {
 :root {
   --button-radius: 10px;
 }
+
+.button:disabled,
+.button[data-disabled] {
+  color: #fff;
+  background-color: #c6cada;
+}
