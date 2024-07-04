@@ -174,7 +174,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
             </Flex>
           </Flex>
           <Flex className="order-2 self-end">
-            <Button type="submit" w={{ base: 72, sm: 140 }} h={{ base: 40, sm: 45 }} color="#4CBFA4" mt={-31} disabled={submitDisabled}>
+            <Button type="submit" className="button" w={{ base: 90, sm: 140 }} h={{ base: 40, sm: 45 }} color="#4CBFA4" mt={-31} disabled={submitDisabled}>
               {type === WriteBoardType.Edit ? "수정하기" : "등록하기"}
             </Button>
           </Flex>
