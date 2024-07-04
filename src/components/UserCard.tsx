@@ -23,7 +23,7 @@ export default function UserCard({ articles }: UserCardProps) {
                   draggable="false"
                 />
                 <div>
-                  <span className="text-[24px] font-[600] gap-[14px]">{article.name}</span>
+                  <span className="gap-[14px] text-[24px] font-[600]">{article.name}</span>
                   <div className="text-[14px] font-[400] text-gray-400">
                     <span>{article.city}</span>
                     {article.city && article.nationality && <span>,&nbsp;</span>}
@@ -39,7 +39,7 @@ export default function UserCard({ articles }: UserCardProps) {
             <CopyButton value={`${window.location.origin}/wiki/${article.name}`} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                  <button className="flex items-center w-[150px] md:w-[220px] lg:w-[220px] md:text-14 lg:text-14 font-[400] text-green-200 bg-green-100 rounded-10" type="button" onClick={copy}>
+                  <button className="flex w-[150px] items-center rounded-10 bg-green-100 font-[400] text-green-200 md:w-[220px] md:text-14 lg:w-[220px] lg:text-14" type="button" onClick={copy}>
                     <ActionIcon variant="gradient" size="md" aria-label="위키 복사 버튼" gradient={{ from: "#EEF9F6", to: "#EEF9F6", deg: 90 }}>
                       {copied ? <IconCheck style={{ width: 20, color: "#4CBFA4" }} /> : <Image src={icCopy} alt="링크 복사 아이콘" style={{ width: 20 }} />}
                     </ActionIcon>

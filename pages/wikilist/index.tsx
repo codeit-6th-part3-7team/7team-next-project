@@ -38,7 +38,7 @@ export default function WikiList() {
   const searchResults = value ? articles.filter((article) => article.name.toLowerCase().includes(value.toLowerCase())) : articles;
 
   return (
-    <div className="mt-[40px] w-[350px] md:mt-[60px] md:w-[700px] lg:mt-[80px] lg:w-[860px] m-auto">
+    <div className="m-auto mt-[40px] w-[350px] md:mt-[60px] md:w-[700px] lg:mt-[80px] lg:w-[860px]">
       <main>
         <div>
           <SearchFrom value={value} setValue={setValue} page={page} setPage={setPage} />
@@ -57,12 +57,12 @@ export default function WikiList() {
             searchResults.map((article) => <UserCard key={article.id} articles={[article]} />)
           ) : (
             <div>
-              <div className="flex justify-center py-[32px] text-[18px] md:text-[20px] lg:text-[20px] font-[500] text-gray-400">
+              <div className="flex justify-center py-[32px] text-[18px] font-[500] text-gray-400 md:text-[20px] lg:text-[20px]">
                 <div className="flex-none">&quot;</div>
-                <div className="flex-none max-w-[100px] md:max-w-[200px] lg:max-w-[350px] truncate">{value}</div>
+                <div className="max-w-[100px] flex-none truncate md:max-w-[200px] lg:max-w-[350px]">{value}</div>
                 <div className="flex-none">&quot;과&#47;와 일치하는 검색 결과가 없어요.</div>
               </div>
-              <div className="w-[100px] md:w-[144px] lg:w-[144px] m-auto">
+              <div className="m-auto w-[100px] md:w-[144px] lg:w-[144px]">
                 <Image src={NoSearchImage} alt="검색 결과 없음 이미지" draggable="false" />
               </div>
             </div>

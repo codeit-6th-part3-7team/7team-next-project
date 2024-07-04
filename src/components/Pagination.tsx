@@ -20,7 +20,7 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
       <button
         key={i}
         onClick={() => onPageChange(i)}
-        className={`h-[45px] w-[45px] rounded-10 text-gray-400  shadow-lg focus:text-green-200 ${currentPage === i ? "font-[700] text-green-200 " : ""}`}
+        className={`h-[45px] w-[45px] rounded-10 text-gray-400 shadow-lg focus:text-green-200 ${currentPage === i ? "font-[700] text-green-200" : ""}`}
         type="button"
       >
         {i}
@@ -30,27 +30,27 @@ export default function Pagination({ totalPages, currentPage, onPageChange }: Pa
 
   return (
     <div className="mt-4 flex justify-center gap-3">
-      <div className="relative w-[45px] h-[45px]">
+      <div className="relative h-[45px] w-[45px]">
         <button
           onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
-          className="w-[45px] h-[45px] rounded-10 shadow-lg text-gray-400 focus:text-green-200"
+          className="h-[45px] w-[45px] rounded-10 text-gray-400 shadow-lg focus:text-green-200"
           type="button"
         >
-          <div className="absolute top-3 left-2">
+          <div className="absolute left-2 top-3">
             <Image src={leftArrow} alt="이전 화살표" width={24} height={24} draggable="false" />
           </div>
         </button>
       </div>
       {pageButtons}
-      <div className="relative w-[45px] h-[45px]">
+      <div className="relative h-[45px] w-[45px]">
         <button
           onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="w-[45px] h-[45px] rounded-10 shadow-lg text-gray-400 focus:text-green-200"
+          className="h-[45px] w-[45px] rounded-10 text-gray-400 shadow-lg focus:text-green-200"
           type="button"
         >
-          <div className="absolute top-3 right-2">
+          <div className="absolute right-2 top-3">
             <Image src={rightArrow} alt="다음 화살표" width={24} height={24} draggable="false" />
           </div>
         </button>
