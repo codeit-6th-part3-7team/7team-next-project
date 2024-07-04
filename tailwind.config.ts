@@ -4,6 +4,12 @@ const config: Config = {
   content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      screens: {
+        md: "744px",
+        // => @media (min-width: 744px) { ... }
+        xl: "1200px",
+        // => @media (min-width: 1280px) { ... }
+      },
       height: {
         "400": "400px",
       },

@@ -8,7 +8,6 @@ import SortDropdown from "@/src/components/boards/SortDropdown";
 import indexImage from "@/public/assets/img_card_section.png";
 import instance from "@/src/apis/axios";
 import { Post } from "@/src/types/boardTypes";
-import Header from "@/src/components/Header";
 
 function PostPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -114,30 +113,26 @@ function PostPage() {
     return <div>Loading...</div>;
   }
   return (
-    <>
-      <Header />
-
-      <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
-        <div className="mb-10 flex items-center justify-between">
-          <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
-          <Button
-            className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white hover:bg-green-300 md:w-[145px]"
-            onClick={() => {
-              window.location.href = "/addboard";
-            }}
-          >
-            게시물 등록하기
-          </Button>
-        </div>
-        {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
-        <div className="mb-8 gap-2.5 md:flex">
-          <SearchBar onSearch={handleSearch} />
-          <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
-        </div>
-        <PostListTable posts={posts} />
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
-      </Container>
-    </>
+    <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
+      <div className="mb-10 flex items-center justify-between">
+        <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
+        <Button
+          className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white hover:bg-green-300 md:w-[145px]"
+          onClick={() => {
+            window.location.href = "/addboard";
+          }}
+        >
+          게시물 등록하기
+        </Button>
+      </div>
+      {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
+      <div className="mb-8 gap-2.5 md:flex">
+        <SearchBar onSearch={handleSearch} />
+        <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
+      </div>
+      <PostListTable posts={posts} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
+    </Container>
   );
 }
 
