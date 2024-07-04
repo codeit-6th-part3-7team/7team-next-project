@@ -79,7 +79,7 @@ export default function EditBoard() {
     return (
       <Flex direction="column" justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
         <p className="text-red-200">{error?.message}</p>
-        <Button href="/boards" component={Link} variant="outline" color="green" mt={4}>
+        <Button href="/boards" component={Link} w={140} variant="outline" color="#4CBFA4" mt={4}>
           목록으로
         </Button>
       </Flex>
@@ -90,7 +90,7 @@ export default function EditBoard() {
     <Flex direction="column">
       <WriteBoard type="edit" initialValues={values} onSubmit={handleSubmit} />
       <Flex justify="center" h={50}>
-        <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+        <Button href="/boards" component={Link} w={140} variant="outline" color="#4CBFA4" px={40}>
           목록으로
         </Button>
       </Flex>
