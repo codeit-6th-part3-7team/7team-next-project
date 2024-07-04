@@ -12,7 +12,7 @@ export default function ArticlePage() {
   const { id } = router.query;
   const [article, setArticle] = useState<ArticleType | null>(null);
   const [replies, setReplies] = useState<ReplyType[] | null>([]);
-  const [myId, setMyId] = useState(0);
+  const [userId, setUserId] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ export default function ArticlePage() {
 
         setArticle(response.data);
         setReplies(replyResponse.data.list);
-        setMyId(userResponse.data.id);
+        setUserId(userResponse.data.id);
       }
     } catch (e) {
       setError("게시글을 불러오는 중 오류가 발생했습니다.");
@@ -61,7 +61,7 @@ export default function ArticlePage() {
 
   return (
     <Flex direction="column" align="center" my={{ base: 20, sm: 40, lg: 60 }}>
-      <Board initialValues={article} isMine={(article?.writer.id ?? false) === myId} />
+      <Board initialValues={article} isMine={(article?.writer.id ?? false) === userId} />
       <Flex justify="center" my={{ base: 40, lg: 60 }}>
         <Button href="/boards" component={Link} variant="outline" w={140} h={{ base: 40, sm: 45 }} color="#4CBFA4" px={40}>
           목록으로
@@ -76,7 +76,7 @@ export default function ArticlePage() {
           <WriteReply type="submit" onUpdate={handleLoad} />
         </Flex>
         <Flex direction="column" gap={{ base: 14, sm: 16, lg: 24 }} mt={{ base: 24, lg: 42 }}>
-          {replies?.map((reply) => <Reply reply={reply} key={reply.id} isMine={(reply?.writer.id ?? false) === myId} onUpdate={handleLoad} />)}
+          {replies?.map((reply) => <Reply reply={reply} key={reply.id} isMine={(reply?.writer.id ?? false) === userId} onUpdate={handleLoad} />)}
         </Flex>
       </Flex>
     </Flex>
