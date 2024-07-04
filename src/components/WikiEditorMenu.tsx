@@ -3,16 +3,18 @@ import Button from "./WikiEditorButton";
 
 type EditorMenuProps = {
   editor: Editor;
+  title: string;
 };
 
-export default function EditorMenu({ editor }: EditorMenuProps) {
+export default function EditorMenu({ editor, title }: EditorMenuProps) {
   if (!editor) {
     return null;
   }
 
   return (
-    <div className="scrollbar-hide relative h-[60px] overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
-      <div className="flex w-[1000px] items-center gap-5">
+    <div className="scrollbar-hide relative flex h-[60px] items-center justify-between overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
+      <span className="text-20 font-semibold">{title}</span>
+      <div className="flex w-[1120px] items-center gap-5">
         {/* note 글자모양 */}
         <Button onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} iconName="bold" alt="글자굵게" />
         <Button onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive("italic")} iconName="italic" alt="글자기울임꼴" />

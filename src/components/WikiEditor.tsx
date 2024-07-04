@@ -9,10 +9,11 @@ import WikiEditorMenu from "./WikiEditorMenu";
 
 type WikiEditorProps = {
   initialData: string;
+  title: string;
   handleChangeContent: (value: string) => void;
 };
 
-export default function WikiEditor({ initialData, handleChangeContent }: WikiEditorProps) {
+export default function WikiEditor({ initialData, title, handleChangeContent }: WikiEditorProps) {
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -44,7 +45,7 @@ export default function WikiEditor({ initialData, handleChangeContent }: WikiEdi
 
   return (
     <>
-      {editor && <WikiEditorMenu editor={editor} />}
+      {editor && <WikiEditorMenu editor={editor} title={title} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
       <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] p-3 shadow-lg shadow-gray-200">
