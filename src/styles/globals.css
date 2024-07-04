@@ -30,3 +30,7 @@ body {
   color: #fff;
   background-color: #c6cada;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

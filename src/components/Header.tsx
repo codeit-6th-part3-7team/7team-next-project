@@ -40,7 +40,7 @@ export default function Header() {
         <Group justify="space-between" h="100%">
           <Group justify="space-between" gap={40} h="100%">
             <Link href="/">
-              <Image src={ImgLogo} width={107} height={30} alt="로고" />
+              <Image src={ImgLogo} width={107} height={30} alt="로고" priority />
             </Link>
             <Group h="100%" gap={40} visibleFrom="sm">
               <Link href="/wikilist" className="text-14 text-gray-800">
