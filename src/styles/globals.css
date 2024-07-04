@@ -43,3 +43,7 @@ body {
 input.mantine-Input-input::placeholder {
   color: #8f95b2;
 }
+
+:root {
+  --button-radius: 10px;
+}

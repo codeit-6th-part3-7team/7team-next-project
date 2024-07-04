@@ -131,7 +131,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
           px={30}
           mx={{ base: 0, sm: 60, lg: 0 }}
           my={{ base: 0, sm: "5.5vh" }}
-          className="bg-white md:drop-shadow-md"
+          className="rounded-[10px] bg-white md:drop-shadow-md"
         >
           <h2 className="order-1 text-16 font-semibold text-gray-800 md:text-20 lg:text-24">{type === "edit" ? "게시물 수정하기" : "게시물 등록하기"}</h2>
           <Box my={24} className="order-3">
@@ -174,7 +174,7 @@ export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, ini
             </Flex>
           </Flex>
           <Flex className="order-2 self-end">
-            <Button type="submit" color="green" mt={-31} disabled={submitDisabled}>
+            <Button type="submit" w={{ base: 72, sm: 140 }} h={{ base: 40, sm: 45 }} color="#4CBFA4" mt={-31} disabled={submitDisabled}>
               {type === WriteBoardType.Edit ? "수정하기" : "등록하기"}
             </Button>
           </Flex>
