@@ -1,4 +1,4 @@
-import { Box, Text, Dialog, Flex, CloseButton } from "@mantine/core";
+import { Box, Text, Dialog, Flex, CloseButton, ScrollArea } from "@mantine/core";
 import { NotiData } from "@/src/types/NotificationResponse";
 import { isAxiosError } from "axios";
 import axiosInstance from "@/src/apis/axios";
@@ -46,45 +46,47 @@ export default function EditNotification({ opened, notiData }: EditNotificationP
       <Flex justify="space-between" align="center">
         <Text>알림 {notiData.totalCount}개</Text>
       </Flex>
-      <Flex direction="column" align="center" gap="8">
-        {notiData.totalCount > 0 ? (
-          notiData.list.map((list) => (
-            <Box key={list.id} className="relative flex h-[98px] w-full flex-col items-start justify-around rounded-[5px] bg-white px-[12px] py-[16px]">
-              <CloseButton
-                size="sm"
-                style={{ position: "absolute", top: 5, right: 5 }}
-                onClick={() => {
-                  deleteNotiData(list.id);
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  lineHeight: "22px",
-                  color: "#1B1B1B",
-                }}
-              >
-                {list.content}
-              </Text>
-              <Text
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 400,
-                  lineHeight: "16px",
-                  color: "#A4A1AA",
-                }}
-              >
-                {formatTimeAgo(list.createdAt)}
-              </Text>
+      <ScrollArea h={notiData.totalCount === 1 ? 100 : 205} offsetScrollbars scrollbars="y">
+        <Flex direction="column" align="center" gap="8">
+          {notiData.totalCount > 0 ? (
+            notiData.list.map((list) => (
+              <Box key={list.id} className="relative flex h-[98px] w-full flex-col items-start justify-around rounded-[5px] bg-white px-[12px] py-[16px]">
+                <CloseButton
+                  size="sm"
+                  style={{ position: "absolute", top: 5, right: 5 }}
+                  onClick={() => {
+                    deleteNotiData(list.id);
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    lineHeight: "22px",
+                    color: "#1B1B1B",
+                  }}
+                >
+                  {list.content}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    lineHeight: "16px",
+                    color: "#A4A1AA",
+                  }}
+                >
+                  {formatTimeAgo(list.createdAt)}
+                </Text>
+              </Box>
+            ))
+          ) : (
+            <Box className="flex h-[200px] w-full flex-col items-center justify-center">
+              <Text>알림이 없습니다</Text>
             </Box>
-          ))
-        ) : (
-          <Box className="flex h-[200px] w-full flex-col items-center justify-center">
-            <Text>알림이 없습니다</Text>
-          </Box>
-        )}
-      </Flex>
+          )}
+        </Flex>
+      </ScrollArea>
     </Dialog>
   );
 }
