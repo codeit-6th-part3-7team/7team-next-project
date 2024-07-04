@@ -64,7 +64,7 @@ export default function AddBoard() {
     return (
       <Flex direction="column" justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
         <p className="text-red-200">{error?.message}</p>
-        <Button href="/boards" component={Link} variant="outline" color="green" mt={4}>
+        <Button href="/boards" component={Link} variant="outline" color="#4CBFA4" mt={4}>
           목록으로
         </Button>
       </Flex>
@@ -75,7 +75,7 @@ export default function AddBoard() {
     <Flex direction="column">
       <WriteBoard type="create" initialValues={values} onSubmit={handleSubmit} />
       <Flex justify="center" h={50}>
-        <Button href="/boards" component={Link} variant="outline" color="green" px={40}>
+        <Button href="/boards" component={Link} variant="outline" w={{ base: 72, sm: 140 }} h={{ base: 40, sm: 45 }} color="#4CBFA4" px={40}>
           목록으로
         </Button>
       </Flex>
