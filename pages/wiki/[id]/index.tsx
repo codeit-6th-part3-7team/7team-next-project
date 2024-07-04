@@ -75,7 +75,7 @@ export default function Wiki() {
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   // note 수정모드 여부 확인 state
-  const [isEditing, setIsEditing] = useState<boolean>(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // note api 호출, url 설정 effect
   useEffect(() => {

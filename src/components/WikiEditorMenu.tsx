@@ -1,7 +1,7 @@
 import { Editor } from "@tiptap/react";
+import { v4 as uuidv4 } from "uuid";
 import Button from "./WikiEditorButton";
 import Dropdown from "./HeadingsDropdown";
-import { v4 as uuidv4 } from "uuid";
 
 type EditorMenuProps = {
   editor: Editor;
@@ -24,7 +24,7 @@ export default function EditorMenu({ editor, title }: EditorMenuProps) {
 
   return (
     <div className="scrollbar-hide relative flex h-[60px] items-center justify-between gap-5 overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
-      <span className="invisible w-0 leading-none xl:visible xl:w-auto xl:text-20 xl:font-semibold">{title}</span>
+      <span className="hidden leading-none xl:block xl:text-20 xl:font-semibold">{title}</span>
       <div className="flex w-[1120px] items-center gap-5">
         {/* note 글자모양 */}
         <Button onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} iconName="bold" alt="글자굵게" />

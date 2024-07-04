@@ -1,4 +1,5 @@
 import { useEditor, EditorContent } from "@tiptap/react";
+import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
@@ -31,6 +32,7 @@ export default function WikiEditor({ initialData, title, handleChangeContent }: 
           keepAttributes: false,
         },
       }),
+      Image,
     ],
     editorProps: {
       attributes: {
