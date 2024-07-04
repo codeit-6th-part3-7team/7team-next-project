@@ -92,11 +92,13 @@ function PostPage() {
   const handleSortLatest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("recent");
+    setCurrentPage(1);
   };
 
   const handleSortPopular = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("like");
+    setCurrentPage(1);
   };
 
   const handleSearch = (searchValue: string) => {
@@ -115,15 +117,20 @@ function PostPage() {
     <>
       <Header />
 
-      <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 sm:mx-[60px] sm:mt-[60px] lg:mx-auto">
+      <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
         <div className="mb-10 flex items-center justify-between">
-          <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 sm:text-32">베스트 게시글</Title>
-          <Button className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white sm:w-[145px]" onClick={() => {}}>
+          <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
+          <Button
+            className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white hover:bg-green-300 md:w-[145px]"
+            onClick={() => {
+              window.location.href = "/addboard";
+            }}
+          >
             게시물 등록하기
           </Button>
         </div>
         {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
-        <div className="mb-8 gap-2.5 sm:flex">
+        <div className="mb-8 gap-2.5 md:flex">
           <SearchBar onSearch={handleSearch} />
           <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
         </div>

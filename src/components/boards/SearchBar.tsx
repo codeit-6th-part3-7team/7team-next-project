@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
-import { Box, Button, TextInput } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import Image from "next/image";
 import searchIcon from "@/public/assets/ic_search.svg";
 
@@ -28,32 +28,25 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <div className="mb-5 w-full rounded-md">
-      <form className="flex flex-row gap-[15px]">
-        <Box className="flex w-full flex-row items-center gap-2.5 rounded-md bg-gray-100 px-3">
-          <Image src={searchIcon} alt="검색" width={22} height={22} />
-          <TextInput
-            placeholder="제목을 검색해주세요"
-            value={searchValue}
-            onChange={handleSearchChange}
-            onKeyPress={handleSearchEnter}
-            styles={{
-              input: { backgroundColor: "transparent", border: "none", width: "100%", "::placeholder": { color: "gray" } },
-            }}
-          />
-        </Box>
-        <Button
-          styles={{
-            root: {
-              height: "45px",
-              width: "80px",
-              backgroundColor: "#4CBFA4",
-              fontSize: "14px",
-              color: "white",
-              borderRadius: "md",
+      <form className="flex flex-row items-center gap-[15px]">
+        <TextInput
+          leftSectionPointerEvents="none"
+          leftSection={<Image src={searchIcon} alt="검색" width={22} height={22} />}
+          variant="filled"
+          placeholder="제목을 검색해주세요"
+          value={searchValue}
+          onChange={handleSearchChange}
+          onKeyPress={handleSearchEnter}
+          size="md"
+          className="w-full"
+          styles={(theme) => ({
+            input: {
+              backgroundColor: theme.colors.gray[0],
             },
-          }}
-          onClick={handleSearchClick}
-        >
+          })}
+        />
+
+        <Button className="h-[45px] w-[80px] rounded-md bg-green-200 text-[14px] text-white hover:bg-green-300" onClick={handleSearchClick}>
           검색
         </Button>
       </form>

@@ -16,21 +16,21 @@ function BestPosts({ bestPosts }: Props) {
   return (
     <div className="mb-8">
       {/* Desktop view */}
-      <div className="hidden grid-cols-2 gap-4 sm:grid lg:grid-cols-4">
+      <div className="hidden grid-cols-2 gap-4 md:grid lg:grid-cols-4">
         {bestPosts.map((post) => (
           <Card
             key={post.id}
             shadow="sm"
             radius="md"
-            className="h-[200px] w-[250px] sm:w-[302px] lg:w-[250px]"
+            className="h-[200px] w-full md:aspect-[3/2] md:h-full lg:h-[200px] lg:w-[250px]"
             component="a"
-            href="/boards"
+            href={`/boards/${post.id}`}
             target="_self"
             style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}
           >
-            <Card.Section className="relative h-[131px]">
+            <Card.Section className="relative h-full">
               <div className="flex h-full items-center justify-center">
-                <div className="relative h-[131px] w-[250px] sm:h-[131px] sm:w-[302px] lg:h-[131px] lg:w-[250px]">
+                <div className="relative h-[131px] w-[250px] md:h-full md:w-full lg:h-[131px] lg:w-[250px]">
                   <Image src={post.image ? post.image.src : indexImage} alt={post.image ? post.image.alt : "기본 이미지"} layout="fill" objectFit="cover" className="rounded-t-md" />
                 </div>
               </div>
@@ -58,10 +58,10 @@ function BestPosts({ bestPosts }: Props) {
 
       {/* Mobile view */}
 
-      <Carousel slideSize={250} height={200} align="start" slideGap="md" withControls={false} className="sm:hidden lg:hidden" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
+      <Carousel slideSize={250} height={200} align="start" slideGap="md" withControls={false} className="md:hidden lg:hidden">
         {bestPosts.map((post) => (
           <Carousel.Slide key={post.id}>
-            <Card shadow="sm" radius="md" className="h-[200px] w-[250px]" component="a" href="/boards" target="_self">
+            <Card shadow="sm" radius="md" className="h-[200px] w-[250px]" component="a" href="/boards" target="_self" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
               <Card.Section className="relative h-[131px]">
                 <div className="flex h-full items-center justify-center">
                   <div className="relative h-[131px] w-[250px] sm:h-[131px] sm:w-[302px] md:h-[131px] md:w-[250px]">
