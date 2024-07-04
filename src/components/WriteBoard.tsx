@@ -35,10 +35,10 @@ type WriteBoardProps = {
   };
 };
 
-function extractTextFromHTML(htmlString) {
+function extractTextFromHTML(htmlString: string | undefined) {
   const regex = /<[^>]*>/g;
-  const pureText = htmlString.replace(regex, "");
-  return pureText;
+  const pureText = htmlString?.replace(regex, "");
+  return pureText ?? "";
 }
 
 export default function WriteBoard({ onSubmit, type = WriteBoardType.Create, initialValues = INITIAL_VALUES }: WriteBoardProps) {
