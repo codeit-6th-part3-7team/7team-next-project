@@ -31,7 +31,7 @@ function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps
         onKeyDown={handleKeyDown}
         role="button"
         tabIndex={0}
-        className="flex h-[45px] w-[140px] items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 text-gray-500"
+        className="flex h-[45px] w-full items-center justify-between rounded-md border border-none bg-gray-100 px-5 py-[14px] text-center text-14 font-normal leading-[24px] text-gray-500 md:w-[140px]"
       >
         <Text>{sortBy === "recent" ? "최신순" : "좋아요순"}</Text>
         {!isOpen ? <Image src={bottomArrow} alt="검색" width={22} height={22} /> : <Image src={upArrow} alt="검색" width={22} height={22} />}
@@ -40,20 +40,22 @@ function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps
       {isOpen && (
         <div className="absolute mt-1 w-[140px] rounded-md border border-none bg-gray-100 p-1 text-14">
           <Button
+            variant="transparent"
             onClick={(event) => {
               onSortLatest(event);
               handleOpenToggle();
             }}
-            className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100"
+            className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 font-normal text-gray-500 hover:text-green-200"
           >
             최신순
           </Button>
           <Button
+            variant="transparent"
             onClick={(event) => {
               onSortPopular(event);
               handleOpenToggle();
             }}
-            className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 text-gray-500 hover:bg-green-100"
+            className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 font-normal text-gray-500 hover:text-green-200"
           >
             좋아요순
           </Button>

@@ -5,8 +5,10 @@ import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
 import SearchBar from "@/src/components/boards/SearchBar";
 import SortDropdown from "@/src/components/boards/SortDropdown";
+import indexImage from "@/public/assets/img_card_section.png";
 import instance from "@/src/apis/axios";
 import { Post } from "@/src/types/boardTypes";
+import Header from "@/src/components/Header";
 
 function PostPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -65,7 +67,12 @@ function PostPage() {
         // eslint-disable-next-line no-console
         console.log("Best posts response:", response.data);
         if (Array.isArray(response.data.list)) {
-          setBestPosts(response.data.list);
+          setBestPosts(
+            response.data.list.map((post: Post) => ({
+              ...post,
+              image: { src: post.image || indexImage, alt: post.image ? "업로드 이미지" : "기본 이미지" },
+            })),
+          );
         } else {
           // NOTE: 배열이 아닐시 에러 출력
           // eslint-disable-next-line no-console
@@ -85,11 +92,13 @@ function PostPage() {
   const handleSortLatest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("recent");
+    setCurrentPage(1);
   };
 
   const handleSortPopular = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSortBy("like");
+    setCurrentPage(1);
   };
 
   const handleSearch = (searchValue: string) => {
@@ -105,21 +114,30 @@ function PostPage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container className="min-w-screen-sm align-center mx-auto max-w-screen-lg flex-col">
-      <div className="mb-10 flex items-center justify-between">
-        <Title className="text-left text-32 font-semibold leading-40 text-gray-800">베스트 게시글</Title>
-        <Button className="h-[45px] w-[160px] rounded-md bg-green-200 text-14 text-white" onClick={() => {}}>
-          게시물 등록하기
-        </Button>
-      </div>
-      {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
-      <div className="mb-8 flex w-full justify-between gap-2.5">
-        <SearchBar onSearch={handleSearch} />
-        <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
-      </div>
-      <PostListTable posts={posts} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
-    </Container>
+    <>
+      <Header />
+
+      <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
+        <div className="mb-10 flex items-center justify-between">
+          <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
+          <Button
+            className="h-[45px] w-[130px] rounded-md bg-green-200 text-14 text-white hover:bg-green-300 md:w-[145px]"
+            onClick={() => {
+              window.location.href = "/addboard";
+            }}
+          >
+            게시물 등록하기
+          </Button>
+        </div>
+        {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
+        <div className="mb-8 gap-2.5 md:flex">
+          <SearchBar onSearch={handleSearch} />
+          <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
+        </div>
+        <PostListTable posts={posts} />
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
+      </Container>
+    </>
   );
 }
 

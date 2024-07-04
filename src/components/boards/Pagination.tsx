@@ -19,33 +19,33 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
   return (
     <div className="mb-10 flex justify-center space-x-2">
       <Button
-        variant="outline"
+        variant="transparent"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex h-12 w-12 items-center justify-center shadow-md hover:cursor-pointer"
+        className="flex h-[40px] w-[40px] items-center justify-center p-0 text-12 shadow-md hover:cursor-pointer sm:h-[45px] sm:w-[45px] sm:text-18"
         style={{ boxShadow: "0px 4px 20px 0px #00000014" }}
       >
-        <Image src={leftArrow} alt="좌방향 화살" width={24} height={24} />
+        <Image src={leftArrow} alt="좌방향 화살" width={18} height={18} className="image-responsive-sm" />
       </Button>
       {pages.map((page) => (
         <Button
           key={page}
-          variant={page === currentPage ? "filled" : "outline"}
+          variant="transparent"
           onClick={() => onPageChange(page)}
-          className="flex h-12 w-12 items-center justify-center py-6 shadow-md"
-          style={{ color: page === currentPage ? "#4CBFA4" : "#8F95B2", boxShadow: "0px 4px 20px 0px #00000014", height: "48px" }}
+          className="flex h-[40px] w-[40px] items-center justify-center p-0 text-12 font-normal shadow-md sm:h-[45px] sm:w-[45px] sm:text-18"
+          style={{ color: page === currentPage ? "#4CBFA4" : "#8F95B2", boxShadow: "0px 4px 20px 0px #00000014" }}
         >
           {page}
         </Button>
       ))}
       <Button
-        variant="outline"
+        variant="transparent"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex h-12 w-12 items-center justify-center shadow-md hover:cursor-pointer"
+        className="flex h-[40px] w-[40px] items-center justify-center p-0 text-12 shadow-md hover:cursor-pointer sm:h-[45px] sm:w-[45px] sm:text-18"
         style={{ boxShadow: "0px 4px 20px 0px #00000014" }}
       >
-        <Image src={rightArrow} alt="우방향 화살" width={24} height={24} />
+        <Image src={rightArrow} alt="우방향 화살" width={18} height={18} className="image-responsive-sm" />
       </Button>
     </div>
   );
