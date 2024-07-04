@@ -48,7 +48,7 @@ export default function EditNotification({ opened, notiData }: EditNotificationP
       </Flex>
       <Flex direction="column" align="center" gap="8">
         {notiData.totalCount > 0 ? (
-          notiData.list.slice(0, notiData.totalCount).map((list) => (
+          notiData.list.map((list) => (
             <Box key={list.id} className="relative flex h-[98px] w-full flex-col items-start justify-around rounded-[5px] bg-white px-[12px] py-[16px]">
               <CloseButton
                 size="sm"
@@ -57,8 +57,26 @@ export default function EditNotification({ opened, notiData }: EditNotificationP
                   deleteNotiData(list.id);
                 }}
               />
-              <Text>{list.content}</Text>
-              <Text>{formatTimeAgo(list.createdAt)}</Text>
+              <Text
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  lineHeight: "22px",
+                  color: "#1B1B1B",
+                }}
+              >
+                {list.content}
+              </Text>
+              <Text
+                style={{
+                  fontSize: "12px",
+                  fontWeight: 400,
+                  lineHeight: "16px",
+                  color: "#A4A1AA",
+                }}
+              >
+                {formatTimeAgo(list.createdAt)}
+              </Text>
             </Box>
           ))
         ) : (
