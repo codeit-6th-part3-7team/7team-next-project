@@ -25,6 +25,10 @@ body {
   }
 }
 
+:root {
+  --button-radius: 10px;
+}
+
 .button:disabled,
 .button[data-disabled] {
   color: #fff;
