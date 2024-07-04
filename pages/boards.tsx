@@ -8,7 +8,6 @@ import SortDropdown from "@/src/components/boards/SortDropdown";
 import indexImage from "@/public/assets/img_card_section.png";
 import instance from "@/src/apis/axios";
 import { Post } from "@/src/types/boardTypes";
-import Header from "@/src/components/Header";
 
 function PostPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
