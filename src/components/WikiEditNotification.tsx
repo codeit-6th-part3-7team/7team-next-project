@@ -2,6 +2,7 @@ import { Box, Text, Dialog, Flex, CloseButton } from "@mantine/core";
 import { NotiData } from "@/src/types/NotificationResponse";
 import { isAxiosError } from "axios";
 import axiosInstance from "@/src/apis/axios";
+import formatTimeAgo from "@/src/utils/formatTimeAgo";
 
 type EditNotificationProps = {
   opened: boolean;
@@ -57,7 +58,7 @@ export default function EditNotification({ opened, notiData }: EditNotificationP
                 }}
               />
               <Text>{list.content}</Text>
-              <Text>{list.createdAt}</Text>
+              <Text>{formatTimeAgo(list.createdAt)}</Text>
             </Box>
           ))
         ) : (
