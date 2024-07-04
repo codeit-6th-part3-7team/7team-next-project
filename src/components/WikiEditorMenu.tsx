@@ -1,5 +1,7 @@
 import { Editor } from "@tiptap/react";
 import Button from "./WikiEditorButton";
+import Dropdown from "./HeadingsDropdown";
+import { v4 as uuidv4 } from "uuid";
 
 type EditorMenuProps = {
   editor: Editor;
@@ -11,25 +13,27 @@ export default function EditorMenu({ editor, title }: EditorMenuProps) {
     return null;
   }
 
+  const headingOptions = [
+    { id: uuidv4(), label: "본문", action: () => editor.chain().focus().setParagraph().run(), active: editor.isActive("paragraph") },
+    { id: uuidv4(), label: "인용구", action: () => editor.chain().focus().toggleBlockquote().run(), active: editor.isActive("blockquote") },
+    { id: uuidv4(), label: "제목1", action: () => editor.chain().focus().toggleHeading({ level: 1 }).run(), active: editor.isActive("heading", { level: 1 }) },
+    { id: uuidv4(), label: "제목2", action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(), active: editor.isActive("heading", { level: 2 }) },
+    { id: uuidv4(), label: "제목3", action: () => editor.chain().focus().toggleHeading({ level: 3 }).run(), active: editor.isActive("heading", { level: 3 }) },
+    { id: uuidv4(), label: "제목4", action: () => editor.chain().focus().toggleHeading({ level: 4 }).run(), active: editor.isActive("heading", { level: 4 }) },
+  ];
+
   return (
-    <div className="scrollbar-hide relative flex h-[60px] items-center justify-between overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
-      <span className="text-20 font-semibold">{title}</span>
+    <div className="scrollbar-hide relative flex h-[60px] items-center justify-between gap-5 overflow-y-hidden overflow-x-scroll rounded-[20px] bg-gray-100 px-5 py-[18px] shadow-lg shadow-gray-200">
+      <span className="invisible w-0 leading-none xl:visible xl:w-auto xl:text-20 xl:font-semibold">{title}</span>
       <div className="flex w-[1120px] items-center gap-5">
         {/* note 글자모양 */}
         <Button onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} iconName="bold" alt="글자굵게" />
         <Button onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive("italic")} iconName="italic" alt="글자기울임꼴" />
         <Button onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive("strike")} iconName="underline" alt="글자취소선" />
         <div className="h-6 w-0 border-[1px] border-gray-200" />
-        {/* note 계층 */}
-        {/* todo 아이콘이 없어서 임시로 링크아이콘이나 텍스트로 다 넣어뒀습니다.. 추후에 율님 작업 머지하고 변경 하겠습니다 */}
-        <Button onClick={() => editor.chain().focus().setParagraph().run()} active={editor.isActive("paragraph")} iconName="link" alt="본문" />
-        <Button onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive("blockquote")} iconName="link" alt="인용구" />
-        <Button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive("heading", { level: 1 })} iconName="link" alt="제목1" />
-        <Button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive("heading", { level: 2 })} iconName="link" alt="제목2" />
-        <Button onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive("heading", { level: 3 })} iconName="link" alt="제목3" />
-        <Button onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()} active={editor.isActive("heading", { level: 4 })} iconName="link" alt="제목4" />
-        <div className="h-6 w-0 border-[1px] border-gray-200" />
         {/* note 단락 */}
+        <Dropdown title="단락" options={headingOptions} />
+        {/* todo 아이콘이 없어서 임시로 링크아이콘이나 텍스트로 다 넣어뒀습니다.. 추후에 율님 작업 머지하고 변경 하겠습니다 */}
         <Button onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")} iconName="bullet_list" alt="글머리기호" />
         <Button onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive("orderedList")} iconName="number_list" alt="글머리번호" />
         <Button onClick={() => editor.chain().focus().setTextAlign("justify").run()} active={editor.isActive({ textAlign: "justify" })} iconName="number_list" alt="일반정렬" />

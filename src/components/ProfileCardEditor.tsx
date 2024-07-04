@@ -22,12 +22,12 @@ const labels: Record<keyof ProfileCardData, string> = {
 
 export default function ProfileCardEditor({ profileData, profileImage, handleChangeProfile }: ProfileCardProps) {
   return (
-    <section className="flex h-[511px] flex-col items-center gap-5 rounded-xl border-none px-[34px] py-4 shadow-lg shadow-gray-200 md:h-[388px] xl:h-[828px] xl:w-[400px] xl:gap-9">
-      <Image className="size-[62px] rounded-full object-cover md:size-[72px] xl:my-6 xl:size-[200px]" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
+    <section className="flex h-[511px] flex-col items-center gap-5 rounded-xl border-none px-[34px] py-4 shadow-lg shadow-gray-200 md:h-[388px] xl:h-[670px] xl:max-w-[400px] xl:gap-4">
+      <Image className="size-[62px] rounded-full object-cover md:size-[72px] xl:my-3 xl:size-[200px]" src={profileImage || ic_profile_skeleton} alt="프로필이미지" />
       <div className="flex flex-col gap-4 md:mt-3 md:grid md:grid-cols-2 md:gap-x-10 xl:flex xl:flex-col">
         {/* todo 프로필카드 초기데이터 prop 설정 후 map 함수 사용해서 렌더링 */}
         {Object.entries(profileData).map(([key, value]) => (
-          <div key={key} className="flex h-[34px] items-center gap-5 md:h-[45px]">
+          <div key={key} className="flex h-[34px] items-center gap-5 md:h-[45px] xl:h-[34px]">
             <div className="w-[60px] text-12 text-gray-400 md:text-14">{labels[key as keyof ProfileCardData]}</div>
             <TextInput
               key={key}

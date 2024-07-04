@@ -174,8 +174,8 @@ export default function Wiki() {
   return (
     <>
       {isEditing ? (
-        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px] md:mx-[60px] md:mt-[47px] md:gap-[10px] xl:mx-auto xl:max-w-[1760px]" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[65%] xl:top-[120px] xl:flex-col-reverse">
+        <form className="m-3 flex min-h-[1100px] flex-col gap-[15px] md:mx-[60px] md:mt-[47px] md:gap-[10px] xl:mx-auto xl:max-w-[1700px]" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-[15px] md:gap-[10px] xl:fixed xl:left-[70%] xl:top-[120px] xl:flex-col-reverse">
             <div className="flex h-10 items-center justify-between md:mb-[10px]">
               <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">{wikiData.name}</span>
               <div className="flex gap-[10px]">
@@ -210,7 +210,7 @@ export default function Wiki() {
             </div>
             <ProfileCardEditor profileData={profileData} profileImage={wikiData.image} handleChangeProfile={handleChangeProfile} />
           </div>
-          <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[60px] xl:mr-[660px] xl:min-w-[700px] xl:max-w-[1120px]">
+          <div className="flex flex-col gap-4 md:mt-[30px] xl:ml-[100px] xl:mr-[530px] xl:mt-0 xl:min-w-[700px] xl:max-w-[1120px]">
             <WikiEditor initialData={wikiData.content} handleChangeContent={handleChangeContent} title={wikiData.name} />
           </div>
         </form>

@@ -11,7 +11,7 @@ import ic_link from "@/public/icons/ic_link.svg";
 type ButtonProps = {
   onClick: () => void;
   active: boolean;
-  iconName: keyof typeof icons | string;
+  iconName: keyof typeof icons;
   alt: string;
 };
 
@@ -28,8 +28,8 @@ const icons = {
 
 export default function Button({ onClick, active, iconName, alt }: ButtonProps) {
   return (
-    <button type="button" onClick={onClick} className={`flex h-6 w-6 items-center justify-center ${active ? "is-active" : ""}`}>
-      {typeof iconName === "string" ? "string" : <Image className="h-6 w-6" src={icons[iconName]} alt={alt} width={24} height={24} />}
+    <button type="button" onClick={onClick} className={`flex h-6 w-6 items-center justify-center rounded-[5px] ${active ? "bg-gray-200" : ""}`}>
+      <Image className="h-6 w-6" src={icons[iconName]} alt={alt} width={24} height={24} />
     </button>
   );
 }

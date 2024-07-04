@@ -48,8 +48,14 @@ export default function WikiEditor({ initialData, title, handleChangeContent }: 
       {editor && <WikiEditorMenu editor={editor} title={title} />}
       {/* note prettier 설정에서 강제 정렬 수정으로 오류 발생해서 해당 부분 제외 했습니다 */}
       {/* eslint-disable-next-line */}
-      <div className="prose prose-sm md:prose-base max-w-none rounded-[10px] p-3 shadow-lg shadow-gray-200">
-        <EditorContent editor={editor} className="w-full" />
+      <div className="prose prose-sm md:prose-base min-h-[600px] max-w-none overflow-auto rounded-[10px] px-5 py-10 shadow-lg shadow-gray-200">
+        <EditorContent
+          editor={editor}
+          style={{
+            overflow: "auto",
+            minHeight: "500px",
+          }}
+        />
       </div>
     </>
   );
