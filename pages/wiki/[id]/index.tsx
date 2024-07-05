@@ -66,7 +66,7 @@ export default function Wiki() {
   const [formData, setFormData] = useState({});
   const [answer, setAnswer] = useState<string>("");
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query as { id: string };
 
   // note mantine modal handler hook
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
@@ -263,9 +263,7 @@ export default function Wiki() {
           </section>
         </main>
       )}
-      {typeof id === "string" && (
-        <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={id} setAnswer={setAnswer} setIsEditing={setIsEditing} />
-      )}
+      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={id} setAnswer={setAnswer} setIsEditing={setIsEditing} />
     </>
   );
 }
