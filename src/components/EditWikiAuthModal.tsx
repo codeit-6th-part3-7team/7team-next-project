@@ -10,10 +10,12 @@ type EditWikiAuthModalProps = {
   securityQuestion: string;
   opened: boolean;
   closeModal: () => void;
+  setAnswer: (answer: string) => void;
+  setIsEditing: (isEditing: boolean) => void;
   wikiCode: string;
 };
 
-export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, wikiCode }: EditWikiAuthModalProps) {
+export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, setAnswer, setIsEditing, wikiCode }: EditWikiAuthModalProps) {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -33,6 +35,8 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
         message: "인증에 성공했습니다.",
         color: "green",
       });
+      setAnswer(value);
+      setIsEditing(true);
       // todo 인증 성공 시 수정 컴포넌트 렌더링
     }
   };
