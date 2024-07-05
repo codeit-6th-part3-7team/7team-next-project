@@ -10,13 +10,10 @@
   font-style: normal;
 }
 
-input.mantine-Input-input::placeholder {
-  color: #8f95b2;
+body {
+  font-family: "Pretendard";
 }
 
-:root {
-  --button-radius: 10px;
-}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
