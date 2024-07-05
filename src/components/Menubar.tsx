@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Editor } from "@tiptap/react";
-import { ActionIcon, Button, ColorPicker, Flex, Modal, TextInput } from "@mantine/core";
+import { ActionIcon, Button, ColorPicker, Flex, Loader, Modal, TextInput, useMatches } from "@mantine/core";
 import { useCallback, useState } from "react";
 import axios from "@/src/apis/axios";
 import iconBold from "@/public/assets/ic_bold.svg";
@@ -25,6 +25,12 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
   const [colorValue, handleColorChange] = useState("");
   const [colorClass, setColorClass] = useState("");
   const [linkValue, setLinkValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const modalSize = useMatches({
+    base: "278px",
+    sm: "394px",
+  });
 
   const handleColoring = () => {
     setColorClass(editor.isActive("textStyle", { color: colorValue }) ? "is-active" : "");
@@ -35,15 +41,24 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
     if (fileValue) {
       const formData = new FormData();
       formData.append("image", fileValue);
+      setLoading(true);
+      try {
+        const res = await axios.post("/images/upload", formData);
+        const { url } = res.data;
 
-      const res = await axios.post("/images/upload", formData);
-      const { url } = res.data;
-
-      editor.chain().focus().setImage({ src: url }).run();
-      editor.commands.createParagraphNear();
-
-      setTitleImage(url);
-      setFileValue(null);
+        editor.chain().focus().setImage({ src: url }).run();
+        setTitleImage(url);
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e);
+        } else {
+          setError(new Error("알 수 없는 에러가 발생했습니다."));
+        }
+      } finally {
+        setLoading(false);
+        editor.commands.createParagraphNear();
+        setFileValue(null);
+      }
     }
   }, [editor, fileValue, setTitleImage]);
 
@@ -54,7 +69,6 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
 
     if (linkValue === "") {
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
       return;
     }
 
@@ -160,20 +174,23 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
           </ActionIcon>
         </Flex>
       </Flex>
-      <Modal centered opened={colorPickerOpened} size="xs" onClose={closeColorPicker} title="색상 선택기">
+      <Modal centered opened={colorPickerOpened} size="xs" onClose={closeColorPicker} radius="md">
         <Flex direction="column" align="center">
+          <Flex justify="center" mb={20}>
+            <strong className="text-16 font-semibold md:text-18">색상 선택</strong>
+          </Flex>
           <ColorPicker format="rgba" size="lg" value={colorValue} onChange={handleColorChange} />
           <Button
             type="submit"
-            variant="outline"
-            color="green"
+            className="button self-end"
+            color="#4CBFA4"
+            w={89}
+            h={40}
             mt={20}
-            px={40}
             onClick={() => {
               handleColoring();
               closeColorPicker();
             }}
-            className="self-end"
           >
             선택
           </Button>
@@ -182,34 +199,52 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
       <Modal
         centered
         opened={uploaderOpened}
-        size="xs"
+        size={modalSize}
         onClose={() => {
           closeUploader();
           setFileValue(null);
         }}
-        title="이미지 선택기"
+        radius="md"
       >
         <Flex direction="column">
+          {loading && (
+            <Flex justify="center" align="center" className="absolute inset-0 bg-white">
+              <Loader size="md" />
+            </Flex>
+          )}
+          {error && (
+            <Flex justify="center" align="center" className="absolute inset-0 bg-white">
+              {error?.message}
+            </Flex>
+          )}
+          <Flex justify="center" mb={20}>
+            <strong className="text-16 font-semibold md:text-18">이미지 선택</strong>
+          </Flex>
           <FileInput value={fileValue} onChange={setFileValue} />
           <Flex justify="flex-end">
             <Button
               type="submit"
-              variant="outline"
-              color="green"
+              className="button"
+              color="#4CBFA4"
+              disabled={!fileValue}
+              w={89}
+              h={40}
               mt={20}
-              px={40}
               onClick={() => {
                 handleUploading();
                 closeUploader();
               }}
             >
-              선택
+              삽입하기
             </Button>
           </Flex>
         </Flex>
       </Modal>
-      <Modal centered opened={anchorOpened} size="xs" onClose={closeAnchor} title="링크 만들기">
+      <Modal centered opened={anchorOpened} size={modalSize} onClose={closeAnchor} radius="md">
         <Flex direction="column" align="center">
+          <Flex justify="center" mb={20}>
+            <strong className="text-16 font-semibold md:text-18">링크 만들기</strong>
+          </Flex>
           <TextInput
             variant="unstyled"
             radius="md"
@@ -222,15 +257,16 @@ export default function MenuBar({ editor, setTitleImage }: { editor: Editor; set
           />
           <Button
             type="submit"
-            variant="outline"
-            color="green"
+            className="button self-end"
+            color="#4CBFA4"
+            disabled={!linkValue}
+            w={89}
+            h={40}
             mt={20}
-            px={40}
             onClick={() => {
               handleAnchoring();
               closeAnchor();
             }}
-            className="self-end"
           >
             만들기
           </Button>
