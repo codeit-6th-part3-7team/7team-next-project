@@ -16,18 +16,18 @@
   font-style: normal;
 }
 
-body {
-  font-family: "Pretendard";
+input.mantine-Input-input::placeholder {
+  color: #8f95b2;
+}
+
+:root {
+  --button-radius: 10px;
 }
 
 @media (max-width: 1200px) {
   body {
     overflow-x: hidden;
   }
-}
-
-:root {
-  --button-radius: 10px;
 }
 
 .button:disabled,
@@ -40,16 +40,3 @@ body {
   display: none;
 }
 
-input.mantine-Input-input::placeholder {
-  color: #8f95b2;
-}
-
-:root {
-  --button-radius: 10px;
-}
-
-.button:disabled,
-.button[data-disabled] {
-  color: #fff;
-  background-color: #c6cada;
-}
