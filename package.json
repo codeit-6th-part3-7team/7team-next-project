@@ -25,6 +25,7 @@
     "@tiptap/extension-color": "^2.4.0",
     "@tiptap/extension-document": "^2.4.0",
     "@tiptap/extension-highlight": "^2.4.0",
+    "@tiptap/extension-image": "^2.4.0",
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/extension-list-item": "^2.4.0",
     "@tiptap/extension-paragraph": "^2.4.0",
@@ -41,6 +42,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -49,6 +51,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
