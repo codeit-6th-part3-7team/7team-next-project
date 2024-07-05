@@ -42,10 +42,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
           styles={(theme) => ({
             input: {
               backgroundColor: theme.colors.gray[0],
-              "::placeholder": {
-                // NOTE: 플레이스 홀더 색이 안변함...
-                color: theme.colors.gray[3],
-              },
+              "--input-placeholder-color": theme.colors.gray[3],
             },
           })}
         />
