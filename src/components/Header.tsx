@@ -1,16 +1,33 @@
 import IcoBurger from "@/public/assets/ic_burger.svg";
 import ImgLogo from "@/public/assets/img_logo.webp";
-import { Group, Menu } from "@mantine/core";
+import { Box, Group, Menu, ThemeIcon } from "@mantine/core";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import IcoProfile from "@/public/assets/ic_profile.svg";
+import IcoAlarm from "@/public/assets/ic_alarm.svg";
 import { notifications } from "@mantine/notifications";
 import { usePathname } from "next/navigation";
+import { useDisclosure } from "@mantine/hooks";
+import { isAxiosError } from "axios";
+import axiosInstance from "@/src/apis/axios";
+import { NotiData } from "@/src/types/NotificationResponse";
+import WikiEditNotification from "@/src/components/WikiEditNotification";
 
 export default function Header() {
   const pathName = usePathname();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [notiData, setNotiData] = useState<NotiData>({
+    totalCount: 0,
+    list: [
+      {
+        createdAt: "",
+        content: "",
+        id: 0,
+      },
+    ],
+  });
+  const [opened, { open: openNoti, close: closeNoti }] = useDisclosure(false);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -25,10 +42,35 @@ export default function Header() {
     });
   };
 
+  const activeNoti = () => {
+    if (opened) {
+      closeNoti();
+    } else {
+      openNoti();
+    }
+  };
+
   useEffect(() => {
+    const getNotiData = async () => {
+      try {
+        const res = await axiosInstance.get("notifications?pageSize=3");
+        if (res.status === 200) {
+          setNotiData(res.data);
+        }
+      } catch (error) {
+        if (isAxiosError(error)) {
+          if (error.response?.status === 404) {
+            window.location.href = "/";
+          } else if (error.response?.status === 401) {
+            window.location.href = "/";
+          }
+        }
+      }
+    };
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       setLoggedIn(true);
+      getNotiData();
     } else {
       setLoggedIn(false);
     }
@@ -55,6 +97,18 @@ export default function Header() {
           {loggedIn ? (
             <Menu width={120} position="bottom" radius="md" shadow="md" withinPortal>
               <Group>
+                <Group>
+                  <Box style={{ position: "relative" }} onClick={activeNoti}>
+                    <Image src={IcoAlarm} width={32} height={32} alt="알림" className="cursor-pointer" />
+                    <Box>
+                      {notiData.totalCount > 0 ? (
+                        <ThemeIcon radius="xl" size="xs" color="red" style={{ position: "absolute", top: 0, left: 15, fontSize: 12 }}>
+                          {notiData.totalCount}
+                        </ThemeIcon>
+                      ) : null}
+                    </Box>
+                  </Box>
+                </Group>
                 <Menu.Target>
                   <Group>
                     <Group hiddenFrom="sm">
@@ -76,11 +130,6 @@ export default function Header() {
                 <Menu.Item hiddenFrom="sm">
                   <Link href="/boards" className="flex justify-center p-2 text-14 text-gray-800">
                     자유게시판
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link href="/notifications" className="flex justify-center p-2 text-14 text-gray-800">
-                    알림
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
@@ -132,6 +181,7 @@ export default function Header() {
           )}
         </Group>
       </header>
+      <WikiEditNotification opened={opened} notiData={notiData} />
     </div>
   );
 }
