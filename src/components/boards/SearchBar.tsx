@@ -42,6 +42,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
           styles={(theme) => ({
             input: {
               backgroundColor: theme.colors.gray[0],
+              "--input-placeholder-color": theme.colors.gray[3],
             },
           })}
         />

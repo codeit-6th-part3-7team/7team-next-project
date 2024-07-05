@@ -28,3 +28,19 @@ export type ProfileCardData = {
   bloodType: string;
   nationality: string;
 };
+
+export type ProfileEditRequestBody = {
+  securityAnswer: string;
+  securityQuestion: string;
+  nationality: string;
+  family: string;
+  bloodType: string;
+  nickname: string;
+  birthday: string;
+  sns: string;
+  job: string;
+  mbti: string;
+  city: string;
+  image: string | null;
+  content: string;
+};

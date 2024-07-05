@@ -5,12 +5,11 @@ import bottomArrow from "../../../public/assets/ic_bottom_arrow.svg";
 import upArrow from "../../../public/assets/ic_up_arrow.svg";
 
 interface SortDropdownProps {
-  onSortLatest: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  onSortPopular: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSort: (event: React.MouseEvent<HTMLButtonElement>) => void;
   sortBy: string;
 }
 
-function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps) {
+function SortDropdown({ onSort, sortBy }: SortDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpenToggle = (): void => {
@@ -41,8 +40,9 @@ function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps
         <div className="absolute mt-1 w-[140px] rounded-md border border-none bg-gray-100 p-1 text-14">
           <Button
             variant="transparent"
+            data-sort="recent"
             onClick={(event) => {
-              onSortLatest(event);
+              onSort(event);
               handleOpenToggle();
             }}
             className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 font-normal text-gray-500 hover:text-green-200"
@@ -51,8 +51,9 @@ function SortDropdown({ onSortLatest, onSortPopular, sortBy }: SortDropdownProps
           </Button>
           <Button
             variant="transparent"
+            data-sort="like"
             onClick={(event) => {
-              onSortPopular(event);
+              onSort(event);
               handleOpenToggle();
             }}
             className="h-[45px] w-[100%] rounded-md border border-none bg-gray-100 text-center text-14 font-normal text-gray-500 hover:text-green-200"

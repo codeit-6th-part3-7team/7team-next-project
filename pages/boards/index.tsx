@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Title, Button } from "@mantine/core";
-import Pagination from "@/src/components/boards/Pagination";
+import Pagination from "@/src/components/Pagination";
 import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
 import SearchBar from "@/src/components/boards/SearchBar";
@@ -30,9 +30,6 @@ function PostPage() {
             keyword: searchTerm,
           },
         });
-        // NOTE: 데이터 전송 확인
-        // eslint-disable-next-line no-console
-        console.log(response.data);
         if (Array.isArray(response.data.list)) {
           setPosts(response.data.list);
           setTotalCount(response.data.totalCount);
@@ -62,9 +59,6 @@ function PostPage() {
             orderBy: "like",
           },
         });
-        // NOTE: 데이터 전송 확인
-        // eslint-disable-next-line no-console
-        console.log("Best posts response:", response.data);
         if (Array.isArray(response.data.list)) {
           setBestPosts(
             response.data.list.map((post: Post) => ({
@@ -88,16 +82,14 @@ function PostPage() {
     fetchBestPosts();
   }, []);
 
-  const handleSortLatest = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSort = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setSortBy("recent");
-    setCurrentPage(1);
-  };
+    const sortType = event.currentTarget.getAttribute("data-sort");
 
-  const handleSortPopular = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setSortBy("like");
-    setCurrentPage(1);
+    if (sortType) {
+      setSortBy(sortType);
+      setCurrentPage(1);
+    }
   };
 
   const handleSearch = (searchValue: string) => {
@@ -113,7 +105,7 @@ function PostPage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
+    <Container className="align-center mx-[20px] mb-[120px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
       <div className="mb-10 flex items-center justify-between">
         <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
         <Button
@@ -128,7 +120,7 @@ function PostPage() {
       {bestLoading ? <div>Loading best posts...</div> : <BestPosts bestPosts={bestPosts} />}
       <div className="mb-8 gap-2.5 md:flex">
         <SearchBar onSearch={handleSearch} />
-        <SortDropdown sortBy={sortBy} onSortLatest={handleSortLatest} onSortPopular={handleSortPopular} />
+        <SortDropdown sortBy={sortBy} onSort={handleSort} />
       </div>
       <PostListTable posts={posts} />
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={paginate} />
