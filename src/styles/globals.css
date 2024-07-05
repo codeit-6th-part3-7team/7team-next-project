@@ -1,6 +1,6 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: "Pretendard";
@@ -29,8 +29,8 @@ body {
     text-align: left;
   }
 
-   /* Custom responsive image size */
-   .image-responsive {
+  /* Custom responsive image size */
+  .image-responsive {
     width: 18px;
     height: 18px;
   }
