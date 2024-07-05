@@ -10,7 +10,19 @@ import Reply, { ReplyType } from "@/src/components/Reply";
 export default function ArticlePage() {
   const router = useRouter();
   const { id } = router.query;
-  const [article, setArticle] = useState<ArticleType | null>(null);
+  const [article, setArticle] = useState<ArticleType>({
+    id: 0,
+    title: "",
+    content: "",
+    image: "",
+    updatedAt: new Date(),
+    writer: {
+      id: 0,
+      name: "",
+    },
+    likeCount: 0,
+    isLiked: false,
+  });
   const [replies, setReplies] = useState<ReplyType[]>([]);
   const [userId, setUserId] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
