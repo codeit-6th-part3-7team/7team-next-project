@@ -24,8 +24,19 @@ input.mantine-Input-input::placeholder {
   --button-radius: 10px;
 }
 
+@media (max-width: 1200px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
 .button:disabled,
 .button[data-disabled] {
   color: #fff;
   background-color: #c6cada;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
