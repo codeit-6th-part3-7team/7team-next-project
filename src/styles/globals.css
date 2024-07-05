@@ -29,8 +29,8 @@ body {
     text-align: left;
   }
 
-   /* Custom responsive image size */
-   .image-responsive {
+  /* Custom responsive image size */
+  .image-responsive {
     width: 18px;
     height: 18px;
   }
@@ -66,4 +66,8 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+input.mantine-Input-input::placeholder {
+  color: #8f95b2;
 }
