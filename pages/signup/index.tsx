@@ -193,7 +193,7 @@ export default function SignUp() {
           required
           variant="filled"
         />
-        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white" className="button">
           가입하기
         </Button>
         <Flex justify="center" gap={10} mt={10}>
