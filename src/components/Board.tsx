@@ -83,7 +83,7 @@ export default function Board({ initialValues, isMine }: BoardProps) {
                 >
                   수정하기
                 </Button>
-                <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-lg">
+                <ActionIcon href={`/boards/${initialValues.id}/edit`} component={Link} variant="transparent" aria-label="수정하기" className="mantine-hidden-from-lg">
                   <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
                 </ActionIcon>
                 <Button type="submit" color={btnColor} w={{ sm: 120, lg: 140 }} h={{ base: 40, sm: 45 }} className="button mantine-visible-from-lg" onClick={openDeleteModal}>
@@ -122,10 +122,10 @@ export default function Board({ initialValues, isMine }: BoardProps) {
         <Flex direction="column" align="center" gap={40}>
           <p>정말 삭제하시겠습니까?</p>
           <Flex gap={10}>
-            <Button type="submit" color="green" onClick={handleDelete}>
+            <Button type="submit" color="#4CBFA4" onClick={handleDelete} className="button">
               삭제하기
             </Button>
-            <Button variant="outline" color="green" onClick={closeDeleteModal}>
+            <Button variant="outline" color="#4CBFA4" onClick={closeDeleteModal}>
               취소하기
             </Button>
           </Flex>
