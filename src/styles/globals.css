@@ -67,3 +67,7 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+input.mantine-Input-input::placeholder {
+  color: #8f95b2;
+}
