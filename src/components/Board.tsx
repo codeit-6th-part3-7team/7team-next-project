@@ -83,7 +83,7 @@ export default function Board({ initialValues, isMine }: BoardProps) {
                 >
                   수정하기
                 </Button>
-                <ActionIcon variant="transparent" aria-label="수정하기" className="mantine-hidden-from-lg">
+                <ActionIcon href={`/boards/${initialValues.id}/edit`} component={Link} variant="transparent" aria-label="수정하기" className="mantine-hidden-from-lg">
                   <Image src={IcoPencil} width={24} height={24} alt="아이콘" aria-hidden="true" />
                 </ActionIcon>
                 <Button type="submit" color={btnColor} w={{ sm: 120, lg: 140 }} h={{ base: 40, sm: 45 }} className="button mantine-visible-from-lg" onClick={openDeleteModal}>
