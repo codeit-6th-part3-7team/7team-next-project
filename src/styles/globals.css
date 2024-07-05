@@ -13,6 +13,7 @@
 body {
   font-family: "Pretendard";
 }
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
