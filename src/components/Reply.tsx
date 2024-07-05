@@ -41,6 +41,7 @@ export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; i
               style={{
                 width: "100%",
               }}
+              className="rounded-full"
               alt="유저 프로필"
             />
           </Flex>

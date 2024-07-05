@@ -11,7 +11,7 @@ export default function ArticlePage() {
   const router = useRouter();
   const { id } = router.query;
   const [article, setArticle] = useState<ArticleType | null>(null);
-  const [replies, setReplies] = useState<ReplyType[] | null>([]);
+  const [replies, setReplies] = useState<ReplyType[]>([]);
   const [userId, setUserId] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,15 +20,16 @@ export default function ArticlePage() {
     setLoading(true);
     setError(null);
     try {
-      if (id !== undefined) {
-        const response = await instance.get(`/articles/${id}`);
-        const replyResponse = await instance.get(`/articles/${id}/comments?limit=100`);
-        const userResponse = await instance.get(`/users/me`);
-
-        setArticle(response.data);
-        setReplies(replyResponse.data.list);
-        setUserId(userResponse.data.id);
+      if (!id) {
+        return;
       }
+      const response = await instance.get(`/articles/${id}`);
+      const replyResponse = await instance.get(`/articles/${id}/comments?limit=100`);
+      const userResponse = await instance.get(`/users/me`);
+
+      setArticle(response.data);
+      setReplies(replyResponse.data.list);
+      setUserId(userResponse.data.id);
     } catch (e) {
       setError("게시글을 불러오는 중 오류가 발생했습니다.");
     } finally {

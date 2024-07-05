@@ -26,12 +26,11 @@ export interface ArticleType {
 }
 
 interface BoardProps {
-  initialValues: ArticleType | null;
+  initialValues: ArticleType;
   isMine: boolean;
 }
 
 export default function Board({ initialValues, isMine }: BoardProps) {
-  const [values] = useState(initialValues);
   const [like, setLike] = useState(initialValues?.isLiked ?? false);
   const [likeCount, setLikeCount] = useState(initialValues?.likeCount ?? 0);
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
@@ -42,18 +41,24 @@ export default function Board({ initialValues, isMine }: BoardProps) {
   });
 
   const handleHeart = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!initialValues.id) {
+      return;
+    }
     if (e.target.checked) {
-      await axios.post(`/articles/${values?.id}/like`);
+      await axios.post(`/articles/${initialValues.id}/like`);
       setLikeCount((prevValue) => prevValue + 1);
     } else {
-      await axios.delete(`/articles/${values?.id}/like`);
+      await axios.delete(`/articles/${initialValues.id}/like`);
       setLikeCount((prevValue) => prevValue - 1);
     }
     setLike(!like);
   };
 
   const handleDelete = async () => {
-    await axios.delete(`/articles/${values?.id}`);
+    if (!initialValues.id) {
+      return;
+    }
+    await axios.delete(`/articles/${initialValues.id}`);
     router.push("/boards");
   };
 
@@ -63,12 +68,12 @@ export default function Board({ initialValues, isMine }: BoardProps) {
         <Flex direction="column" w="100%" pt={46} pb={30} px={30} className="rounded-[10px] bg-white drop-shadow-md">
           <Box mb={{ base: 14, sm: 30 }}>
             <Box className="float-left overflow-hidden">
-              <h2 className="text-24 font-semibold text-gray-800 md:text-32">{values?.title}</h2>
+              <h2 className="text-24 font-semibold text-gray-800 md:text-32">{initialValues?.title}</h2>
             </Box>
             {isMine && (
               <Flex gap={{ base: 12, lg: 14 }} className="float-right">
                 <Button
-                  href={`/boards/${values?.id}/edit`}
+                  href={`/boards/${initialValues.id}/edit`}
                   component={Link}
                   type="submit"
                   color={btnColor}
@@ -92,8 +97,8 @@ export default function Board({ initialValues, isMine }: BoardProps) {
           </Box>
           <Flex justify="space-between">
             <p className="text-12 text-gray-400 md:text-14">
-              <strong className="mr-2 font-normal">{values?.writer.name}</strong>
-              <strong className="font-normal">{new Date(values?.updatedAt ?? "").toLocaleDateString()}</strong>
+              <strong className="mr-2 font-normal">{initialValues?.writer.name}</strong>
+              <strong className="font-normal">{new Date(initialValues?.updatedAt ?? "").toLocaleDateString()}</strong>
             </p>
             <label htmlFor="like" className="flex items-center gap-[2px]">
               <Flex w={{ base: 16, sm: 18 }} h={{ base: 16, sm: 18 }}>
@@ -109,7 +114,7 @@ export default function Board({ initialValues, isMine }: BoardProps) {
           </Flex>
           <Divider color="#E4E5F0" mt={10} />
           <Flex direction="column" py={{ base: 16, sm: 20 }} className="text-gray-800">
-            {Parser(values?.content ?? "")}
+            {Parser(initialValues?.content ?? "")}
           </Flex>
         </Flex>
       </Flex>
