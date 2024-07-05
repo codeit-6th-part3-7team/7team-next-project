@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Title, Button } from "@mantine/core";
-import Pagination from "@/src/components/boards/Pagination";
+import Pagination from "@/src/components/Pagination";
 import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
 import SearchBar from "@/src/components/boards/SearchBar";
@@ -105,7 +105,7 @@ function PostPage() {
     return <div>Loading...</div>;
   }
   return (
-    <Container className="align-center mx-[20px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
+    <Container className="align-center mx-[20px] mb-[120px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">
       <div className="mb-10 flex items-center justify-between">
         <Title className="text-left text-[24px] font-semibold leading-[32px] text-gray-800 md:text-32">베스트 게시글</Title>
         <Button
