@@ -59,6 +59,12 @@ body {
   --button-radius: 10px;
 }
 
+.button {
+  -webkit-appearance: button;
+  background-color: #4cbfa4;
+  background-image: none;
+}
+
 .button:disabled,
 .button[data-disabled] {
   color: #fff;
