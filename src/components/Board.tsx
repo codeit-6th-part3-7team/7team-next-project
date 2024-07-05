@@ -122,10 +122,10 @@ export default function Board({ initialValues, isMine }: BoardProps) {
         <Flex direction="column" align="center" gap={40}>
           <p>정말 삭제하시겠습니까?</p>
           <Flex gap={10}>
-            <Button type="submit" color="green" onClick={handleDelete}>
+            <Button type="submit" color="#4CBFA4" onClick={handleDelete} className="button">
               삭제하기
             </Button>
-            <Button variant="outline" color="green" onClick={closeDeleteModal}>
+            <Button variant="outline" color="#4CBFA4" onClick={closeDeleteModal}>
               취소하기
             </Button>
           </Flex>
