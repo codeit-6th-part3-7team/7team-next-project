@@ -48,4 +48,22 @@ body {
   font-family: "Pretendard";
 }
 
-@media (max-width: 1200px) { body{overflow-x: hidden;} }
+@media (max-width: 1200px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+:root {
+  --button-radius: 10px;
+}
+
+.button:disabled,
+.button[data-disabled] {
+  color: #fff;
+  background-color: #c6cada;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
