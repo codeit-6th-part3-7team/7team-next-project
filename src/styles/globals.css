@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "./editor.css";
 
 @font-face {
   font-family: "Pretendard";
@@ -16,18 +15,18 @@
   font-style: normal;
 }
 
-input.mantine-Input-input::placeholder {
-  color: #8f95b2;
-}
-
-:root {
-  --button-radius: 10px;
+body {
+  font-family: "Pretendard";
 }
 
 @media (max-width: 1200px) {
   body {
     overflow-x: hidden;
   }
+}
+
+:root {
+  --button-radius: 10px;
 }
 
 .button:disabled,
@@ -39,4 +38,3 @@ input.mantine-Input-input::placeholder {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-
