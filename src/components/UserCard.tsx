@@ -38,13 +38,13 @@ export default function UserCard({ articles }: UserCardProps) {
           <div className="absolute bottom-4 right-6">
             <CopyButton value={`${window.location.origin}/wiki/${article.name}`} timeout={2000}>
               {({ copied, copy }) => (
-                <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                  <button className="flex w-[150px] items-center rounded-10 bg-green-100 font-[400] text-green-200 md:w-[220px] md:text-14 lg:w-[220px] lg:text-14" type="button" onClick={copy}>
+                <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right" onClick={copy}>
+                  <div className="flex w-[150px] items-center rounded-10 bg-green-100 font-[400] text-green-200 md:w-[220px] md:text-14 lg:w-[220px] lg:text-14" style={{ cursor: "pointer" }}>
                     <ActionIcon variant="gradient" size="md" aria-label="위키 복사 버튼" gradient={{ from: "#EEF9F6", to: "#EEF9F6", deg: 90 }}>
                       {copied ? <IconCheck style={{ width: 20, color: "#4CBFA4" }} /> : <Image src={icCopy} alt="링크 복사 아이콘" style={{ width: 20 }} />}
                     </ActionIcon>
                     <span className="truncate">{`${window.location.origin}/wiki/${article.name}`}</span>
-                  </button>
+                  </div>
                 </Tooltip>
               )}
             </CopyButton>
