@@ -43,6 +43,11 @@ body {
       height: 24px;
     }
   }
+  @media (max-width: 1200px) {
+    body {
+      overflow-x: hidden;
+    }
+  }
 }
 
 input.mantine-Input-input::placeholder {
