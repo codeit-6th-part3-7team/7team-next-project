@@ -2,7 +2,12 @@ import React from "react";
 import Image from "next/image";
 import leftArrow from "@/public/ic_left_arrow.svg";
 import rightArrow from "@/public/ic_right_arrow.svg";
-import { PaginationProps } from "@/src/types/wikiListTypes";
+
+interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
 export default function Pagination({ totalPages, currentPage, onPageChange }: PaginationProps) {
   const pageButtons = [];
