@@ -6,11 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext ts,tsx src/**/* --cache --fix",
+    "lint": "eslint --ext ts,tsx --cache --fix",
     "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
+    "@mantine/carousel": "^7.10.2",
     "@mantine/core": "^7.10.2",
     "@mantine/dates": "^7.10.2",
     "@mantine/dropzone": "^7.10.2",
@@ -30,10 +31,8 @@
     "@tiptap/extension-list-item": "^2.4.0",
     "@tiptap/extension-paragraph": "^2.4.0",
     "@tiptap/extension-text": "^2.4.0",
-    "@tiptap/extension-placeholder": "^2.4.0",
     "@tiptap/extension-text-align": "^2.4.0",
     "@tiptap/extension-text-style": "^2.4.0",
-    "@tiptap/extension-underline": "^2.4.0",
     "@tiptap/pm": "^2.4.0",
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
@@ -45,7 +44,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
