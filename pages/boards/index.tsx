@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Title, Button } from "@mantine/core";
+import { Container, Title, Button, Flex, Loader } from "@mantine/core";
 import Pagination from "@/src/components/Pagination";
 import PostListTable from "@/src/components/boards/PostListTable";
 import BestPosts from "@/src/components/boards/BestPost";
@@ -102,7 +102,11 @@ function PostPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Flex justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
+        <Loader size="md" />
+      </Flex>
+    );
   }
   return (
     <Container className="align-center mx-[20px] mb-[120px] mt-[40px] min-w-[335px] max-w-screen-lg flex-col px-0 md:mx-[60px] md:mt-[60px] lg:mx-auto">

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -69,8 +70,6 @@ const config: Config = {
       },
       borderRadius: {
         "1/2": "50%",
-        "20": "20px",
-        "25": "25px",
         "10": "10px",
       },
       lineHeight: {
@@ -86,6 +85,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typography],
 };
 export default config;

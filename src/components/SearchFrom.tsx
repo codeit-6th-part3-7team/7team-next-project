@@ -17,7 +17,7 @@ export default function SearchFrom({ value, setValue, page, setPage }: SearchPro
             }
           }}
           placeholder="이름으로 위키 찾기"
-          className="m-auto h-[45px] w-full rounded-20 bg-gray-100 py-[20px] pl-[50px] pr-[15px] outline-none"
+          className="m-auto h-[45px] w-full rounded-[20px] bg-gray-100 py-[20px] pl-[50px] pr-[15px] outline-none"
         />
         <div className="absolute left-[20px] top-1/2 -translate-y-1/2 transform">
           <Image src={searchIcon} alt="검색 아이콘" width={22} height={22} draggable="false" />
