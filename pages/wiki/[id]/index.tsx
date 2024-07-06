@@ -84,10 +84,10 @@ export default function Wiki() {
     const getWikiDataByCode = async () => {
       try {
         const response = await instance.get(`/profiles`, { params: { name: id } });
-        const code = response.data.list[0].code;
-        setWikiCode(code);
+        const wikiIdCode = response.data.list[0].code;
+        setWikiCode(wikiIdCode);
 
-        const { data } = await instance.get(`/profiles/${code}`);
+        const { data } = await instance.get(`/profiles/${wikiIdCode}`);
         setWikiData(data);
 
         const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = data;
@@ -131,6 +131,7 @@ export default function Wiki() {
           message: "위키 수정을 위해 로그인이 필요합니다.",
           color: "red",
         });
+        router.push("/login");
         return;
       }
       const wikiStatus = await checkWikiStatus(wikiCode);
