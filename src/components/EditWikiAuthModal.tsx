@@ -2,7 +2,7 @@ import authEditWiki from "@/src/apis/authEditWiki";
 import { Button, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import ic_lock from "@/public/ic_lock.webp";
 import { notifications } from "@mantine/notifications";
@@ -17,6 +17,8 @@ type EditWikiAuthModalProps = {
 };
 
 export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, setAnswer, setIsEditing, wikiCode }: EditWikiAuthModalProps) {
+  const [securityAnswer, SetSecurityAnswer] = useState("");
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -43,8 +45,8 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   };
 
   useEffect(() => {
-    form.reset();
-  }, []);
+    SetSecurityAnswer("");
+  }, [opened]);
 
   return (
     <Modal
@@ -70,9 +72,10 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
       </div>
       <form
         className="flex flex-col gap-6"
-        onSubmit={form.onSubmit((value) => {
-          handleSubmitAnswer(value.securityAnswer);
-        })}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmitAnswer(securityAnswer);
+        }}
       >
         <TextInput
           label={securityQuestion}
@@ -95,6 +98,8 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
           })}
           key={form.key("securityAnswer")}
           {...form.getInputProps("securityAnswer")}
+          value={securityAnswer}
+          onChange={(e) => SetSecurityAnswer(e.target.value)}
         />
         <Button size="md" color="green.1" type="submit">
           확인
