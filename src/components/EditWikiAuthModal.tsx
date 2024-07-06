@@ -2,7 +2,7 @@ import authEditWiki from "@/src/apis/authEditWiki";
 import { Button, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ic_lock from "@/public/ic_lock.webp";
 import { notifications } from "@mantine/notifications";

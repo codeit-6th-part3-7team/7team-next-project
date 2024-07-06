@@ -151,7 +151,6 @@ export default function Wiki() {
       ...prevFormData,
       [name]: value,
     }));
-    console.log(formData);
   };
 
   const handleChangeContent = (value: string) => {
@@ -159,12 +158,10 @@ export default function Wiki() {
       ...prevFormData,
       content: value,
     }));
-    console.log(formData);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
     try {
       const updatedFormData = {
         ...formData,
