@@ -268,7 +268,7 @@ export default function Wiki() {
           </section>
         </main>
       )}
-      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={id} setAnswer={setAnswer} setIsEditing={setIsEditing} />
+      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={wikiCode} setAnswer={setAnswer} setIsEditing={setIsEditing} />
     </>
   );
 }
