@@ -1,5 +1,5 @@
 import axios, { isAxiosError } from "@/src/apis/axios";
-import { baseSchema } from "@/src/schema/userFormSchema";
+import { loginSchema } from "@/src/schema/userFormSchema";
 import { LoginFormData } from "@/src/types/userFormData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Flex, TextInput, PasswordInput, Button, Title, Text } from "@mantine/core";
@@ -9,11 +9,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-const loginSchema = baseSchema.pick({ email: true, password: true });
-
 export default function LogIn() {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -143,7 +140,7 @@ export default function LogIn() {
           required
           variant="filled"
         />
-        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white" className="button">
           로그인
         </Button>
         <Flex justify="center" gap={10} mt={10}>

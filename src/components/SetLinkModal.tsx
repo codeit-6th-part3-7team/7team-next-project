@@ -1,6 +1,6 @@
 import { Button, Modal, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SetLinkModalProps = {
   opened: boolean;
@@ -24,6 +24,11 @@ export default function SetLinkModal({ opened, onClose, setLink }: SetLinkModalP
       });
     }
   };
+
+  useEffect(() => {
+    setUrl("");
+  }, [opened]);
+
   return (
     <Modal title="링크를 입력해주세요" opened={opened} onClose={onClose} size="sm" centered padding={20} radius={10} transitionProps={{ transition: "fade", duration: 200, timingFunction: "linear" }}>
       <TextInput
