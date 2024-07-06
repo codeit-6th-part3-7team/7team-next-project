@@ -120,7 +120,7 @@ export default function Wiki() {
       }
     };
     getWikiDataByCode();
-  }, [id]);
+  }, [id, isEditing]);
 
   const handleClickEdit = async () => {
     if (typeof id === "string") {
@@ -166,7 +166,11 @@ export default function Wiki() {
     event.preventDefault();
     console.log(formData);
     try {
-      const res = await instance.patch(`/profiles/${wikiCode}`, formData);
+      const updatedFormData = {
+        ...formData,
+        securityAnswer: answer,
+      };
+      const res = await instance.patch(`/profiles/${wikiCode}`, updatedFormData);
       if (res) {
         notifications.show({
           title: "저장 완료",

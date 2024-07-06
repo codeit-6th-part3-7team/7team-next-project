@@ -17,7 +17,7 @@ type EditWikiAuthModalProps = {
 };
 
 export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, setAnswer, setIsEditing, wikiCode }: EditWikiAuthModalProps) {
-  const [securityAnswer, SetSecurityAnswer] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
 
   const form = useForm({
     mode: "uncontrolled",
@@ -32,7 +32,6 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   const handleSubmitAnswer = async (value: string) => {
     const res = await authEditWiki(value, wikiCode);
     if (res) {
-      setAnswer(value);
       closeModal();
       notifications.show({
         title: "인증 성공",
@@ -40,18 +39,20 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
         color: "green",
       });
       setIsEditing(true);
-      // todo 인증 성공 시 수정 컴포넌트 렌더링
+      setAnswer(value);
+      setSecurityAnswer("");
     }
   };
 
-  useEffect(() => {
-    SetSecurityAnswer("");
-  }, [opened]);
+  const handleModalClose = () => {
+    closeModal();
+    setSecurityAnswer("");
+  };
 
   return (
     <Modal
       opened={opened}
-      onClose={closeModal}
+      onClose={handleModalClose}
       size="sm"
       centered
       padding={20}
@@ -99,7 +100,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
           key={form.key("securityAnswer")}
           {...form.getInputProps("securityAnswer")}
           value={securityAnswer}
-          onChange={(e) => SetSecurityAnswer(e.target.value)}
+          onChange={(e) => setSecurityAnswer(e.target.value)}
         />
         <Button size="md" color="green.1" type="submit">
           확인
