@@ -82,7 +82,7 @@ export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; i
             <Button type="submit" color="#4CBFA4" className="button" onClick={handleDelete}>
               삭제하기
             </Button>
-            <Button variant="outline" color="#4CBFA4" className="button" onClick={closeDeleteModal}>
+            <Button variant="outline" color="#4CBFA4" onClick={closeDeleteModal}>
               취소하기
             </Button>
           </Flex>
