@@ -65,6 +65,8 @@ export default function Wiki() {
   const [wikiUrl, setWikiUrl] = useState<string>("");
   const [formData, setFormData] = useState({});
   const [answer, setAnswer] = useState<string>("");
+  const [wikiCode, setWikiCode] = useState<string>("");
+
   const router = useRouter();
   const { id } = router.query as { id: string };
 
@@ -82,8 +84,10 @@ export default function Wiki() {
     const getWikiDataByCode = async () => {
       try {
         const response = await instance.get(`/profiles`, { params: { name: id } });
-        const firstItem = response.data.list[0].code;
-        const { data } = await instance.get(`/profiles/${firstItem}`);
+        const code = response.data.list[0].code;
+        setWikiCode(code);
+
+        const { data } = await instance.get(`/profiles/${code}`);
         setWikiData(data);
 
         const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = data;
@@ -129,7 +133,7 @@ export default function Wiki() {
         });
         return;
       }
-      const wikiStatus = await checkWikiStatus(id);
+      const wikiStatus = await checkWikiStatus(wikiCode);
       if (wikiStatus) {
         openModal();
       }
@@ -155,7 +159,7 @@ export default function Wiki() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const res = await instance.patch(`/profiles/${id}`, formData);
+      const res = await instance.patch(`/profiles/${wikiCode}`, formData);
       if (res) {
         notifications.show({
           title: "저장 완료",
