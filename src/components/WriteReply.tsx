@@ -6,8 +6,8 @@ import instance from "../apis/axios";
 interface WriteReplyProps {
   type: string;
   onUpdate: () => void;
-  initialValue?: string;
-  replyId?: number;
+  initialValue: string;
+  replyId: number;
 }
 
 export default function WriteReply({ type, onUpdate, replyId = 0, initialValue = "" }: WriteReplyProps) {
@@ -53,8 +53,3 @@ export default function WriteReply({ type, onUpdate, replyId = 0, initialValue =
     </form>
   );
 }
-
-WriteReply.defaultProps = {
-  initialValue: "",
-  replyId: 0,
-};

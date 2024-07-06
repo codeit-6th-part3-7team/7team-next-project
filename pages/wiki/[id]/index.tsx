@@ -225,7 +225,7 @@ export default function Wiki() {
               {/* content header label */}
               <div className="px-auto flex h-[43px] justify-between">
                 <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px]">{wikiData.name}</span>
-                <Button color="green.1" size="sm" onClick={handleClickEdit}>
+                <Button color="green.1" size="sm" onClick={handleClickEdit} className="button">
                   위키 참여하기
                 </Button>
               </div>
@@ -255,7 +255,7 @@ export default function Wiki() {
               <div className="mt-8 flex h-auto flex-col items-center justify-center bg-gray-100 p-12 xl:mr-[400px] xl:max-w-[860px]">
                 <span className="text-16 text-gray-400">아직 작성된 내용이 없네요</span>
                 <span className="text-16 text-gray-400">위키에 참여해 보세요!</span>
-                <Button className="mt-5" color="green.1" size="sm">
+                <Button className="button mt-5" color="green.1" size="sm">
                   시작하기
                 </Button>
               </div>
