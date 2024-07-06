@@ -140,7 +140,7 @@ export default function LogIn() {
           required
           variant="filled"
         />
-        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white">
+        <Button type="submit" disabled={!isValid} fullWidth mt={16} size="md" color="green.1" radius="md" c="white" className="button">
           로그인
         </Button>
         <Flex justify="center" gap={10} mt={10}>
