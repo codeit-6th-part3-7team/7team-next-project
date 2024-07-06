@@ -151,14 +151,20 @@ export default function Wiki() {
       ...prevFormData,
       [name]: value,
     }));
+    console.log(formData);
   };
 
   const handleChangeContent = (value: string) => {
-    setFormData({ ...formData, content: value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      content: value,
+    }));
+    console.log(formData);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(formData);
     try {
       const res = await instance.patch(`/profiles/${wikiCode}`, formData);
       if (res) {

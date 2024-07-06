@@ -32,13 +32,13 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
   const handleSubmitAnswer = async (value: string) => {
     const res = await authEditWiki(value, wikiCode);
     if (res) {
+      setAnswer(value);
       closeModal();
       notifications.show({
         title: "인증 성공",
         message: "인증에 성공했습니다.",
         color: "green",
       });
-      setAnswer(value);
       setIsEditing(true);
       // todo 인증 성공 시 수정 컴포넌트 렌더링
     }
