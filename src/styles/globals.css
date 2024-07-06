@@ -1,33 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "./editor.css";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+  font-family: "Nexon";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Pretendard";
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  /* Custom placeholder color utility */
+  .placeholder-gray::placeholder {
+    background-color: "transparent";
+    border: "none";
+    width: "100%";
+    color: #8f95b2;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: Pretendard;
+    line-height: 26px;
+    text-align: left;
+  }
+
+  /* Custom responsive image size */
+  .image-responsive {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (min-width: 640px) {
+    /* sm breakpoint */
+    .image-responsive-sm {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+input.mantine-Input-input::placeholder {
+  color: #8f95b2;
+}
+
+:root {
+  --button-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.button {
+  -webkit-appearance: button;
+  background-color: #4cbfa4;
+  background-image: none;
+}
+
+.button:disabled,
+.button[data-disabled] {
+  color: #fff;
+  background-color: #c6cada;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
