@@ -22,11 +22,15 @@ instance.interceptors.request.use(
 let isRefreshing = false;
 let subscribers: ((token: string) => void)[] = [];
 
-// note 토큰 갱신 요청 함수
+// note 별도 인스턴스를 사용하여 토큰 갱신 요청
+const refreshInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+});
+
 const postRefreshToken = async () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) throw new Error("No refresh token found");
-  const response = await instance.post("auth/refresh-token", { refreshToken });
+  const response = await refreshInstance.post("auth/refresh-token", { refreshToken });
   return response.data;
 };
 
@@ -55,11 +59,13 @@ instance.interceptors.response.use(
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           window.location.href = "/login";
-          return await Promise.reject(err);
+          return Promise.reject(err);
         } finally {
           isRefreshing = false;
         }
       }
+
+      originalRequest.retryAttempt = true;
 
       return new Promise((resolve) => {
         subscribers.push((token) => {
