@@ -82,11 +82,18 @@ export default function EditWikiAuthModal({ securityQuestion, opened, openModal,
     >
       <div className="mb-4 flex flex-col items-center gap-4">
         <Image className="mx-auto" src={ic_lock} alt="위키수정권한확인" width={42} height={42} />
-        <span className="text-center text-sm font-normal text-gray-400">
-          다음 퀴즈를 맞추고
-          <br />
-          위키를 작성해 보세요
-        </span>
+        {isEditing ? (
+          <span className="text-center text-sm font-normal text-gray-400">
+            수정 가능 시간이 1분 남았습니다 <br />
+            계속 수정하시려면 답변을 입력해주세요
+          </span>
+        ) : (
+          <span className="text-center text-sm font-normal text-gray-400">
+            다음 퀴즈를 맞추고
+            <br />
+            위키를 작성해 보세요
+          </span>
+        )}
       </div>
       <form
         className="flex flex-col gap-6"
