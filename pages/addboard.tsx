@@ -35,7 +35,8 @@ export default function AddBoard() {
   const handleSubmit = async (data: { title: string; content: string; image?: string }) => {
     setLoading(true);
     try {
-      await instance.post("/articles", data);
+      const res = await instance.post("/articles", data);
+      router.push(`/boards/${res.data.id}`);
     } catch (e: unknown) {
       if (e instanceof Error) {
         setError(e);
@@ -44,7 +45,6 @@ export default function AddBoard() {
       }
     } finally {
       setLoading(false);
-      router.push("/boards");
     }
   };
 
