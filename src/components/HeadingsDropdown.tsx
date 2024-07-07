@@ -9,7 +9,9 @@ export default function Dropdown({ title, options }: DropdownProps) {
   return (
     <Menu>
       <Menu.Target>
-        <MantineButton color="green.1">{title}</MantineButton>
+        <MantineButton color="green.1" className="button">
+          {title}
+        </MantineButton>
       </Menu.Target>
       <Menu.Dropdown>
         {options.map((option) => (
