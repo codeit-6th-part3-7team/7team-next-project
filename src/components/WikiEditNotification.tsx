@@ -1,43 +1,23 @@
 import { Box, Text, Dialog, Flex, CloseButton, ScrollArea } from "@mantine/core";
 import { NotiData } from "@/src/types/NotificationResponse";
-import { isAxiosError } from "axios";
 import axiosInstance from "@/src/apis/axios";
 import formatTimeAgo from "@/src/utils/formatTimeAgo";
 
 type EditNotificationProps = {
   opened: boolean;
   notiData: NotiData;
+  setNotiData: React.Dispatch<React.SetStateAction<NotiData>>;
 };
 
-export default function EditNotification({ opened, notiData }: EditNotificationProps) {
+export default function EditNotification({ opened, notiData, setNotiData }: EditNotificationProps) {
   const deleteNotiData = async (id: number) => {
-    try {
-      const res = await axiosInstance.delete(`notifications/${id}`);
-      if (res.status === 200) {
-        // TODO: 테스트용 추후 삭제 예정
-        // eslint-disable-next-line no-console
-        console.log("noti 삭제 성공");
-      }
-    } catch (error) {
-      if (isAxiosError(error)) {
-        if (error.response?.status === 400) {
-          // TODO: 테스트용 추후 삭제 예정
-          // eslint-disable-next-line no-console
-          console.log(error.response?.data.message);
-        } else if (error.response?.status === 401) {
-          // TODO: 테스트용 추후 삭제 예정
-          // eslint-disable-next-line no-console
-          console.log(error.response.data.message);
-        } else if (error.response?.status === 403) {
-          // TODO: 테스트용 추후 삭제 예정
-          // eslint-disable-next-line no-console
-          console.log(error.response.data.message);
-        } else if (error.response?.status === 404) {
-          // TODO: 테스트용 추후 삭제 예정
-          // eslint-disable-next-line no-console
-          console.log(error.response?.data.message);
-        }
-      }
+    const res = await axiosInstance.delete(`notifications/${id}`);
+    if (res.status === 200) {
+      setNotiData((prevState) => ({
+        ...prevState,
+        totalCount: prevState.totalCount - 1,
+        list: prevState.list.filter((item) => item.id !== id),
+      }));
     }
   };
 

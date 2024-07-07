@@ -111,7 +111,7 @@ export default function CreateWikiForm() {
           variant="filled"
         />
         <Flex justify="flex-end">
-          <Button type="submit" disabled={!isValid} w="89" color="green.1" radius="md" c="white">
+          <Button type="submit" disabled={!isValid} w="89" color="green.1" radius="md" c="white" className="button">
             생성하기
           </Button>
         </Flex>

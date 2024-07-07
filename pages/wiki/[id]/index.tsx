@@ -221,6 +221,7 @@ export default function Wiki() {
                     borderWidth: "1px",
                     borderColor: theme.colors.green[1],
                   })}
+                  className="button"
                 >
                   저장
                 </Button>

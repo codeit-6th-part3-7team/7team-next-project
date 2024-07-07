@@ -181,7 +181,7 @@ export default function Header() {
           )}
         </Group>
       </header>
-      <WikiEditNotification opened={opened} notiData={notiData} />
+      <WikiEditNotification opened={opened} notiData={notiData} setNotiData={setNotiData} />
     </div>
   );
 }
