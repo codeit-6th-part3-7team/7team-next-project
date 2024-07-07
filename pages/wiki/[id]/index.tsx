@@ -122,6 +122,14 @@ export default function Wiki() {
     getWikiDataByCode();
   }, [id, isEditing]);
 
+  useEffect(() = {
+    if(isEditing) {
+      const editTimer = setTimeout(() => {
+        
+      }, 4 * 60 * 1000)
+    }
+  }, [])
+
   const handleClickEdit = async () => {
     if (typeof id === "string") {
       const accessToken = localStorage.getItem("accessToken");
@@ -195,6 +203,9 @@ export default function Wiki() {
               <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">{wikiData.name}</span>
               <div className="flex gap-[10px]">
                 <Button
+                  onClick={() => {
+                    router.back();
+                  }}
                   color="white"
                   style={(theme) => ({
                     width: "65px",
