@@ -71,7 +71,7 @@ export default function Wiki() {
   const { id } = router.query as { id: string };
 
   // note mantine modal handler hook
-  const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
+  const [opened, { open: openAuthModal, close: closeAuthModal }] = useDisclosure(false);
 
   // note profileCard(모바일, 태블릿) 상세보기 상태 state
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
@@ -136,7 +136,7 @@ export default function Wiki() {
       }
       const wikiStatus = await checkWikiStatus(wikiCode);
       if (wikiStatus) {
-        openModal();
+        openAuthModal();
       }
     }
   };
@@ -195,6 +195,9 @@ export default function Wiki() {
               <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">{wikiData.name}</span>
               <div className="flex gap-[10px]">
                 <Button
+                  onClick={() => {
+                    router.back();
+                  }}
                   color="white"
                   style={(theme) => ({
                     width: "65px",
@@ -275,7 +278,16 @@ export default function Wiki() {
           </section>
         </main>
       )}
-      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={wikiCode} setAnswer={setAnswer} setIsEditing={setIsEditing} />
+      <EditWikiAuthModal
+        securityQuestion={wikiData.securityQuestion}
+        opened={opened}
+        openModal={openAuthModal}
+        closeModal={closeAuthModal}
+        wikiCode={wikiCode}
+        setAnswer={setAnswer}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
     </>
   );
 }
