@@ -12,21 +12,16 @@ export default async function checkWikiStatus(wikiCode: string): Promise<boolean
     const whoami = await axios.get(`/users/me`);
     const response = await axios.get<CheckWikiStatusResponseBody>(`profiles/${wikiCode}/ping`);
 
-    if (response.status === 200) {
-      // note 수정 중인 경우 수정상태 관련 정보 반환, 로그인 유저와 비교해서 같은 유저인 경우 계속 수정 가능하도록
-      if (whoami.data.id === response.data.userId) {
-        return true;
-      } else {
-        notifications.show({
-          title: "수정 중",
-          message: "현재 다른 사용자가 위키를 수정 중 입니다",
-          color: "yellow",
-        });
-        return false;
-      }
+    if (response.status === 200 && whoami.data.id !== response.data.userId) {
+      notifications.show({
+        title: "수정 중",
+        message: "현재 다른 사용자가 위키를 수정 중입니다",
+        color: "yellow",
+      });
+      return false;
     }
-    if (response.status === 204) {
-      // note 수정 중이 아닌 경우 true 반환
+
+    if (response.status === 204 || whoami.data.id === response.data.userId) {
       return true;
     }
 

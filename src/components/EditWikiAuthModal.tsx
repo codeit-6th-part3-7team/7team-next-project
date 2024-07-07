@@ -54,9 +54,9 @@ export default function EditWikiAuthModal({ securityQuestion, opened, openModal,
         },
         4 * 60 * 1000,
       );
-
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [isEditing, openModal]);
 
   const handleModalClose = () => {
