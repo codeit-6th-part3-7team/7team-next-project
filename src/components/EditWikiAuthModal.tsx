@@ -126,7 +126,7 @@ export default function EditWikiAuthModal({ securityQuestion, opened, openModal,
           value={securityAnswer}
           onChange={(e) => setSecurityAnswer(e.target.value)}
         />
-        <Button size="md" color="green.1" type="submit">
+        <Button size="md" color="green.1" type="submit" className="button">
           확인
         </Button>
       </form>
