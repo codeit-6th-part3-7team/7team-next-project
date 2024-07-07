@@ -11,12 +11,20 @@ import LandingImg_07 from "@/public/assets/img_landing_07.webp";
 import LandingImg_08 from "@/public/assets/img_landing_08.webp";
 import LandingImg_09 from "@/public/assets/img_landing_09.webp";
 import LandingImg_10 from "@/public/assets/img_landing_10.webp";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const btnSize = useMatches({
     base: "lg",
     sm: "xl",
   });
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    setIsLoggedIn(Boolean(accessToken));
+  }, []);
+
   return (
     <>
       <div className="relative overflow-hidden">
@@ -28,7 +36,7 @@ export default function Home() {
               <h2 className="text-60 font-bold leading-70 md:text-90 md:leading-100">나만의 위키</h2>
             </Box>
           </Flex>
-          <Button component={Link} href="/mypage" variant="filled" color="#474D66" size={btnSize} h={{ base: 54, sm: 60 }} radius="md">
+          <Button component={Link} href={isLoggedIn ? "/mypage" : "/login"} variant="filled" color="#474D66" size={btnSize} h={{ base: 54, sm: 60 }} radius="md">
             위키 만들기
           </Button>
           <div className="isolate">
@@ -135,7 +143,7 @@ export default function Home() {
       <div>
         <Flex bg="#474D66" direction="column" gap={40} align="center" py={{ base: 100, sm: 160, lg: 200 }}>
           <h2 className="font-nexon text-30 font-semibold text-white md:text-60">나만의 위키 만들어 보기</h2>
-          <Button component={Link} href="/wiki" variant="white" color="#474D66" size={btnSize} h={{ base: 54, sm: 60 }} radius="md">
+          <Button component={Link} href={isLoggedIn ? "/mypage" : "/login"} variant="white" color="#474D66" size={btnSize} h={{ base: 54, sm: 60 }} radius="md">
             지금 시작하기
           </Button>
         </Flex>
