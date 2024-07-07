@@ -2,7 +2,7 @@ import authEditWiki from "@/src/apis/authEditWiki";
 import { Button, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import ic_lock from "@/public/ic_lock.webp";
 import { notifications } from "@mantine/notifications";
@@ -10,13 +10,17 @@ import { notifications } from "@mantine/notifications";
 type EditWikiAuthModalProps = {
   securityQuestion: string;
   opened: boolean;
+  openModal: () => void;
   closeModal: () => void;
   setAnswer: (answer: string) => void;
+  isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
   wikiCode: string;
 };
 
-export default function EditWikiAuthModal({ securityQuestion, opened, closeModal, setAnswer, setIsEditing, wikiCode }: EditWikiAuthModalProps) {
+export default function EditWikiAuthModal({ securityQuestion, opened, openModal, closeModal, setAnswer, isEditing, setIsEditing, wikiCode }: EditWikiAuthModalProps) {
+  const [securityAnswer, setSecurityAnswer] = useState("");
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -36,20 +40,36 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
         message: "인증에 성공했습니다.",
         color: "green",
       });
-      setAnswer(value);
       setIsEditing(true);
-      // todo 인증 성공 시 수정 컴포넌트 렌더링
+      setAnswer(value);
+      setSecurityAnswer("");
     }
   };
 
   useEffect(() => {
-    form.reset();
-  }, []);
+    if (isEditing) {
+      const timer = setTimeout(
+        () => {
+          openModal();
+        },
+        4 * 60 * 1000,
+      );
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [isEditing, openModal]);
+
+  const handleModalClose = () => {
+    closeModal();
+    if (!isEditing) {
+      setSecurityAnswer("");
+    }
+  };
 
   return (
     <Modal
       opened={opened}
-      onClose={closeModal}
+      onClose={handleModalClose}
       size="sm"
       centered
       padding={20}
@@ -62,17 +82,25 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
     >
       <div className="mb-4 flex flex-col items-center gap-4">
         <Image className="mx-auto" src={ic_lock} alt="위키수정권한확인" width={42} height={42} />
-        <span className="text-center text-sm font-normal text-gray-400">
-          다음 퀴즈를 맞추고
-          <br />
-          위키를 작성해 보세요
-        </span>
+        {isEditing ? (
+          <span className="text-center text-sm font-normal text-gray-400">
+            수정 가능 시간이 1분 남았습니다 <br />
+            계속 수정하시려면 답변을 입력해주세요
+          </span>
+        ) : (
+          <span className="text-center text-sm font-normal text-gray-400">
+            다음 퀴즈를 맞추고
+            <br />
+            위키를 작성해 보세요
+          </span>
+        )}
       </div>
       <form
         className="flex flex-col gap-6"
-        onSubmit={form.onSubmit((value) => {
-          handleSubmitAnswer(value.securityAnswer);
-        })}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmitAnswer(securityAnswer);
+        }}
       >
         <TextInput
           label={securityQuestion}
@@ -95,8 +123,10 @@ export default function EditWikiAuthModal({ securityQuestion, opened, closeModal
           })}
           key={form.key("securityAnswer")}
           {...form.getInputProps("securityAnswer")}
+          value={securityAnswer}
+          onChange={(e) => setSecurityAnswer(e.target.value)}
         />
-        <Button size="md" color="green.1" type="submit">
+        <Button size="md" color="green.1" type="submit" className="button">
           확인
         </Button>
       </form>

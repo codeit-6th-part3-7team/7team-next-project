@@ -135,7 +135,7 @@ export default function ChangePasswordForm() {
           variant="filled"
         />
         <Flex justify="flex-end">
-          <Button type="submit" disabled={!isValid} w="89" color="green.1" radius="md" c="white">
+          <Button type="submit" disabled={!isValid} w="89" color="green.1" radius="md" c="white" className="button">
             변경하기
           </Button>
         </Flex>

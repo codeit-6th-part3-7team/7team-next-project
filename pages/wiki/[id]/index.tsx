@@ -65,11 +65,13 @@ export default function Wiki() {
   const [wikiUrl, setWikiUrl] = useState<string>("");
   const [formData, setFormData] = useState({});
   const [answer, setAnswer] = useState<string>("");
+  const [wikiCode, setWikiCode] = useState<string>("");
+
   const router = useRouter();
   const { id } = router.query as { id: string };
 
   // note mantine modal handler hook
-  const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
+  const [opened, { open: openAuthModal, close: closeAuthModal }] = useDisclosure(false);
 
   // note profileCard(모바일, 태블릿) 상세보기 상태 state
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
@@ -82,8 +84,10 @@ export default function Wiki() {
     const getWikiDataByCode = async () => {
       try {
         const response = await instance.get(`/profiles`, { params: { name: id } });
-        const firstItem = response.data.list[0].code;
-        const { data } = await instance.get(`/profiles/${firstItem}`);
+        const wikiIdCode = response.data.list[0].code;
+        setWikiCode(wikiIdCode);
+
+        const { data } = await instance.get(`/profiles/${wikiIdCode}`);
         setWikiData(data);
 
         const { city, mbti, job, sns, birthday, nickname, bloodType, nationality } = data;
@@ -116,7 +120,7 @@ export default function Wiki() {
       }
     };
     getWikiDataByCode();
-  }, [id]);
+  }, [id, isEditing]);
 
   const handleClickEdit = async () => {
     if (typeof id === "string") {
@@ -127,11 +131,12 @@ export default function Wiki() {
           message: "위키 수정을 위해 로그인이 필요합니다.",
           color: "red",
         });
+        router.push("/login");
         return;
       }
-      const wikiStatus = await checkWikiStatus(id);
+      const wikiStatus = await checkWikiStatus(wikiCode);
       if (wikiStatus) {
-        openModal();
+        openAuthModal();
       }
     }
   };
@@ -149,13 +154,20 @@ export default function Wiki() {
   };
 
   const handleChangeContent = (value: string) => {
-    setFormData({ ...formData, content: value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      content: value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const res = await instance.patch(`/profiles/${id}`, formData);
+      const updatedFormData = {
+        ...formData,
+        securityAnswer: answer,
+      };
+      const res = await instance.patch(`/profiles/${wikiCode}`, updatedFormData);
       if (res) {
         notifications.show({
           title: "저장 완료",
@@ -183,6 +195,9 @@ export default function Wiki() {
               <span className="text-32 font-semibold leading-none text-gray-800 md:text-[48px] xl:invisible">{wikiData.name}</span>
               <div className="flex gap-[10px]">
                 <Button
+                  onClick={() => {
+                    router.back();
+                  }}
                   color="white"
                   style={(theme) => ({
                     width: "65px",
@@ -206,6 +221,7 @@ export default function Wiki() {
                     borderWidth: "1px",
                     borderColor: theme.colors.green[1],
                   })}
+                  className="button"
                 >
                   저장
                 </Button>
@@ -263,7 +279,16 @@ export default function Wiki() {
           </section>
         </main>
       )}
-      <EditWikiAuthModal securityQuestion={wikiData.securityQuestion} opened={opened} closeModal={closeModal} wikiCode={id} setAnswer={setAnswer} setIsEditing={setIsEditing} />
+      <EditWikiAuthModal
+        securityQuestion={wikiData.securityQuestion}
+        opened={opened}
+        openModal={openAuthModal}
+        closeModal={closeAuthModal}
+        wikiCode={wikiCode}
+        setAnswer={setAnswer}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
     </>
   );
 }

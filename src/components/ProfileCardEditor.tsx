@@ -32,7 +32,6 @@ export default function ProfileCardEditor({ profileData, profileImage, handleCha
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-
       try {
         const response = await axios.post(`/images/upload`, formData);
         if (response) {
@@ -62,14 +61,12 @@ export default function ProfileCardEditor({ profileData, profileImage, handleCha
         <input id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
         <Image className="-translate-1/2 absolute left-1/2 top-1/2 size-[17px] -translate-x-1/2 md:size-[20px] xl:size-[36px]" src={ic_photo} alt="프로필이미지변경" />
       </label>
-
       <div className="flex flex-col gap-4 md:mt-3 md:grid md:grid-cols-2 md:gap-x-10 xl:flex xl:flex-col">
         {/* todo 프로필카드 초기데이터 prop 설정 후 map 함수 사용해서 렌더링 */}
         {Object.entries(profileData).map(([key, value]) => (
           <div key={key} className="flex h-[34px] items-center gap-5 md:h-[45px] xl:h-[34px]">
             <div className="w-[60px] text-12 text-gray-400 md:text-14">{labels[key as keyof ProfileCardData]}</div>
             <TextInput
-              key={key}
               name={key}
               onChange={handleChangeProfile}
               placeholder="정보를 입력해 주세요"

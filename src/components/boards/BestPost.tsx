@@ -61,7 +61,7 @@ function BestPosts({ bestPosts }: Props) {
       <Carousel slideSize={250} height={200} align="start" slideGap="md" withControls={false} className="md:hidden lg:hidden">
         {bestPosts.map((post) => (
           <Carousel.Slide key={post.id}>
-            <Card shadow="sm" radius="md" className="h-[200px] w-[250px]" component="a" href="/boards" target="_self" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
+            <Card shadow="sm" radius="md" className="h-[200px] w-[250px]" component="a" href={`/boards/${post.id}`} target="_self" style={{ boxShadow: " 0px 4px 20px 0px #00000014" }}>
               <Card.Section className="relative h-[131px]">
                 <div className="flex h-full items-center justify-center">
                   <div className="relative h-[131px] w-[250px] sm:h-[131px] sm:w-[302px] md:h-[131px] md:w-[250px]">
