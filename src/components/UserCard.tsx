@@ -17,7 +17,7 @@ export default function UserCard({ articles }: UserCardProps) {
                 <Image
                   src={article.image ? article.image : userImageNull}
                   alt={article.image ? "유저 이미지" : "기본 유저 이미지"}
-                  className="mx-[32px] rounded-full"
+                  className="mx-[32px] rounded-full object-cover"
                   width={85}
                   height={85}
                   draggable="false"
