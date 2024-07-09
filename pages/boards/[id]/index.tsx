@@ -3,7 +3,7 @@ import instance from "@/src/apis/axios";
 import Board, { ArticleType } from "@/src/components/Board";
 import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import WriteReply from "@/src/components/WriteReply";
 import Reply, { ReplyType } from "@/src/components/Reply";
 
@@ -43,7 +43,11 @@ export default function ArticlePage() {
       setReplies(replyResponse.data.list);
       setUserId(userResponse.data.id);
     } catch (e) {
-      setError("게시글을 불러오는 중 오류가 발생했습니다.");
+      if (!userId) {
+        setError("로그인이 필요합니다.");
+      } else {
+        setError("게시글을 불러오는 중 오류가 발생했습니다.");
+      }
     } finally {
       setLoading(false);
     }
@@ -64,7 +68,7 @@ export default function ArticlePage() {
   if (error) {
     return (
       <Flex direction="column" justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
-        <p className="text-red-200">{error}</p>
+        <p className="text-gray-600">{error}</p>
         <Button href="/boards" component={Link} variant="outline" w={140} h={{ base: 40, sm: 45 }} color="#4CBFA4" mt={4}>
           목록으로
         </Button>
