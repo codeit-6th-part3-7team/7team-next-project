@@ -75,14 +75,8 @@ export default function ArticlePage() {
           },
         });
 
-        const newReplies = replyResponse.data.list.sort((a: ReplyType, b: ReplyType) => {
-          if (a.updatedAt < b.updatedAt) return -1;
-          if (a.updatedAt > b.updatedAt) return 1;
-          return 0;
-        });
-
         if (replyResponse.data.list.length !== 0 && cursor !== null) {
-          setReplies((prevReplies) => [...prevReplies, ...newReplies]);
+          setReplies((prevReplies) => [...prevReplies, ...replyResponse.data.list]);
           setCursor(replyResponse.data.nextCursor);
         }
       } catch (e) {
