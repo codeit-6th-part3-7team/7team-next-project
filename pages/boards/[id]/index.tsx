@@ -143,6 +143,7 @@ export default function ArticlePage() {
         </Flex>
         <div ref={ref} className="flex justify-center py-[30px]">
           {replyLoading && <Loader size="md" />}
+          {replyError && <p className="text-gray-600">{replyError}</p>}
         </div>
       </Flex>
     </Flex>
