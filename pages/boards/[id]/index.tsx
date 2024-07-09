@@ -3,7 +3,7 @@ import instance from "@/src/apis/axios";
 import Board, { ArticleType } from "@/src/components/Board";
 import { Button, Flex, Loader } from "@mantine/core";
 import Link from "next/link";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import WriteReply from "@/src/components/WriteReply";
 import Reply, { ReplyType } from "@/src/components/Reply";
 
