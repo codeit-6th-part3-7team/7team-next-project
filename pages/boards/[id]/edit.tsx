@@ -78,7 +78,7 @@ export default function EditBoard() {
   if (error) {
     return (
       <Flex direction="column" justify="center" align="center" mih={{ base: "calc(100vh - 60px)", sm: "calc(100vh - 80px)" }}>
-        <p className="text-red-200">{error?.message}</p>
+        <p className="text-gray-600">{error?.message}</p>
         <Button href="/boards" component={Link} w={140} variant="outline" color="#4CBFA4" mt={4}>
           목록으로
         </Button>

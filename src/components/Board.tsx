@@ -65,7 +65,7 @@ export default function Board({ initialValues, isMine }: BoardProps) {
   return (
     <>
       <Flex direction="column" justify="center" align="center" w={{ base: "100%", lg: 1060 }} px={{ base: 20, sm: 60, lg: 0 }}>
-        <Flex direction="column" w="100%" pt={46} pb={30} px={30} className="rounded-[10px] bg-white drop-shadow-md">
+        <Flex direction="column" w="100%" mih="60vh" pt={46} pb={30} px={30} className="rounded-[10px] bg-white drop-shadow-md">
           <Box mb={{ base: 14, sm: 30 }}>
             <Box className="float-left overflow-hidden">
               <h2 className="text-24 font-semibold text-gray-800 md:text-32">{initialValues?.title}</h2>
