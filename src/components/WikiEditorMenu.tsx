@@ -88,15 +88,6 @@ export default function EditorMenu({ editor, title }: EditorMenuProps) {
         <Button onClick={() => editor.chain().focus().setTextAlign("left").run()} active={editor.isActive({ textAlign: "left" })} iconName="left" alt="왼쪽정렬" />
         <Button onClick={() => editor.chain().focus().setTextAlign("center").run()} active={editor.isActive({ textAlign: "center" })} iconName="center" alt="가운데정렬" />
         <Button onClick={() => editor.chain().focus().setTextAlign("right").run()} active={editor.isActive({ textAlign: "right" })} iconName="right" alt="오른쪽정렬" />
-        <button type="button" onClick={() => editor.chain().focus().setHorizontalRule().run()} className="flex h-6 w-6 items-center justify-center">
-          -
-        </button>
-        <button type="button" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()} className="flex h-6 w-6 items-center justify-center">
-          Undo
-        </button>
-        <button type="button" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()} className="flex h-6 w-6 items-center justify-center">
-          Redo
-        </button>
         <div className="h-6 w-0 border-[1px] border-gray-200" />
         {/* note 기타기능 */}
         <label htmlFor="image">
