@@ -126,11 +126,11 @@ export default function Wiki() {
 
   useEffect(() => {
     if (isEditing) {
-      const id = setTimeout(() => {
+      const editTimer = setTimeout(() => {
         setIsEditing(false);
         closeAuthModal();
       }, 300000); // 5분 = 300000ms
-      setTimerId(id);
+      setTimerId(editTimer);
     }
 
     return () => {
