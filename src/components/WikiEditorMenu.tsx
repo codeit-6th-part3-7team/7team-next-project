@@ -7,7 +7,6 @@ import { useDisclosure } from "@mantine/hooks";
 import Button from "./WikiEditorButton";
 import Dropdown from "./HeadingsDropdown";
 import SetLinkModal from "./SetLinkModal";
-import { Underline } from "@tiptap/extension-underline";
 
 type EditorMenuProps = {
   editor: Editor;

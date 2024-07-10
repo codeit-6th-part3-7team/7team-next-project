@@ -7,8 +7,8 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
-import WikiEditorMenu from "./WikiEditorMenu";
 import Underline from "@tiptap/extension-underline";
+import WikiEditorMenu from "./WikiEditorMenu";
 
 type WikiEditorProps = {
   initialData: string;
