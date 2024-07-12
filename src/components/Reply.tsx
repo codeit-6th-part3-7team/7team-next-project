@@ -5,8 +5,10 @@ import { useState } from "react";
 import ImgUser from "@/public/assets/user.svg";
 import IcoPencil from "@/public/assets/ic_pencil.svg";
 import IcoBin from "@/public/assets/ic_bin.svg";
-import instance from "../apis/axios";
+import { useQueryClient } from "@tanstack/react-query";
 import WriteReply from "./WriteReply";
+import { useDeleteComment } from "../hooks/useCommentQuery";
+import quries from "../apis/queries";
 
 export interface ReplyType {
   writer: {
@@ -19,16 +21,23 @@ export interface ReplyType {
   id: number;
 }
 
-export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; isMine: boolean; onUpdate: () => void }) {
+export default function Reply({ reply, isMine, articleId }: { reply: ReplyType; isMine: boolean; articleId: number }) {
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [onEdit, setOnEdit] = useState(false);
   const [replyContent] = useState(reply?.content);
 
-  const handleDelete = async () => {
-    await instance.delete(`/comments/${reply.id}`);
-    onUpdate();
-    closeDeleteModal();
-  };
+  // const handleDelete = async () => {
+  //   await instance.delete(`/comments/${reply.id}`);
+
+  //   closeDeleteModal();
+  // };
+
+  const queryClient = useQueryClient();
+  const { mutate: handleDelete } = useDeleteComment({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(quries.comment.getArticleCommentList({ articleId, limit: 100 }));
+    },
+  });
 
   return (
     <>
@@ -71,7 +80,7 @@ export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; i
               )}
             </Flex>
           </Flex>
-          {onEdit ? <WriteReply type="edit" replyId={reply.id} onUpdate={onUpdate} initialValue={replyContent} /> : <p className="text-14 text-gray-800 md:text-16">{reply?.content}</p>}
+          {onEdit ? <WriteReply type="edit" replyId={reply.id} initialValue={replyContent} /> : <p className="text-14 text-gray-800 md:text-16">{reply?.content}</p>}
           <span className="mt-[4px] text-12 text-gray-400 md:text-14">{new Date(reply?.updatedAt).toLocaleDateString()}</span>
         </Flex>
       </Flex>
@@ -79,7 +88,7 @@ export default function Reply({ reply, isMine, onUpdate }: { reply: ReplyType; i
         <Flex direction="column" align="center" gap={40}>
           <p>정말 삭제하시겠습니까?</p>
           <Flex gap={10}>
-            <Button type="submit" color="#4CBFA4" className="button" onClick={handleDelete}>
+            <Button type="submit" color="#4CBFA4" className="button" onClick={() => handleDelete({ commentId: reply.id })}>
               삭제하기
             </Button>
             <Button variant="outline" color="#4CBFA4" onClick={closeDeleteModal}>

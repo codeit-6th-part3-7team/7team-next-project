@@ -10,20 +10,9 @@ import IcoPencil from "@/public/assets/ic_pencil.svg";
 import IcoBin from "@/public/assets/ic_bin.svg";
 import IcoHeart from "@/public/assets/ic_heart.svg";
 import IcoHeartOn from "@/public/assets/ic_heart_on.svg";
+import { ArticleDetailReponseType } from "../schema/article";
 
-export interface ArticleType {
-  id: number;
-  title: string;
-  content: string;
-  image: string;
-  updatedAt: Date;
-  writer: {
-    id: number;
-    name: string;
-  };
-  likeCount: number;
-  isLiked: boolean;
-}
+export type ArticleType = Omit<ArticleDetailReponseType, "createdAt">;
 
 interface BoardProps {
   initialValues: ArticleType;

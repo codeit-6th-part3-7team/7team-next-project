@@ -5,12 +5,12 @@ import instance from "../apis/axios";
 
 interface WriteReplyProps {
   type: string;
-  onUpdate: () => void;
+
   initialValue: string;
   replyId: number;
 }
 
-export default function WriteReply({ type, onUpdate, replyId = 0, initialValue = "" }: WriteReplyProps) {
+export default function WriteReply({ type, replyId = 0, initialValue = "" }: WriteReplyProps) {
   const [content, setContent] = useState(initialValue);
   const router = useRouter();
   const { id } = router.query;
@@ -24,7 +24,6 @@ export default function WriteReply({ type, onUpdate, replyId = 0, initialValue =
       await instance.post(`/articles/${id}/comments`, { content });
     }
     setContent("");
-    onUpdate();
   };
   return (
     <form onSubmit={handleSubmit} className="w-full">
